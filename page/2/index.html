@@ -67,13 +67,33 @@
     
         <a class="newer-posts" href="/hugo/">&larr; Newer Posts</a>
     
-    <span class="page-number">Page 2 of 3</span>
+    <span class="page-number">Page 2 of 4</span>
     
         <a class="older-posts" href="/hugo/page/3/">Older Posts &rarr;</a>
     
 </nav>
 
     </div>
+		
+      <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/hugo/post/servidorest7/">T7. Hosting.</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Vamos a instalar phpMyAdmin:
+Extensión para conectar php con la base de datos:
+[centos@salmorejo ~]$ sudo dnf install -y php-json php-mbstring  Instalamos phpMyAdmin
+[centos@salmorejo ~]$ sudo wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ sudo tar -zxvf phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ mv phpMyAdmin-4.9.0.1-all-languages /usr/share/phpMyAdmin  Configuramos php:
+[centos@salmorejo ~]$ sudo cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php [centos@salmorejo ~]$ sudo mkdir -p /var/lib/phpmyadmin/tmp [centos@salmorejo ~]$ sudo chown -R nginx:nginx /var/lib/phpmyadmin [centos@salmorejo ~]$ sudo nano /usr/share/phpMyAdmin/config.inc.ph  Añadimos lo siguiente en el fichero: &hellip; <a class="read-more" href="/hugo/post/servidorest7/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">December 11, 2019</time>
+	</footer>
+</article>
+
 		
       <article class="post">
 	<header class="post-header">
@@ -114,30 +134,13 @@ debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; B
 </article>
 
 		
-      <article class="post">
-	<header class="post-header">
-    
-		<h2 class="post-title"><a href="/hugo/post/oraclevspostgresql/">PL/SQL vs PL/PGSQL</a></h2>
-	</header>
-	<section class="post-excerpt">
-    <p>
-      Vamos a ver las principales diferencias entre estos dos gestores. Diferencias en cursores: Recorreremos los cursores de formas diferentes en los dos gestores.
- PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir. &hellip; <a class="read-more" href="/hugo/post/oraclevspostgresql/">&raquo;</a>
-    </p>
-	</section>
-	<footer class="post-meta">
-    <time class="post-date">November 09, 2019</time>
-	</footer>
-</article>
-
-		
     
 
 <nav class="pagination" role="navigation">
     
         <a class="newer-posts" href="/hugo/">&larr; Newer Posts</a>
     
-    <span class="page-number">Page 2 of 3</span>
+    <span class="page-number">Page 2 of 4</span>
     
         <a class="older-posts" href="/hugo/page/3/">Older Posts &rarr;</a>
     

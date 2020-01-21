@@ -4,6 +4,15 @@ date: 2019-10-30T12:20:59+01:00
 draft: false
 ---
 
+Vamos a instalar dos aplicaciones web php en nuestros servidores:
+
+- En www.tunombre.gonzalonazareno.org vamos a instalar WordPress. En WordPress debemos configurar de forma correcta las URL limpias.
+- En cloud.tunombre.gonzalonazareno.org vamos a instalar NextCloud.
+
+Modifica las aplicaciones web y personalizalas para que se demuestre que son tus aplicaciones. Entrega una breve descripción de los pasos dados para conseguir la instalación de las aplicaciones web. Usando resolución estática entrega algunas capturas donde se demuestre que las aplicaciones están funcionando.
+
+
+
 Creamos la base de datos llamada **wordpress**
 
 ```

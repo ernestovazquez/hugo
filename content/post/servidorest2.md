@@ -4,6 +4,27 @@ date: 2019-10-29T10:49:14+01:00
 draft: false
 ---
 
+Ante de realizar la instalación del servidor web vamos a configurar el nombre de nuestras máquinas, para ello:
+
+Piensa en un nombre de dominio, que sera un subdominio de gonzalonazareno.org, y que contenga tu nombre, por ejemplo: josedom.gonzalonazareno.org.
+Siguiendo con el ejemplo, los nombres de mis máquinas serán:
+
+- croqueta.josedom.gonzalonazareno.org
+- tortilla.josedom.gonzalonazareno.org
+- salmorejo.josedom.gonzalonazareno.org
+
+Comprueba que los servidores tienen configurados el nuevo nombre de dominio de forma adecuada después de volver a reiniciar el servidor (o tomar una nueva configuración DHCP). Para que el servidor tenga el FQDN debes tener configurado de forma correcta el parámetro domain en el fichero /etc/resolv.conf, además debemos evitar que este fichero se sobreescriba con los datos que manda el servidor DHCP de OpenStack. Quizás sea buena idea mirar la configuración de cloud-init. Documenta la configuración que has tenido que modificar y muestra el contenido del fichero /etc/resolv.conf y la salida del comando hostname -f después de un reinicio.
+
+**Servidor Web**
+
+En salmorejo (CentOs 7) vamos a instalar un servidor web nginx. Configura el servidor para que sea capaz de ejecutar código php (para ello vamos a usar un servidor de aplicaciones php-fpm). Entrega una captura de pantalla accediendo a www.tunombre.gonzalonazareno.org/info.php donde se vea la salida del fichero info.php.
+
+**Servidor de base de datos**
+
+En tortilla (Ubuntu) vamos a instalar un servidor de base de datos mariadb. Entrega una prueba de funcionamiento donde se vea como se realiza una conexión a la base de datos desde los otros dos equipos.
+
+
+
 #### Croqueta:
 
 Entramos en 

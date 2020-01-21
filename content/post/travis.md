@@ -4,6 +4,24 @@ date: 2019-12-15T15:29:57+01:00
 draft: false
 ---
 
+Tarea 1: Despliegue de una página web estática (build, deploy) (4 puntos)
+
+En esta práctica investiga como generar una página web estática con la herramienta que elegiste en la práctica 1 de la asignatura y desplegarla en el servicio que utilizaste en esa práctica.
+
+- En el repositorio GitHub sólo tienen que estar los ficheros markdown.
+- La página se debe generar en el sistema de integración continúa, por lo tanto debemos instalar las herramientas necesarias.
+- Investiga si podemos desplegar de forma automática en el servicio elegido (si es necesario cambia el servicio de hosting para el despliegue).
+
+Tarea 2: Integración continúa de aplicación django (Test + Deploy) (6 puntos)Permalink
+
+Estudia las distintas pruebas que se han realizado, y modifica el código de la aplicación para que al menos una de ella no se ejecute de manera exitosa. (1 punto)
+
+Crea un fichero .travis.yml para realizar de los tests en travis. Entrega el fichero .travis.yml, una captura de pantalla con un resltado exitoso de la IC y otro con un error.(1 punto)
+
+Entrega un breve descripción de los pasos más importantes para realizar el despliegue desde travis. (3 puntos)
+
+
+
 Vamos a crear el repositorio donde vamos a trabajar.
 También vamos a crear la rama gh-pages, donde estarán los ficheros generados por Hugo.
 

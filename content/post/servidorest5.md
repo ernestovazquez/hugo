@@ -4,6 +4,10 @@ date: 2019-11-11T13:10:28+01:00
 draft: false
 ---
 
+Actualiza salmorejo a CentOS 8 garantizando que todos los servicios previamente configurados sigan funcionando correctamente.
+
+
+
 Instalamos los **repositorios** de **EPEL** :
 
 ```

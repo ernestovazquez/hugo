@@ -4,6 +4,19 @@ date: 2019-10-13T10:36:33+01:00
 draft: false
 ---
 
+Tarea 1) Instalación de los servidores
+
+Crear tres máquinas en el cloud con los siguientes nombres y sistemas operativos:
+
+  Croqueta (Debian 10)
+  Tortilla (Ubunut 18.04)
+  Salmorejo (CentOs 7)
+
+- Croqueta y Tortilla usan un volumen como unidad de disco principal.
+- Se creará un usuario "profesor" con el que podrán acceder los profesores usando claves RSA.
+
+
+
 #### **Croqueta: 172.22.200.111**
 
 Vamos a cambiar el nombre de dominio.

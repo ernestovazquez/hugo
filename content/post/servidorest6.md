@@ -3,6 +3,28 @@ title: "T6. DNS."
 date: 2019-11-19T13:15:31+01:00
 draft: false
 ---
+
+Vamos a instalar un servidor dns que nos permita gestionar la resolución directa e inversa de nuestros nombres. Cada alumno va a poseer un servidor dns con autoridad sobre un subdominio de nuestro dominio principal gonzalonazareno.org, que se llamará tu_nombre.gonzalonazareno.org.
+
+Indica al profesor el nombre de tu dominio para que pueda realizar la delegación en el servidor DNS principal papion-dns.
+
+El servidor DNS se va a instalar en el servidor1 (croqueta). Y en un primer momento se configurará de la siguiente manera:
+
+- El servidor DNS se llama croqueta.tu_nombre.gonzalonazareno.org y va a ser el servidor con autoridad para la zona tu_nombre.gonzalonazareno.org.
+- El servidor debe resolver el nombre de los tres servidores.
+- El servidor debe resolver los distintos servicios (virtualhost y servidor de base de datos).
+- Debes determinar si la resolución directa se hace con dirección ip fijas o flotantes del cloud depediendo del servicio que se este prestando.
+- Debes considerar la posibilidad de hacer dos zonas de resolución inversa para resolver ip fijas o flotantes del cloud.
+
+Entrega el resultado de las siguientes consultas a los servidores de nuestra red :
+
+- El servidor DNS con autoridad sobre la zona del dominio tu_nombre.gonzalonazareno.org
+- La dirección IP de algún servidor
+- Una resolución de un nombre de un servicio
+- Un resolución inversa de IP fija, y otra resolución inversa de IP flotante. (Esta consulta la debes hacer directamente preguntando a tu servidor).
+
+
+
 Asignamos **zonas** :
 
 ```

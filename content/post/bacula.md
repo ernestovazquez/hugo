@@ -18,8 +18,6 @@ Implementar un sistema de copias de seguridad para las instancias del cloud, ten
 - Incluye en la copia los datos de las nuevas aplicaciones que se vayan instalando durante el resto del curso
 - Utiliza saturno u otra opción que se te facilite como equipo secundario para almacenar las copias de seguridad. Solicita acceso o la instalación de las aplicaciones que sean precisas.
 
-La corrección consistirá tanto en la restauración puntual de un fichero en cualquier fecha como la restauración completa de una de las instancias la última semana de curso.
-
-
+La corrección consistirá tanto en la restauración puntual de un fichero en cualquier fecha como la restauración completa de una de las instancias la última semana de curso...
 
 

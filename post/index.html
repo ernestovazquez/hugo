@@ -93,9 +93,9 @@
 	</header>
 	<section class="post-excerpt">
     <p>
-      Vamos a crear el repositorio donde vamos a trabajar. También vamos a crear la rama gh-pages, donde estarán los ficheros generados por Hugo.
-Fichero de configuración .travis.yml .
-ernesto@honda:~/blog$ sudo nano .travis.yml install: - wget https://github.com/gohugoio/hugo/releases/download/v0.53/hugo_0.53_Linux-64bit.deb &amp;&amp; sudo dpkg -i hugo*.deb - git clone https://github.com/ernestovazquez/blog.git script: - rm hugo*.deb - hugo new site sitio - mkdir -p sitio/content/post - mv blog/content/post/* sitio/content/post - mv blog/config.toml sitio/ - cd sitio/themes &amp;&amp; git clone https://github. &hellip; <a class="read-more" href="/hugo/post/travis/">&raquo;</a>
+      Tarea 1: Despliegue de una página web estática (build, deploy) (4 puntos)
+En esta práctica investiga como generar una página web estática con la herramienta que elegiste en la práctica 1 de la asignatura y desplegarla en el servicio que utilizaste en esa práctica.
+ En el repositorio GitHub sólo tienen que estar los ficheros markdown. La página se debe generar en el sistema de integración continúa, por lo tanto debemos instalar las herramientas necesarias. &hellip; <a class="read-more" href="/hugo/post/travis/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -111,13 +111,8 @@ ernesto@honda:~/blog$ sudo nano .travis.yml install: - wget https://github.com/g
 	</header>
 	<section class="post-excerpt">
     <p>
-      Creamos el entorno virtual en nuestra máquina.
-Instalamos Mezzanine con:
-(produccionmazzine) ernesto@honda:~/Documentos$ pip install mezzanine  Creamos el proyecto:
-(produccionmazzine) ernesto@honda:~/Documentos$ mezzanine-project mezzanineernesto  Creamos la base de datos:
-(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py createdb  Probamos si funciona en local :
-(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py runserver  Subimos el directorio a nuestro GitHub
-(produccionmazzine) ernesto@honda:~/Documentos$ git clone git@github.com:ernestovazquez/mezzanineernesto.git (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git add --all (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git commit -am &quot;produccion foto&quot; (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git push  Configuración contenido estático. &hellip; <a class="read-more" href="/hugo/post/servidorest8/">&raquo;</a>
+      En esta tarea vamos a desplegar un CMS python. Hemos elegido Mezzanine, pero puedes elegir otro CMS python basado en django.
+ Instala el CMS en el entorno de desarrollo. Debes utilizar un entorno virtual. Personaliza la página (cambia el nombre al blog y pon tu nombre) y añade contenido (algún artículo con alguna imagen). Guarda los ficheros generados durante la instalación en un repositorio github. Guarda también en ese repositorio la copia de seguridad de la bese de datos. &hellip; <a class="read-more" href="/hugo/post/servidorest8/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -133,11 +128,9 @@ Instalamos Mezzanine con:
 	</header>
 	<section class="post-excerpt">
     <p>
-      Vamos a instalar phpMyAdmin:
-Extensión para conectar php con la base de datos:
-[centos@salmorejo ~]$ sudo dnf install -y php-json php-mbstring  Instalamos phpMyAdmin
-[centos@salmorejo ~]$ sudo wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ sudo tar -zxvf phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ mv phpMyAdmin-4.9.0.1-all-languages /usr/share/phpMyAdmin  Configuramos php:
-[centos@salmorejo ~]$ sudo cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php [centos@salmorejo ~]$ sudo mkdir -p /var/lib/phpmyadmin/tmp [centos@salmorejo ~]$ sudo chown -R nginx:nginx /var/lib/phpmyadmin [centos@salmorejo ~]$ sudo nano /usr/share/phpMyAdmin/config.inc.ph  Añadimos lo siguiente en el fichero: &hellip; <a class="read-more" href="/hugo/post/servidorest7/">&raquo;</a>
+      Queremos que diferentes usuarios, puedan gestionar una página web en vuestro servidor que esté gestionada por medio de un FTP. También se creará una base de datos para cada usuario.
+Por ejemplo, el usuario josedom quiere hacer una página cuyo nombre será servicios:
+ La página que vamos a crear será accesible en https://servicios.tunombre.gonzalonazareno.org. Se creará un usuario user_josedom, que tendrá una contraseña, para que accediendo a ftp.tunombre.gonzalonazareno.org, pueda gestionar los ficheros de su página web. &hellip; <a class="read-more" href="/hugo/post/servidorest7/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -153,9 +146,9 @@ Extensión para conectar php con la base de datos:
 	</header>
 	<section class="post-excerpt">
     <p>
-      Asignamos zonas :
-debian@croqueta:/etc/bind$ sudo nano named.conf.local  include &quot;/etc/bind/zones.rfc1918&quot;; zone &quot;ernesto.gonzalonazareno.org&quot;{ type master; file &quot;db.ernesto.gonzalonazareno.org&quot;; }; // Zona inversa 172.22 zone &quot;22.172.in-addr.arpa&quot; { type master; file &quot;db.172.22.rev&quot;; }; // Zona inversa 10.0 zone &quot;0.0.10.in-addr.arpa&quot; { type master; file &quot;db.10.0.rev&quot;; };  Zona directa :
-debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; BIND reverse data file for broadcast zone ; $TTL 604800 @ IN SOA croqueta.ernesto.gonzalonazareno.org. root.croqueta.ernesto.gonzalonazareno.org. ( 1 ; Serial 604800 ; Refresh 86400 ; Retry 2419200 ; Expire 604800 ) ; Negative Cache TTL ; @ IN NS croqueta. &hellip; <a class="read-more" href="/hugo/post/servidorest6/">&raquo;</a>
+      Vamos a instalar un servidor dns que nos permita gestionar la resolución directa e inversa de nuestros nombres. Cada alumno va a poseer un servidor dns con autoridad sobre un subdominio de nuestro dominio principal gonzalonazareno.org, que se llamará tu_nombre.gonzalonazareno.org.
+Indica al profesor el nombre de tu dominio para que pueda realizar la delegación en el servidor DNS principal papion-dns.
+El servidor DNS se va a instalar en el servidor1 (croqueta). &hellip; <a class="read-more" href="/hugo/post/servidorest6/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -171,12 +164,12 @@ debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; B
 	</header>
 	<section class="post-excerpt">
     <p>
-      Instalamos los repositorios de EPEL :
+      Actualiza salmorejo a CentOS 8 garantizando que todos los servicios previamente configurados sigan funcionando correctamente.
+Instalamos los repositorios de EPEL :
 [root@salmorejo centos]# yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm  Instalamos yum-utils :
 [root@salmorejo centos]# yum -y install rpmconf yum-utils [root@salmorejo centos]# rpmconf -a  Limpiamos paquetes innecesarios:
 [root@salmorejo centos]# package-cleanup --leaves [root@salmorejo centos]# package-cleanup --orphans  Instalamos el software DNF :
-[root@salmorejo centos]# yum -y install dnf  Eliminamos los paquetes manager:
-[root@salmorejo centos]# dnf -y remove yum yum-metadata-parser [root@salmorejo centos]# rm -Rf /etc/yum  Actualizamos el sistema con DNF: &hellip; <a class="read-more" href="/hugo/post/servidorest5/">&raquo;</a>
+[root@salmorejo centos]# yum -y install dnf  Eliminamos los paquetes manager: &hellip; <a class="read-more" href="/hugo/post/servidorest5/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -209,9 +202,8 @@ debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; B
 	</header>
 	<section class="post-excerpt">
     <p>
-      Creamos la base de datos llamada wordpress
-root@tortilla:/home/ubuntu# mysql -u root  MariaDB [(none)]&gt; CREATE DATABASE wordpress; MariaDB [(none)]&gt; use wordpress; MariaDB [wordpress]&gt; GRANT ALL PRIVILEGES ON *.* TO 'salmorejo'@'10.0.0.7' IDENTIFIED BY 'salmorejo' WITH GRANT OPTION;  Nos conectamos remotamente:
-[centos@salmorejo ~]$ mysql --host=10.0.0.14 -u salmorejo -p wordpress Enter password: Welcome to the MariaDB monitor. Commands end with ; or \g. Your MariaDB connection id is 39 Server version: 10.1.41-MariaDB-0ubuntu0.18.04.1 Ubuntu 18. &hellip; <a class="read-more" href="/hugo/post/servidorest3/">&raquo;</a>
+      Vamos a instalar dos aplicaciones web php en nuestros servidores:
+ En www.tunombre.gonzalonazareno.org vamos a instalar WordPress. En WordPress debemos configurar de forma correcta las URL limpias. En cloud.tunombre.gonzalonazareno.org vamos a instalar NextCloud.  Modifica las aplicaciones web y personalizalas para que se demuestre que son tus aplicaciones. Entrega una breve descripción de los pasos dados para conseguir la instalación de las aplicaciones web. Usando resolución estática entrega algunas capturas donde se demuestre que las aplicaciones están funcionando. &hellip; <a class="read-more" href="/hugo/post/servidorest3/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -227,11 +219,9 @@ root@tortilla:/home/ubuntu# mysql -u root  MariaDB [(none)]&gt; CREATE DATABASE 
 	</header>
 	<section class="post-excerpt">
     <p>
-      Croqueta: Entramos en
-debian@croqueta:~$ sudo nano /etc/dhcp/dhclient.conf  Y quitamos los siguiente parametros:
-domain-name, domain-name-servers, domain-search  Editamos el archivo:
-debian@croqueta:~$ sudo nano /etc/resolv.conf  domain croqueta.ernesto.gonzalonazareno.org search croqueta.ernesto.gonzalonazareno.org nameserver 192.168.202.2  127.0.1.1 croqueta.ernesto.gonzalonazareno.org croqueta.ernesto 10.0.0.9 tortilla.ernesto.gonzalonazareno.org tortilla.ernesto 10.0.0.11 salmorejo.ernesto.gonzalonazareno.org salmorejo.ernesto #127.0.0.1 localhost  debian@croqueta:~$ hostname croqueta debian@croqueta:~$ hostname -f croqueta.ernesto.gonzalonazareno.org  Tortilla: Editamos el fichero:
-ubuntu@tortilla:~$ sudo nano /etc/systemd/resolved.conf  [Resolve] DNS=192.168.202.2 #FallbackDNS= Domains=tortilla.ernesto.gonzalonazareno.org #LLMNR=no #MulticastDNS=no #DNSSEC=no #Cache=yes #DNSStubListener=yes  Reiniciamos y comprobamos el fichero /etc/resolv. &hellip; <a class="read-more" href="/hugo/post/servidorest2/">&raquo;</a>
+      Ante de realizar la instalación del servidor web vamos a configurar el nombre de nuestras máquinas, para ello:
+Piensa en un nombre de dominio, que sera un subdominio de gonzalonazareno.org, y que contenga tu nombre, por ejemplo: josedom.gonzalonazareno.org. Siguiendo con el ejemplo, los nombres de mis máquinas serán:
+ croqueta.josedom.gonzalonazareno.org tortilla.josedom.gonzalonazareno.org salmorejo.josedom.gonzalonazareno.org  Comprueba que los servidores tienen configurados el nuevo nombre de dominio de forma adecuada después de volver a reiniciar el servidor (o tomar una nueva configuración DHCP). &hellip; <a class="read-more" href="/hugo/post/servidorest2/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -247,12 +237,11 @@ ubuntu@tortilla:~$ sudo nano /etc/systemd/resolved.conf  [Resolve] DNS=192.168.2
 	</header>
 	<section class="post-excerpt">
     <p>
-      Croqueta: 172.22.200.111 Vamos a cambiar el nombre de dominio.
-Editamos el fichero /etc/hostname
-sudo nano /etc/hostname croqueta.gonzalonazareno.org croqueta  Ahora solo falta cambiar nuestro ficheros hosts.
-sudo nano /etc/hosts 127.0.0.1 localhost 127.0.1.1 croqueta.gonzalonazareno.org croqueta  Creamos el usuario profesor que pueda utilizar sudo sin contraseña.
-Abre el archivo /etc/sudoers con el comando:
-sudo visudo profesor ALL=(ALL) NOPASSWD:ALL  Este comando comprueba la edición y si hay un error de sintaxis no guardará los cambios. &hellip; <a class="read-more" href="/hugo/post/servidorest1/">&raquo;</a>
+      Tarea 1) Instalación de los servidores
+Crear tres máquinas en el cloud con los siguientes nombres y sistemas operativos:
+Croqueta (Debian 10) Tortilla (Ubunut 18.04) Salmorejo (CentOs 7)
+ Croqueta y Tortilla usan un volumen como unidad de disco principal. Se creará un usuario &ldquo;profesor&rdquo; con el que podrán acceder los profesores usando claves RSA.  Croqueta: 172.22.200.111 Vamos a cambiar el nombre de dominio.
+Editamos el fichero /etc/hostname &hellip; <a class="read-more" href="/hugo/post/servidorest1/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">

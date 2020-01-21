@@ -96,9 +96,9 @@
 	</header>
 	<section class="post-excerpt">
     <p>
-      Vamos a crear el repositorio donde vamos a trabajar. También vamos a crear la rama gh-pages, donde estarán los ficheros generados por Hugo.
-Fichero de configuración .travis.yml .
-ernesto@honda:~/blog$ sudo nano .travis.yml install: - wget https://github.com/gohugoio/hugo/releases/download/v0.53/hugo_0.53_Linux-64bit.deb &amp;&amp; sudo dpkg -i hugo*.deb - git clone https://github.com/ernestovazquez/blog.git script: - rm hugo*.deb - hugo new site sitio - mkdir -p sitio/content/post - mv blog/content/post/* sitio/content/post - mv blog/config.toml sitio/ - cd sitio/themes &amp;&amp; git clone https://github. &hellip; <a class="read-more" href="/hugo/post/travis/">&raquo;</a>
+      Tarea 1: Despliegue de una página web estática (build, deploy) (4 puntos)
+En esta práctica investiga como generar una página web estática con la herramienta que elegiste en la práctica 1 de la asignatura y desplegarla en el servicio que utilizaste en esa práctica.
+ En el repositorio GitHub sólo tienen que estar los ficheros markdown. La página se debe generar en el sistema de integración continúa, por lo tanto debemos instalar las herramientas necesarias. &hellip; <a class="read-more" href="/hugo/post/travis/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -114,13 +114,8 @@ ernesto@honda:~/blog$ sudo nano .travis.yml install: - wget https://github.com/g
 	</header>
 	<section class="post-excerpt">
     <p>
-      Creamos el entorno virtual en nuestra máquina.
-Instalamos Mezzanine con:
-(produccionmazzine) ernesto@honda:~/Documentos$ pip install mezzanine  Creamos el proyecto:
-(produccionmazzine) ernesto@honda:~/Documentos$ mezzanine-project mezzanineernesto  Creamos la base de datos:
-(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py createdb  Probamos si funciona en local :
-(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py runserver  Subimos el directorio a nuestro GitHub
-(produccionmazzine) ernesto@honda:~/Documentos$ git clone git@github.com:ernestovazquez/mezzanineernesto.git (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git add --all (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git commit -am &quot;produccion foto&quot; (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git push  Configuración contenido estático. &hellip; <a class="read-more" href="/hugo/post/servidorest8/">&raquo;</a>
+      En esta tarea vamos a desplegar un CMS python. Hemos elegido Mezzanine, pero puedes elegir otro CMS python basado en django.
+ Instala el CMS en el entorno de desarrollo. Debes utilizar un entorno virtual. Personaliza la página (cambia el nombre al blog y pon tu nombre) y añade contenido (algún artículo con alguna imagen). Guarda los ficheros generados durante la instalación en un repositorio github. Guarda también en ese repositorio la copia de seguridad de la bese de datos. &hellip; <a class="read-more" href="/hugo/post/servidorest8/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">

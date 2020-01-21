@@ -99,9 +99,8 @@
 	</header>
 	<section class="post-excerpt">
     <p>
-      Creamos la base de datos llamada wordpress
-root@tortilla:/home/ubuntu# mysql -u root  MariaDB [(none)]&gt; CREATE DATABASE wordpress; MariaDB [(none)]&gt; use wordpress; MariaDB [wordpress]&gt; GRANT ALL PRIVILEGES ON *.* TO 'salmorejo'@'10.0.0.7' IDENTIFIED BY 'salmorejo' WITH GRANT OPTION;  Nos conectamos remotamente:
-[centos@salmorejo ~]$ mysql --host=10.0.0.14 -u salmorejo -p wordpress Enter password: Welcome to the MariaDB monitor. Commands end with ; or \g. Your MariaDB connection id is 39 Server version: 10.1.41-MariaDB-0ubuntu0.18.04.1 Ubuntu 18. &hellip; <a class="read-more" href="/hugo/post/servidorest3/">&raquo;</a>
+      Vamos a instalar dos aplicaciones web php en nuestros servidores:
+ En www.tunombre.gonzalonazareno.org vamos a instalar WordPress. En WordPress debemos configurar de forma correcta las URL limpias. En cloud.tunombre.gonzalonazareno.org vamos a instalar NextCloud.  Modifica las aplicaciones web y personalizalas para que se demuestre que son tus aplicaciones. Entrega una breve descripción de los pasos dados para conseguir la instalación de las aplicaciones web. Usando resolución estática entrega algunas capturas donde se demuestre que las aplicaciones están funcionando. &hellip; <a class="read-more" href="/hugo/post/servidorest3/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -117,11 +116,9 @@ root@tortilla:/home/ubuntu# mysql -u root  MariaDB [(none)]&gt; CREATE DATABASE 
 	</header>
 	<section class="post-excerpt">
     <p>
-      Croqueta: Entramos en
-debian@croqueta:~$ sudo nano /etc/dhcp/dhclient.conf  Y quitamos los siguiente parametros:
-domain-name, domain-name-servers, domain-search  Editamos el archivo:
-debian@croqueta:~$ sudo nano /etc/resolv.conf  domain croqueta.ernesto.gonzalonazareno.org search croqueta.ernesto.gonzalonazareno.org nameserver 192.168.202.2  127.0.1.1 croqueta.ernesto.gonzalonazareno.org croqueta.ernesto 10.0.0.9 tortilla.ernesto.gonzalonazareno.org tortilla.ernesto 10.0.0.11 salmorejo.ernesto.gonzalonazareno.org salmorejo.ernesto #127.0.0.1 localhost  debian@croqueta:~$ hostname croqueta debian@croqueta:~$ hostname -f croqueta.ernesto.gonzalonazareno.org  Tortilla: Editamos el fichero:
-ubuntu@tortilla:~$ sudo nano /etc/systemd/resolved.conf  [Resolve] DNS=192.168.202.2 #FallbackDNS= Domains=tortilla.ernesto.gonzalonazareno.org #LLMNR=no #MulticastDNS=no #DNSSEC=no #Cache=yes #DNSStubListener=yes  Reiniciamos y comprobamos el fichero /etc/resolv. &hellip; <a class="read-more" href="/hugo/post/servidorest2/">&raquo;</a>
+      Ante de realizar la instalación del servidor web vamos a configurar el nombre de nuestras máquinas, para ello:
+Piensa en un nombre de dominio, que sera un subdominio de gonzalonazareno.org, y que contenga tu nombre, por ejemplo: josedom.gonzalonazareno.org. Siguiendo con el ejemplo, los nombres de mis máquinas serán:
+ croqueta.josedom.gonzalonazareno.org tortilla.josedom.gonzalonazareno.org salmorejo.josedom.gonzalonazareno.org  Comprueba que los servidores tienen configurados el nuevo nombre de dominio de forma adecuada después de volver a reiniciar el servidor (o tomar una nueva configuración DHCP). &hellip; <a class="read-more" href="/hugo/post/servidorest2/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">

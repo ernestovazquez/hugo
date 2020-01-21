@@ -82,11 +82,9 @@
 	</header>
 	<section class="post-excerpt">
     <p>
-      Vamos a instalar phpMyAdmin:
-Extensión para conectar php con la base de datos:
-[centos@salmorejo ~]$ sudo dnf install -y php-json php-mbstring  Instalamos phpMyAdmin
-[centos@salmorejo ~]$ sudo wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ sudo tar -zxvf phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ mv phpMyAdmin-4.9.0.1-all-languages /usr/share/phpMyAdmin  Configuramos php:
-[centos@salmorejo ~]$ sudo cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php [centos@salmorejo ~]$ sudo mkdir -p /var/lib/phpmyadmin/tmp [centos@salmorejo ~]$ sudo chown -R nginx:nginx /var/lib/phpmyadmin [centos@salmorejo ~]$ sudo nano /usr/share/phpMyAdmin/config.inc.ph  Añadimos lo siguiente en el fichero: &hellip; <a class="read-more" href="/hugo/post/servidorest7/">&raquo;</a>
+      Queremos que diferentes usuarios, puedan gestionar una página web en vuestro servidor que esté gestionada por medio de un FTP. También se creará una base de datos para cada usuario.
+Por ejemplo, el usuario josedom quiere hacer una página cuyo nombre será servicios:
+ La página que vamos a crear será accesible en https://servicios.tunombre.gonzalonazareno.org. Se creará un usuario user_josedom, que tendrá una contraseña, para que accediendo a ftp.tunombre.gonzalonazareno.org, pueda gestionar los ficheros de su página web. &hellip; <a class="read-more" href="/hugo/post/servidorest7/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -102,9 +100,9 @@ Extensión para conectar php con la base de datos:
 	</header>
 	<section class="post-excerpt">
     <p>
-      Asignamos zonas :
-debian@croqueta:/etc/bind$ sudo nano named.conf.local  include &quot;/etc/bind/zones.rfc1918&quot;; zone &quot;ernesto.gonzalonazareno.org&quot;{ type master; file &quot;db.ernesto.gonzalonazareno.org&quot;; }; // Zona inversa 172.22 zone &quot;22.172.in-addr.arpa&quot; { type master; file &quot;db.172.22.rev&quot;; }; // Zona inversa 10.0 zone &quot;0.0.10.in-addr.arpa&quot; { type master; file &quot;db.10.0.rev&quot;; };  Zona directa :
-debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; BIND reverse data file for broadcast zone ; $TTL 604800 @ IN SOA croqueta.ernesto.gonzalonazareno.org. root.croqueta.ernesto.gonzalonazareno.org. ( 1 ; Serial 604800 ; Refresh 86400 ; Retry 2419200 ; Expire 604800 ) ; Negative Cache TTL ; @ IN NS croqueta. &hellip; <a class="read-more" href="/hugo/post/servidorest6/">&raquo;</a>
+      Vamos a instalar un servidor dns que nos permita gestionar la resolución directa e inversa de nuestros nombres. Cada alumno va a poseer un servidor dns con autoridad sobre un subdominio de nuestro dominio principal gonzalonazareno.org, que se llamará tu_nombre.gonzalonazareno.org.
+Indica al profesor el nombre de tu dominio para que pueda realizar la delegación en el servidor DNS principal papion-dns.
+El servidor DNS se va a instalar en el servidor1 (croqueta). &hellip; <a class="read-more" href="/hugo/post/servidorest6/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -120,12 +118,12 @@ debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; B
 	</header>
 	<section class="post-excerpt">
     <p>
-      Instalamos los repositorios de EPEL :
+      Actualiza salmorejo a CentOS 8 garantizando que todos los servicios previamente configurados sigan funcionando correctamente.
+Instalamos los repositorios de EPEL :
 [root@salmorejo centos]# yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm  Instalamos yum-utils :
 [root@salmorejo centos]# yum -y install rpmconf yum-utils [root@salmorejo centos]# rpmconf -a  Limpiamos paquetes innecesarios:
 [root@salmorejo centos]# package-cleanup --leaves [root@salmorejo centos]# package-cleanup --orphans  Instalamos el software DNF :
-[root@salmorejo centos]# yum -y install dnf  Eliminamos los paquetes manager:
-[root@salmorejo centos]# dnf -y remove yum yum-metadata-parser [root@salmorejo centos]# rm -Rf /etc/yum  Actualizamos el sistema con DNF: &hellip; <a class="read-more" href="/hugo/post/servidorest5/">&raquo;</a>
+[root@salmorejo centos]# yum -y install dnf  Eliminamos los paquetes manager: &hellip; <a class="read-more" href="/hugo/post/servidorest5/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">

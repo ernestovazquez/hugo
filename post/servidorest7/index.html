@@ -62,7 +62,22 @@
       </section>
     </header>
     <section class="post-content">
-      <p>Vamos a instalar <strong>phpMyAdmin</strong>:</p>
+      <p>Queremos que diferentes usuarios, puedan gestionar una página web en vuestro servidor que esté gestionada por medio de un FTP. También se creará una base de datos para cada usuario.</p>
+
+<p>Por ejemplo, el usuario josedom quiere hacer una página cuyo nombre será servicios:</p>
+
+<ul>
+<li>La página que vamos a crear será accesible en <a href="https://servicios.tunombre.gonzalonazareno.org">https://servicios.tunombre.gonzalonazareno.org</a>.</li>
+<li>Se creará un usuario user_josedom, que tendrá una contraseña, para que accediendo a ftp.tunombre.gonzalonazareno.org, pueda gestionar los ficheros de su página web.</li>
+<li>Se creará un usuario en la base de datos llamado myjosedom. Este usuario tendrá una contraseña distinta a la del usuario del servidor FTP.</li>
+<li>Se creará una bases de datos para el usuario anteriormente creado. Para que los usuarios gestionen su base de datos se puede instalar la aplicación phpmyadmin a la que se accederá con la URL <a href="https://sql.tunombre.gonzalonmazareno.org">https://sql.tunombre.gonzalonmazareno.org</a>.</li>
+</ul>
+
+<p>Tarea: Configura manualmente los distintos servicios para crear un nuevo usuario que gestione su propia página web y tenga una base de datos a su disposición. Instala un CMS.
+Mejora 1: Modifica la configuración del sistema para que se usen usuarios virtuales para el acceso por FTP, cuya información este guardada en vuestro directorio ldap.
+Mejora 2: Realiza un script que automatice la creación/borrado de nuevos usuarios en el hosting.</p>
+
+<p>Vamos a instalar <strong>phpMyAdmin</strong>:</p>
 
 <p>Extensión para conectar php con la <strong>base de datos</strong>:</p>
 

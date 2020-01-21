@@ -65,36 +65,13 @@
 
 <nav class="pagination" role="navigation">
     
-    <span class="page-number">Page 1 of 4</span>
+    <span class="page-number">Page 1 of 3</span>
     
         <a class="older-posts" href="/hugo/page/2/">Older Posts &rarr;</a>
     
 </nav>
 
     </div>
-		
-      <article class="post">
-	<header class="post-header">
-    
-		<h2 class="post-title"><a href="/hugo/post/markdown/">Uso de Markdown</a></h2>
-	</header>
-	<section class="post-excerpt">
-    <p>
-      En este apartado descubrirás la sintaxis Markdown y los conceptos básicos para escribir utilizando este lenguaje de marcado.
-Este método te permitirá añadir formatos tales como negritas, cursivas o enlaces, utilizando simplemente texto plano, lo que hará de tu escritura algo más simple y eficiente al evitar distracciones.
-Markdown Sintaxis básicos para poder utilizar Markdown.
-Sintaxis básica:
-## Título
-Título ### Subtítulo
-Subtítulo - Listado por puntos
- Listado por puntos  ~~~ &hellip; <a class="read-more" href="/hugo/post/markdown/">&raquo;</a>
-    </p>
-	</section>
-	<footer class="post-meta">
-    <time class="post-date">January 21, 2020</time>
-	</footer>
-</article>
-
 		
       <article class="post">
 	<header class="post-header">
@@ -136,11 +113,31 @@ Instalamos Mezzanine con:
 </article>
 
 		
+      <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/hugo/post/servidorest7/">T7. Hosting.</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Vamos a instalar phpMyAdmin:
+Extensión para conectar php con la base de datos:
+[centos@salmorejo ~]$ sudo dnf install -y php-json php-mbstring  Instalamos phpMyAdmin
+[centos@salmorejo ~]$ sudo wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ sudo tar -zxvf phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ mv phpMyAdmin-4.9.0.1-all-languages /usr/share/phpMyAdmin  Configuramos php:
+[centos@salmorejo ~]$ sudo cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php [centos@salmorejo ~]$ sudo mkdir -p /var/lib/phpmyadmin/tmp [centos@salmorejo ~]$ sudo chown -R nginx:nginx /var/lib/phpmyadmin [centos@salmorejo ~]$ sudo nano /usr/share/phpMyAdmin/config.inc.ph  Añadimos lo siguiente en el fichero: &hellip; <a class="read-more" href="/hugo/post/servidorest7/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">December 11, 2019</time>
+	</footer>
+</article>
+
+		
     
 
 <nav class="pagination" role="navigation">
     
-    <span class="page-number">Page 1 of 4</span>
+    <span class="page-number">Page 1 of 3</span>
     
         <a class="older-posts" href="/hugo/page/2/">Older Posts &rarr;</a>
     

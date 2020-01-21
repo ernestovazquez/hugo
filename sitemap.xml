@@ -3,69 +3,69 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/blog/post/travis/</loc>
+    <loc>/hugo/post/travis/</loc>
     <lastmod>2019-12-15T15:29:57+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/post/servidorest8/</loc>
+    <loc>/hugo/post/servidorest8/</loc>
     <lastmod>2019-12-11T15:29:57+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/post/servidorest7/</loc>
+    <loc>/hugo/post/servidorest7/</loc>
     <lastmod>2019-12-11T14:29:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/post/servidorest6/</loc>
+    <loc>/hugo/post/servidorest6/</loc>
     <lastmod>2019-11-19T13:15:31+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/post/servidorest5/</loc>
+    <loc>/hugo/post/servidorest5/</loc>
     <lastmod>2019-11-11T13:10:28+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/post/oraclevspostgresql/</loc>
+    <loc>/hugo/post/oraclevspostgresql/</loc>
     <lastmod>2019-11-09T18:38:43+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/post/servidorest3/</loc>
+    <loc>/hugo/post/servidorest3/</loc>
     <lastmod>2019-10-30T12:20:59+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/post/servidorest2/</loc>
+    <loc>/hugo/post/servidorest2/</loc>
     <lastmod>2019-10-29T10:49:14+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/post/servidorest1/</loc>
+    <loc>/hugo/post/servidorest1/</loc>
     <lastmod>2019-10-13T10:36:33+01:00</lastmod>
   </url>
   
   <url>
-    <loc>/blog/categories/</loc>
+    <loc>/hugo/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/</loc>
+    <loc>/hugo/</loc>
     <lastmod>2019-12-15T15:29:57+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/post/</loc>
+    <loc>/hugo/post/</loc>
     <lastmod>2019-12-15T15:29:57+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/blog/tags/</loc>
+    <loc>/hugo/tags/</loc>
     <priority>0</priority>
   </url>
   

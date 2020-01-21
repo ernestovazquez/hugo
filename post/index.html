@@ -13,19 +13,19 @@
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="alternate" type="application/rss&#43;xml" href="/blog/post/index.xml">
+    <link rel="alternate" type="application/rss&#43;xml" href="/hugo/post/index.xml">
     
-    <link rel="stylesheet" type="text/css" href="/blog/assets/css/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="/blog/assets/css/icons.css" />
-    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/screen.css" />
     
     <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
     
 
     
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="/blog/assets/bigfoot/dist/bigfoot.js"></script>
-    <link rel="stylesheet" type="text/css" href="/blog/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript" src="/hugo/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/hugo/assets/bigfoot/dist/bigfoot-number.css" />
     <script type="text/javascript">
         $.bigfoot();
     </script>
@@ -37,7 +37,7 @@
         <header class="main-header">
 	<div class="main-header-content">
 		<h1 class="blog-title">
-			<a href="/blog/">
+			<a href="/hugo/">
 				
            De Rookie a Leyenda
 				
@@ -73,13 +73,13 @@
   <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/blog/post/travis/">Introducción a la integración continua</a></h2>
+		<h2 class="post-title"><a href="/hugo/post/travis/">Introducción a la integración continua</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
       Vamos a crear el repositorio donde vamos a trabajar. También vamos a crear la rama gh-pages, donde estarán los ficheros generados por Hugo.
 Fichero de configuración .travis.yml .
-ernesto@honda:~/blog$ sudo nano .travis.yml install: - wget https://github.com/gohugoio/hugo/releases/download/v0.53/hugo_0.53_Linux-64bit.deb &amp;&amp; sudo dpkg -i hugo*.deb - git clone https://github.com/ernestovazquez/blog.git script: - rm hugo*.deb - hugo new site sitio - mkdir -p sitio/content/post - mv blog/content/post/* sitio/content/post - mv blog/config.toml sitio/ - cd sitio/themes &amp;&amp; git clone https://github. &hellip; <a class="read-more" href="/blog/post/travis/">&raquo;</a>
+ernesto@honda:~/blog$ sudo nano .travis.yml install: - wget https://github.com/gohugoio/hugo/releases/download/v0.53/hugo_0.53_Linux-64bit.deb &amp;&amp; sudo dpkg -i hugo*.deb - git clone https://github.com/ernestovazquez/blog.git script: - rm hugo*.deb - hugo new site sitio - mkdir -p sitio/content/post - mv blog/content/post/* sitio/content/post - mv blog/config.toml sitio/ - cd sitio/themes &amp;&amp; git clone https://github. &hellip; <a class="read-more" href="/hugo/post/travis/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -91,7 +91,7 @@ ernesto@honda:~/blog$ sudo nano .travis.yml install: - wget https://github.com/g
   <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/blog/post/servidorest8/">T8. Instalación de aplicación python.</a></h2>
+		<h2 class="post-title"><a href="/hugo/post/servidorest8/">T8. Instalación de aplicación python.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
@@ -101,7 +101,7 @@ Instalamos Mezzanine con:
 (produccionmazzine) ernesto@honda:~/Documentos$ mezzanine-project mezzanineernesto  Creamos la base de datos:
 (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py createdb  Probamos si funciona en local :
 (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py runserver  Subimos el directorio a nuestro GitHub
-(produccionmazzine) ernesto@honda:~/Documentos$ git clone git@github.com:ernestovazquez/mezzanineernesto.git (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git add --all (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git commit -am &quot;produccion foto&quot; (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git push  Configuración contenido estático. &hellip; <a class="read-more" href="/blog/post/servidorest8/">&raquo;</a>
+(produccionmazzine) ernesto@honda:~/Documentos$ git clone git@github.com:ernestovazquez/mezzanineernesto.git (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git add --all (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git commit -am &quot;produccion foto&quot; (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git push  Configuración contenido estático. &hellip; <a class="read-more" href="/hugo/post/servidorest8/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -113,7 +113,7 @@ Instalamos Mezzanine con:
   <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/blog/post/servidorest7/">T7. Hosting.</a></h2>
+		<h2 class="post-title"><a href="/hugo/post/servidorest7/">T7. Hosting.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
@@ -121,7 +121,7 @@ Instalamos Mezzanine con:
 Extensión para conectar php con la base de datos:
 [centos@salmorejo ~]$ sudo dnf install -y php-json php-mbstring  Instalamos phpMyAdmin
 [centos@salmorejo ~]$ sudo wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ sudo tar -zxvf phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ mv phpMyAdmin-4.9.0.1-all-languages /usr/share/phpMyAdmin  Configuramos php:
-[centos@salmorejo ~]$ sudo cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php [centos@salmorejo ~]$ sudo mkdir -p /var/lib/phpmyadmin/tmp [centos@salmorejo ~]$ sudo chown -R nginx:nginx /var/lib/phpmyadmin [centos@salmorejo ~]$ sudo nano /usr/share/phpMyAdmin/config.inc.ph  Añadimos lo siguiente en el fichero: &hellip; <a class="read-more" href="/blog/post/servidorest7/">&raquo;</a>
+[centos@salmorejo ~]$ sudo cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php [centos@salmorejo ~]$ sudo mkdir -p /var/lib/phpmyadmin/tmp [centos@salmorejo ~]$ sudo chown -R nginx:nginx /var/lib/phpmyadmin [centos@salmorejo ~]$ sudo nano /usr/share/phpMyAdmin/config.inc.ph  Añadimos lo siguiente en el fichero: &hellip; <a class="read-more" href="/hugo/post/servidorest7/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -133,13 +133,13 @@ Extensión para conectar php con la base de datos:
   <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/blog/post/servidorest6/">T6. DNS.</a></h2>
+		<h2 class="post-title"><a href="/hugo/post/servidorest6/">T6. DNS.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
       Asignamos zonas :
 debian@croqueta:/etc/bind$ sudo nano named.conf.local  include &quot;/etc/bind/zones.rfc1918&quot;; zone &quot;ernesto.gonzalonazareno.org&quot;{ type master; file &quot;db.ernesto.gonzalonazareno.org&quot;; }; // Zona inversa 172.22 zone &quot;22.172.in-addr.arpa&quot; { type master; file &quot;db.172.22.rev&quot;; }; // Zona inversa 10.0 zone &quot;0.0.10.in-addr.arpa&quot; { type master; file &quot;db.10.0.rev&quot;; };  Zona directa :
-debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; BIND reverse data file for broadcast zone ; $TTL 604800 @ IN SOA croqueta.ernesto.gonzalonazareno.org. root.croqueta.ernesto.gonzalonazareno.org. ( 1 ; Serial 604800 ; Refresh 86400 ; Retry 2419200 ; Expire 604800 ) ; Negative Cache TTL ; @ IN NS croqueta. &hellip; <a class="read-more" href="/blog/post/servidorest6/">&raquo;</a>
+debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; BIND reverse data file for broadcast zone ; $TTL 604800 @ IN SOA croqueta.ernesto.gonzalonazareno.org. root.croqueta.ernesto.gonzalonazareno.org. ( 1 ; Serial 604800 ; Refresh 86400 ; Retry 2419200 ; Expire 604800 ) ; Negative Cache TTL ; @ IN NS croqueta. &hellip; <a class="read-more" href="/hugo/post/servidorest6/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -151,7 +151,7 @@ debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; B
   <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/blog/post/servidorest5/">T5. Actualización a CentOS 8.</a></h2>
+		<h2 class="post-title"><a href="/hugo/post/servidorest5/">T5. Actualización a CentOS 8.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
@@ -160,7 +160,7 @@ debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; B
 [root@salmorejo centos]# yum -y install rpmconf yum-utils [root@salmorejo centos]# rpmconf -a  Limpiamos paquetes innecesarios:
 [root@salmorejo centos]# package-cleanup --leaves [root@salmorejo centos]# package-cleanup --orphans  Instalamos el software DNF :
 [root@salmorejo centos]# yum -y install dnf  Eliminamos los paquetes manager:
-[root@salmorejo centos]# dnf -y remove yum yum-metadata-parser [root@salmorejo centos]# rm -Rf /etc/yum  Actualizamos el sistema con DNF: &hellip; <a class="read-more" href="/blog/post/servidorest5/">&raquo;</a>
+[root@salmorejo centos]# dnf -y remove yum yum-metadata-parser [root@salmorejo centos]# rm -Rf /etc/yum  Actualizamos el sistema con DNF: &hellip; <a class="read-more" href="/hugo/post/servidorest5/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -172,12 +172,12 @@ debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; B
   <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/blog/post/oraclevspostgresql/">PL/SQL vs PL/PGSQL</a></h2>
+		<h2 class="post-title"><a href="/hugo/post/oraclevspostgresql/">PL/SQL vs PL/PGSQL</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
       Vamos a ver las principales diferencias entre estos dos gestores. Diferencias en cursores: Recorreremos los cursores de formas diferentes en los dos gestores.
- PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir. &hellip; <a class="read-more" href="/blog/post/oraclevspostgresql/">&raquo;</a>
+ PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir. &hellip; <a class="read-more" href="/hugo/post/oraclevspostgresql/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -189,13 +189,13 @@ debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; B
   <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/blog/post/servidorest3/">T3. Instalación aplicaciones web.</a></h2>
+		<h2 class="post-title"><a href="/hugo/post/servidorest3/">T3. Instalación aplicaciones web.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
       Creamos la base de datos llamada wordpress
 root@tortilla:/home/ubuntu# mysql -u root  MariaDB [(none)]&gt; CREATE DATABASE wordpress; MariaDB [(none)]&gt; use wordpress; MariaDB [wordpress]&gt; GRANT ALL PRIVILEGES ON *.* TO 'salmorejo'@'10.0.0.7' IDENTIFIED BY 'salmorejo' WITH GRANT OPTION;  Nos conectamos remotamente:
-[centos@salmorejo ~]$ mysql --host=10.0.0.14 -u salmorejo -p wordpress Enter password: Welcome to the MariaDB monitor. Commands end with ; or \g. Your MariaDB connection id is 39 Server version: 10.1.41-MariaDB-0ubuntu0.18.04.1 Ubuntu 18. &hellip; <a class="read-more" href="/blog/post/servidorest3/">&raquo;</a>
+[centos@salmorejo ~]$ mysql --host=10.0.0.14 -u salmorejo -p wordpress Enter password: Welcome to the MariaDB monitor. Commands end with ; or \g. Your MariaDB connection id is 39 Server version: 10.1.41-MariaDB-0ubuntu0.18.04.1 Ubuntu 18. &hellip; <a class="read-more" href="/hugo/post/servidorest3/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -207,7 +207,7 @@ root@tortilla:/home/ubuntu# mysql -u root  MariaDB [(none)]&gt; CREATE DATABASE 
   <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/blog/post/servidorest2/">T2. Instalación de un servidor Web.</a></h2>
+		<h2 class="post-title"><a href="/hugo/post/servidorest2/">T2. Instalación de un servidor Web.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
@@ -215,7 +215,7 @@ root@tortilla:/home/ubuntu# mysql -u root  MariaDB [(none)]&gt; CREATE DATABASE 
 debian@croqueta:~$ sudo nano /etc/dhcp/dhclient.conf  Y quitamos los siguiente parametros:
 domain-name, domain-name-servers, domain-search  Editamos el archivo:
 debian@croqueta:~$ sudo nano /etc/resolv.conf  domain croqueta.ernesto.gonzalonazareno.org search croqueta.ernesto.gonzalonazareno.org nameserver 192.168.202.2  127.0.1.1 croqueta.ernesto.gonzalonazareno.org croqueta.ernesto 10.0.0.9 tortilla.ernesto.gonzalonazareno.org tortilla.ernesto 10.0.0.11 salmorejo.ernesto.gonzalonazareno.org salmorejo.ernesto #127.0.0.1 localhost  debian@croqueta:~$ hostname croqueta debian@croqueta:~$ hostname -f croqueta.ernesto.gonzalonazareno.org  Tortilla: Editamos el fichero:
-ubuntu@tortilla:~$ sudo nano /etc/systemd/resolved.conf  [Resolve] DNS=192.168.202.2 #FallbackDNS= Domains=tortilla.ernesto.gonzalonazareno.org #LLMNR=no #MulticastDNS=no #DNSSEC=no #Cache=yes #DNSStubListener=yes  Reiniciamos y comprobamos el fichero /etc/resolv. &hellip; <a class="read-more" href="/blog/post/servidorest2/">&raquo;</a>
+ubuntu@tortilla:~$ sudo nano /etc/systemd/resolved.conf  [Resolve] DNS=192.168.202.2 #FallbackDNS= Domains=tortilla.ernesto.gonzalonazareno.org #LLMNR=no #MulticastDNS=no #DNSSEC=no #Cache=yes #DNSStubListener=yes  Reiniciamos y comprobamos el fichero /etc/resolv. &hellip; <a class="read-more" href="/hugo/post/servidorest2/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -227,7 +227,7 @@ ubuntu@tortilla:~$ sudo nano /etc/systemd/resolved.conf  [Resolve] DNS=192.168.2
   <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/blog/post/servidorest1/">T1. Instalación de los servidores.</a></h2>
+		<h2 class="post-title"><a href="/hugo/post/servidorest1/">T1. Instalación de los servidores.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
@@ -236,7 +236,7 @@ Editamos el fichero /etc/hostname
 sudo nano /etc/hostname croqueta.gonzalonazareno.org croqueta  Ahora solo falta cambiar nuestro ficheros hosts.
 sudo nano /etc/hosts 127.0.0.1 localhost 127.0.1.1 croqueta.gonzalonazareno.org croqueta  Creamos el usuario profesor que pueda utilizar sudo sin contraseña.
 Abre el archivo /etc/sudoers con el comando:
-sudo visudo profesor ALL=(ALL) NOPASSWD:ALL  Este comando comprueba la edición y si hay un error de sintaxis no guardará los cambios. &hellip; <a class="read-more" href="/blog/post/servidorest1/">&raquo;</a>
+sudo visudo profesor ALL=(ALL) NOPASSWD:ALL  Este comando comprueba la edición y si hay un error de sintaxis no guardará los cambios. &hellip; <a class="read-more" href="/hugo/post/servidorest1/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">

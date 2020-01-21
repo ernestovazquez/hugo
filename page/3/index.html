@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<meta name="generator" content="Hugo 0.53" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="alternate" type="application/rss&#43;xml" href="/blog/index.xml">
+    
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/blog/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/blog/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/blog/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+	<main class="content" role="main">
+    
+    
+      
+    
+    
+    <div class="extra-pagination">
+      
+
+<nav class="pagination" role="navigation">
+    
+        <a class="newer-posts" href="/blog/page/2/">&larr; Newer Posts</a>
+    
+    <span class="page-number">Page 3 of 3</span>
+    
+</nav>
+
+    </div>
+		
+      <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/blog/post/servidorest3/">T3. Instalación aplicaciones web.</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Creamos la base de datos llamada wordpress
+root@tortilla:/home/ubuntu# mysql -u root  MariaDB [(none)]&gt; CREATE DATABASE wordpress; MariaDB [(none)]&gt; use wordpress; MariaDB [wordpress]&gt; GRANT ALL PRIVILEGES ON *.* TO 'salmorejo'@'10.0.0.7' IDENTIFIED BY 'salmorejo' WITH GRANT OPTION;  Nos conectamos remotamente:
+[centos@salmorejo ~]$ mysql --host=10.0.0.14 -u salmorejo -p wordpress Enter password: Welcome to the MariaDB monitor. Commands end with ; or \g. Your MariaDB connection id is 39 Server version: 10.1.41-MariaDB-0ubuntu0.18.04.1 Ubuntu 18. &hellip; <a class="read-more" href="/blog/post/servidorest3/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">October 30, 2019</time>
+	</footer>
+</article>
+
+		
+      <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/blog/post/servidorest2/">T2. Instalación de un servidor Web.</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Croqueta: Entramos en
+debian@croqueta:~$ sudo nano /etc/dhcp/dhclient.conf  Y quitamos los siguiente parametros:
+domain-name, domain-name-servers, domain-search  Editamos el archivo:
+debian@croqueta:~$ sudo nano /etc/resolv.conf  domain croqueta.ernesto.gonzalonazareno.org search croqueta.ernesto.gonzalonazareno.org nameserver 192.168.202.2  127.0.1.1 croqueta.ernesto.gonzalonazareno.org croqueta.ernesto 10.0.0.9 tortilla.ernesto.gonzalonazareno.org tortilla.ernesto 10.0.0.11 salmorejo.ernesto.gonzalonazareno.org salmorejo.ernesto #127.0.0.1 localhost  debian@croqueta:~$ hostname croqueta debian@croqueta:~$ hostname -f croqueta.ernesto.gonzalonazareno.org  Tortilla: Editamos el fichero:
+ubuntu@tortilla:~$ sudo nano /etc/systemd/resolved.conf  [Resolve] DNS=192.168.202.2 #FallbackDNS= Domains=tortilla.ernesto.gonzalonazareno.org #LLMNR=no #MulticastDNS=no #DNSSEC=no #Cache=yes #DNSStubListener=yes  Reiniciamos y comprobamos el fichero /etc/resolv. &hellip; <a class="read-more" href="/blog/post/servidorest2/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">October 29, 2019</time>
+	</footer>
+</article>
+
+		
+      <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/blog/post/servidorest1/">T1. Instalación de los servidores.</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Croqueta: 172.22.200.111 Vamos a cambiar el nombre de dominio.
+Editamos el fichero /etc/hostname
+sudo nano /etc/hostname croqueta.gonzalonazareno.org croqueta  Ahora solo falta cambiar nuestro ficheros hosts.
+sudo nano /etc/hosts 127.0.0.1 localhost 127.0.1.1 croqueta.gonzalonazareno.org croqueta  Creamos el usuario profesor que pueda utilizar sudo sin contraseña.
+Abre el archivo /etc/sudoers con el comando:
+sudo visudo profesor ALL=(ALL) NOPASSWD:ALL  Este comando comprueba la edición y si hay un error de sintaxis no guardará los cambios. &hellip; <a class="read-more" href="/blog/post/servidorest1/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">October 13, 2019</time>
+	</footer>
+</article>
+
+		
+    
+
+<nav class="pagination" role="navigation">
+    
+        <a class="newer-posts" href="/blog/page/2/">&larr; Newer Posts</a>
+    
+    <span class="page-number">Page 3 of 3</span>
+    
+</nav>
+
+	</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>De Rookie a Leyenda</title>
+    <link>/blog/</link>
+    <description>Recent content on De Rookie a Leyenda</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 15 Dec 2019 15:29:57 +0100</lastBuildDate>
+    
+	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introducción a la integración continua</title>
+      <link>/blog/post/travis/</link>
+      <pubDate>Sun, 15 Dec 2019 15:29:57 +0100</pubDate>
+      
+      <guid>/blog/post/travis/</guid>
+      <description>Vamos a crear el repositorio donde vamos a trabajar. También vamos a crear la rama gh-pages, donde estarán los ficheros generados por Hugo.
+Fichero de configuración .travis.yml .
+ernesto@honda:~/blog$ sudo nano .travis.yml install: - wget https://github.com/gohugoio/hugo/releases/download/v0.53/hugo_0.53_Linux-64bit.deb &amp;amp;&amp;amp; sudo dpkg -i hugo*.deb - git clone https://github.com/ernestovazquez/blog.git script: - rm hugo*.deb - hugo new site sitio - mkdir -p sitio/content/post - mv blog/content/post/* sitio/content/post - mv blog/config.toml sitio/ - cd sitio/themes &amp;amp;&amp;amp; git clone https://github.</description>
+    </item>
+    
+    <item>
+      <title>T8. Instalación de aplicación python.</title>
+      <link>/blog/post/servidorest8/</link>
+      <pubDate>Wed, 11 Dec 2019 15:29:57 +0100</pubDate>
+      
+      <guid>/blog/post/servidorest8/</guid>
+      <description>Creamos el entorno virtual en nuestra máquina.
+Instalamos Mezzanine con:
+(produccionmazzine) ernesto@honda:~/Documentos$ pip install mezzanine  Creamos el proyecto:
+(produccionmazzine) ernesto@honda:~/Documentos$ mezzanine-project mezzanineernesto  Creamos la base de datos:
+(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py createdb  Probamos si funciona en local :
+(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py runserver  Subimos el directorio a nuestro GitHub
+(produccionmazzine) ernesto@honda:~/Documentos$ git clone git@github.com:ernestovazquez/mezzanineernesto.git (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git add --all (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git commit -am &amp;quot;produccion foto&amp;quot; (produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git push  Configuración contenido estático.</description>
+    </item>
+    
+    <item>
+      <title>T7. Hosting.</title>
+      <link>/blog/post/servidorest7/</link>
+      <pubDate>Wed, 11 Dec 2019 14:29:52 +0100</pubDate>
+      
+      <guid>/blog/post/servidorest7/</guid>
+      <description>Vamos a instalar phpMyAdmin:
+Extensión para conectar php con la base de datos:
+[centos@salmorejo ~]$ sudo dnf install -y php-json php-mbstring  Instalamos phpMyAdmin
+[centos@salmorejo ~]$ sudo wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ sudo tar -zxvf phpMyAdmin-4.9.0.1-all-languages.tar.gz [centos@salmorejo ~]$ mv phpMyAdmin-4.9.0.1-all-languages /usr/share/phpMyAdmin  Configuramos php:
+[centos@salmorejo ~]$ sudo cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php [centos@salmorejo ~]$ sudo mkdir -p /var/lib/phpmyadmin/tmp [centos@salmorejo ~]$ sudo chown -R nginx:nginx /var/lib/phpmyadmin [centos@salmorejo ~]$ sudo nano /usr/share/phpMyAdmin/config.inc.ph  Añadimos lo siguiente en el fichero:</description>
+    </item>
+    
+    <item>
+      <title>T6. DNS.</title>
+      <link>/blog/post/servidorest6/</link>
+      <pubDate>Tue, 19 Nov 2019 13:15:31 +0100</pubDate>
+      
+      <guid>/blog/post/servidorest6/</guid>
+      <description>Asignamos zonas :
+debian@croqueta:/etc/bind$ sudo nano named.conf.local  include &amp;quot;/etc/bind/zones.rfc1918&amp;quot;; zone &amp;quot;ernesto.gonzalonazareno.org&amp;quot;{ type master; file &amp;quot;db.ernesto.gonzalonazareno.org&amp;quot;; }; // Zona inversa 172.22 zone &amp;quot;22.172.in-addr.arpa&amp;quot; { type master; file &amp;quot;db.172.22.rev&amp;quot;; }; // Zona inversa 10.0 zone &amp;quot;0.0.10.in-addr.arpa&amp;quot; { type master; file &amp;quot;db.10.0.rev&amp;quot;; };  Zona directa :
+debian@croqueta:/var/cache/bind$ sudo nano db.ernesto.gonzalonazareno.org  ; ; BIND reverse data file for broadcast zone ; $TTL 604800 @ IN SOA croqueta.ernesto.gonzalonazareno.org. root.croqueta.ernesto.gonzalonazareno.org. ( 1 ; Serial 604800 ; Refresh 86400 ; Retry 2419200 ; Expire 604800 ) ; Negative Cache TTL ; @ IN NS croqueta.</description>
+    </item>
+    
+    <item>
+      <title>T5. Actualización a CentOS 8.</title>
+      <link>/blog/post/servidorest5/</link>
+      <pubDate>Mon, 11 Nov 2019 13:10:28 +0100</pubDate>
+      
+      <guid>/blog/post/servidorest5/</guid>
+      <description>Instalamos los repositorios de EPEL :
+[root@salmorejo centos]# yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm  Instalamos yum-utils :
+[root@salmorejo centos]# yum -y install rpmconf yum-utils [root@salmorejo centos]# rpmconf -a  Limpiamos paquetes innecesarios:
+[root@salmorejo centos]# package-cleanup --leaves [root@salmorejo centos]# package-cleanup --orphans  Instalamos el software DNF :
+[root@salmorejo centos]# yum -y install dnf  Eliminamos los paquetes manager:
+[root@salmorejo centos]# dnf -y remove yum yum-metadata-parser [root@salmorejo centos]# rm -Rf /etc/yum  Actualizamos el sistema con DNF:</description>
+    </item>
+    
+    <item>
+      <title>PL/SQL vs PL/PGSQL</title>
+      <link>/blog/post/oraclevspostgresql/</link>
+      <pubDate>Sat, 09 Nov 2019 18:38:43 +0100</pubDate>
+      
+      <guid>/blog/post/oraclevspostgresql/</guid>
+      <description>Vamos a ver las principales diferencias entre estos dos gestores. Diferencias en cursores: Recorreremos los cursores de formas diferentes en los dos gestores.
+ PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir.</description>
+    </item>
+    
+    <item>
+      <title>T3. Instalación aplicaciones web.</title>
+      <link>/blog/post/servidorest3/</link>
+      <pubDate>Wed, 30 Oct 2019 12:20:59 +0100</pubDate>
+      
+      <guid>/blog/post/servidorest3/</guid>
+      <description>Creamos la base de datos llamada wordpress
+root@tortilla:/home/ubuntu# mysql -u root  MariaDB [(none)]&amp;gt; CREATE DATABASE wordpress; MariaDB [(none)]&amp;gt; use wordpress; MariaDB [wordpress]&amp;gt; GRANT ALL PRIVILEGES ON *.* TO &#39;salmorejo&#39;@&#39;10.0.0.7&#39; IDENTIFIED BY &#39;salmorejo&#39; WITH GRANT OPTION;  Nos conectamos remotamente:
+[centos@salmorejo ~]$ mysql --host=10.0.0.14 -u salmorejo -p wordpress Enter password: Welcome to the MariaDB monitor. Commands end with ; or \g. Your MariaDB connection id is 39 Server version: 10.1.41-MariaDB-0ubuntu0.18.04.1 Ubuntu 18.</description>
+    </item>
+    
+    <item>
+      <title>T2. Instalación de un servidor Web.</title>
+      <link>/blog/post/servidorest2/</link>
+      <pubDate>Tue, 29 Oct 2019 10:49:14 +0100</pubDate>
+      
+      <guid>/blog/post/servidorest2/</guid>
+      <description>Croqueta: Entramos en
+debian@croqueta:~$ sudo nano /etc/dhcp/dhclient.conf  Y quitamos los siguiente parametros:
+domain-name, domain-name-servers, domain-search  Editamos el archivo:
+debian@croqueta:~$ sudo nano /etc/resolv.conf  domain croqueta.ernesto.gonzalonazareno.org search croqueta.ernesto.gonzalonazareno.org nameserver 192.168.202.2  127.0.1.1 croqueta.ernesto.gonzalonazareno.org croqueta.ernesto 10.0.0.9 tortilla.ernesto.gonzalonazareno.org tortilla.ernesto 10.0.0.11 salmorejo.ernesto.gonzalonazareno.org salmorejo.ernesto #127.0.0.1 localhost  debian@croqueta:~$ hostname croqueta debian@croqueta:~$ hostname -f croqueta.ernesto.gonzalonazareno.org  Tortilla: Editamos el fichero:
+ubuntu@tortilla:~$ sudo nano /etc/systemd/resolved.conf  [Resolve] DNS=192.168.202.2 #FallbackDNS= Domains=tortilla.ernesto.gonzalonazareno.org #LLMNR=no #MulticastDNS=no #DNSSEC=no #Cache=yes #DNSStubListener=yes  Reiniciamos y comprobamos el fichero /etc/resolv.</description>
+    </item>
+    
+    <item>
+      <title>T1. Instalación de los servidores.</title>
+      <link>/blog/post/servidorest1/</link>
+      <pubDate>Sun, 13 Oct 2019 10:36:33 +0100</pubDate>
+      
+      <guid>/blog/post/servidorest1/</guid>
+      <description>Croqueta: 172.22.200.111 Vamos a cambiar el nombre de dominio.
+Editamos el fichero /etc/hostname
+sudo nano /etc/hostname croqueta.gonzalonazareno.org croqueta  Ahora solo falta cambiar nuestro ficheros hosts.
+sudo nano /etc/hosts 127.0.0.1 localhost 127.0.1.1 croqueta.gonzalonazareno.org croqueta  Creamos el usuario profesor que pueda utilizar sudo sin contraseña.
+Abre el archivo /etc/sudoers con el comando:
+sudo visudo profesor ALL=(ALL) NOPASSWD:ALL  Este comando comprueba la edición y si hay un error de sintaxis no guardará los cambios.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      T1. Instalación de los servidores. - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/blog/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/blog/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/blog/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title">T1. Instalación de los servidores.</h2>
+      <section class="post-meta">
+        <time class="post-date">October 13, 2019</time>
+      </section>
+    </header>
+    <section class="post-content">
+      
+
+<h4 id="croqueta-172-22-200-111"><strong>Croqueta: 172.22.200.111</strong></h4>
+
+<p>Vamos a cambiar el nombre de dominio.</p>
+
+<p>Editamos el fichero <em>/etc/hostname</em></p>
+
+<pre><code>sudo nano /etc/hostname
+
+croqueta.gonzalonazareno.org croqueta
+</code></pre>
+
+<p>Ahora solo falta cambiar nuestro ficheros hosts.</p>
+
+<pre><code>sudo nano /etc/hosts
+
+127.0.0.1 localhost
+127.0.1.1 croqueta.gonzalonazareno.org croqueta
+</code></pre>
+
+<p>Creamos el usuario <em>profesor</em> que pueda utilizar sudo sin contraseña.</p>
+
+<p>Abre el archivo /etc/sudoers con el comando:</p>
+
+<pre><code>sudo visudo
+
+profesor  ALL=(ALL) NOPASSWD:ALL
+</code></pre>
+
+<p>Este comando comprueba la edición y si hay un error de sintaxis no guardará los cambios. Si abres el archivo con el editor de texto, un error de sintaxis hará que se pierda el acceso a sudo.</p>
+
+<p>Añadimos las claves públicas de Alberto y José Domingo</p>
+
+<pre><code>root@croqueta:/home/debian/.ssh# nano authorized_keys
+</code></pre>
+
+<p>Añade temporalmente la <em>resolución estática</em> de todos los nodos</p>
+
+<pre><code>debian@croqueta:~$ sudo nano /etc/hosts
+
+10.0.0.11 salmorejo.gonzalonazareno.org salmorejo
+10.0.0.9 tortilla.gonzalonazareno.org tortilla
+</code></pre>
+
+<p>Por ultimo actualizamos la máquina</p>
+
+<h4 id="tortilla-172-22-200-21"><strong>Tortilla: 172.22.200.21</strong></h4>
+
+<p>Vamos a cambiar el nombre de dominio.</p>
+
+<p>Editamos el fichero <em>/etc/hostname</em></p>
+
+<pre><code>sudo nano /etc/hostname
+
+tortilla.gonzalonazareno.org tortilla
+</code></pre>
+
+<p>Ahora solo falta cambiar nuestro ficheros hosts.</p>
+
+<pre><code>sudo nano /etc/hosts
+
+127.0.1.1 tortilla.gonzalonazareno.org tortilla
+</code></pre>
+
+<p>Creamos el usuario <em>profesor</em> que pueda utilizar sudo sin contraseña.</p>
+
+<p>Abre el archivo <em>/etc/sudoers</em>  con el comando:</p>
+
+<pre><code>sudo nano /etc/sudoers
+
+profesor  ALL=(ALL) NOPASSWD:ALL
+</code></pre>
+
+<p>Añadimos las claves públicas de Alberto y José Domingo</p>
+
+<pre><code>root@tortilla:/home/ubuntu/.ssh# nano authorized_keys
+</code></pre>
+
+<p>Añade temporalmente la <em>resolución estática</em> de todos los nodos</p>
+
+<pre><code>ubuntu@tortilla:~$ sudo nano /etc/hosts
+
+10.0.0.3 croqueta.gonzalonazareno.org croqueta
+10.0.0.11 salmorejo.gonzalonazareno.org salmorejo
+</code></pre>
+
+<p>Por ultimo actualizamos la máquina</p>
+
+<h4 id="salmorejo-172-22-200-109"><strong>Salmorejo: 172.22.200.109</strong></h4>
+
+<pre><code>[centos@salmorejo ~]$ hostnamectl set-hostname salmorejo.gonzalonazareno.org
+</code></pre>
+
+<p>Creamos el usuario <em>profesor</em> que pueda utilizar sudo sin contraseña.</p>
+
+<p>Abre el archivo <em>/etc/sudoers</em>  con el comando:</p>
+
+<pre><code>[root@salmorejo centos]# nano /etc/sudoers
+
+## Allow root to run any commands anywhere
+root    ALL=(ALL)	ALL
+profesor ALL=(ALL) NOPASSWD:ALL
+</code></pre>
+
+<p>Añadimos las claves públicas de Alberto y José Domingo</p>
+
+<pre><code>[root@salmorejo .ssh]# nano authorized_keys
+</code></pre>
+
+<p>Añade temporalmente la <em>resolución estática</em> de todos los nodos</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo nano /etc/hosts
+
+10.0.0.9 tortilla.gonzalonazareno.org tortilla
+10.0.0.3 croqueta.gonzalonazareno.org croqueta
+</code></pre>
+
+<p>Por ultimo actualizamos la máquina</p>
+
+<p>Añade temporalmente la <em>resolución estática</em> de todos los nodos</p>
+
+<pre><code>
+ernesto@honda:~$ sudo nano /etc/hosts
+
+172.22.200.111 croqueta.gonzalonazareno.org croqueta
+172.22.200.21 tortilla.gonzalonazareno.org tortilla
+172.22.200.109 salmorejo.gonzalonazareno.org salmorejo
+</code></pre>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

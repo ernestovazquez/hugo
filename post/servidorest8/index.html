@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      T8. Instalación de aplicación python. - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/blog/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/blog/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/blog/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title">T8. Instalación de aplicación python.</h2>
+      <section class="post-meta">
+        <time class="post-date">December 11, 2019</time>
+      </section>
+    </header>
+    <section class="post-content">
+      <p>Creamos el entorno virtual en nuestra máquina.</p>
+
+<p>Instalamos <strong>Mezzanine</strong> con:</p>
+
+<pre><code>(produccionmazzine) ernesto@honda:~/Documentos$ pip install mezzanine
+</code></pre>
+
+<p>Creamos el proyecto:</p>
+
+<pre><code>(produccionmazzine) ernesto@honda:~/Documentos$ mezzanine-project mezzanineernesto
+</code></pre>
+
+<p>Creamos la base de datos:</p>
+
+<pre><code>(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py createdb
+</code></pre>
+
+<p>Probamos si <strong>funciona</strong> en <strong>local</strong> :</p>
+
+<pre><code>(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py runserver
+</code></pre>
+
+<p><img src="/img/runserver.png" alt="runserver" /></p>
+
+<p>Subimos el directorio a nuestro <strong>GitHub</strong></p>
+
+<pre><code>(produccionmazzine) ernesto@honda:~/Documentos$ git clone git@github.com:ernestovazquez/mezzanineernesto.git
+(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git add --all
+(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git commit -am &quot;produccion foto&quot;
+(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git push
+</code></pre>
+
+<p>Configuración contenido estático.</p>
+
+<pre><code>(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py collectstatic
+</code></pre>
+
+<p>Personalizamos la página cambiándole el nombre</p>
+
+<p><img src="/img/nombremezza.png" alt="nombremezza" /></p>
+
+<p>Añadimos una foto.</p>
+
+<p><img src="/img/fotomezza1.png" alt="fotomezza1" /></p>
+
+<p><img src="/img/cambiosmezza.png" alt="cambiosmezza" /></p>
+
+<p>Copia de seguridad de la base de datos:</p>
+
+<pre><code>(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py dumpdata &gt; db.json
+
+(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ ls
+db.json  deploy  dev.db  fabfile.py  manage.py  mezzanineernesto  README.md  requirements.txt  static
+
+(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ python manage.py dumpdata admin &gt; admin.json
+
+(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ ls
+admin.json  db.json  deploy  dev.db  fabfile.py  manage.py  mezzanineernesto  README.md  requirements.txt  static
+</code></pre>
+
+<p>Subimos los cambios a GitHub:</p>
+
+<pre><code>(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git status
+En la rama master
+Tu rama está actualizada con 'origin/master'.
+
+Cambios no rastreados para el commit:
+  (usa &quot;git add &lt;archivo&gt;...&quot; para actualizar lo que será confirmado)
+  (usa &quot;git checkout -- &lt;archivo&gt;...&quot; para descartar los cambios en el directorio de trabajo)
+
+	modificado:     dev.db
+
+Archivos sin seguimiento:
+  (usa &quot;git add &lt;archivo&gt;...&quot; para incluirlo a lo que se será confirmado)
+
+	admin.json
+	db.json
+
+sin cambios agregados al commit (usa &quot;git add&quot; y/o &quot;git commit -a&quot;)
+</code></pre>
+
+<pre><code>(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git add --all
+
+(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git commit -am &quot;copia de seguridad bd&quot;
+[master 79aa9ef] copia de seguridad bd
+ 3 files changed, 2 insertions(+)
+ create mode 100644 admin.json
+ create mode 100644 db.json
+
+(produccionmazzine) ernesto@honda:~/Documentos/mezzanineernesto$ git push
+Enumerando objetos: 7, listo.
+Contando objetos: 100% (7/7), listo.
+Compresión delta usando hasta 4 hilos
+Comprimiendo objetos: 100% (5/5), listo.
+Escribiendo objetos: 100% (5/5), 3.57 KiB | 3.57 MiB/s, listo.
+Total 5 (delta 2), reusado 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To github.com:ernestovazquez/mezzanineernesto.git
+   a262af4..79aa9ef  master -&gt; master
+</code></pre>
+
+<ol>
+<li>Trabajamos en el entorno de <strong>desarrollo</strong> .</li>
+</ol>
+
+<p>Clonamos el repositorio en el <strong>DocumentRoot</strong></p>
+
+<pre><code>[centos@salmorejo ~]$ cd /var/www/
+[centos@salmorejo www]$ sudo git clone https://github.com/ernestovazquez/iaw_mezzanine.git
+</code></pre>
+
+<p>Instalamos <strong>gunicorn</strong> y sus paquetes necesarios.</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo dnf install python36 python36-devel
+</code></pre>
+
+<p>Entorno virtual:</p>
+
+<pre><code>[root@salmorejo]# python3 -m venv produccionmezz
+
+[root@salmorejo]# source produccionmezz/bin/activate
+(produccionmezz) [root@salmorejo mezzanineernesto]# 
+</code></pre>
+
+<p>Instalamos los paquetes necesarios del fichero <strong>requirements.txt</strong></p>
+
+<pre><code>(produccionmezz) [centos@salmorejo iaw_mezzanine]$ pip install -r requirements.txt
+</code></pre>
+
+<p>Creamos la base de datos:</p>
+
+<pre><code>ubuntu@tortilla:~$ sudo mysql -u root -p
+
+MariaDB [(none)]&gt; CREATE DATABASE mezzaninedb;
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [(none)]&gt; CREATE USER mezzanine identified by 'mezzanine';
+Query OK, 0 rows affected (0.03 sec)
+
+MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON mezzaninedb.* to mezzanine;
+Query OK, 0 rows affected (0.01 sec)
+
+MariaDB [(none)]&gt; flush privileges;
+Query OK, 0 rows affected (0.02 sec)
+
+MariaDB [(none)]&gt; 
+</code></pre>
+
+<p>Configuración para conectarse a la base de datos:</p>
+
+<pre><code>(produccionmezz) [centos@salmorejo iaw_mezzanine]$ sudo nano iaw_mezzanine/settings.py 
+
+DATABASES = {
+    &quot;default&quot;: {
+        # Add &quot;postgresql_psycopg2&quot;, &quot;mysql&quot;, &quot;sqlite3&quot; or &quot;oracle&quot;.
+        &quot;ENGINE&quot;: &quot;mysql.connector.django&quot;,
+        # DB name or path to database file if using sqlite3.
+        &quot;NAME&quot;: &quot;mezzaninedb&quot;,
+        # Not used with sqlite3.
+        &quot;USER&quot;: &quot;mezzanine&quot;,
+        # Not used with sqlite3.
+        &quot;PASSWORD&quot;: &quot;mezzanine&quot;,
+        # Set to empty string for localhost. Not used with sqlite3.
+        &quot;HOST&quot;: &quot;sql.ernesto.gonzalonazareno.org&quot;,
+        # Set to empty string for default. Not used with sqlite3.
+        &quot;PORT&quot;: &quot;&quot;,
+    }
+}
+</code></pre>
+
+<p>Configuramos el <strong>Allowed_hosts</strong> para permitir la dirección:</p>
+
+<pre><code>ALLOWED_HOSTS = ['python.ernesto.gonzalonazareno.org']
+</code></pre>
+
+<p>Conector python-mysql y eliminamos el anterior para que no tenga conflictos:</p>
+
+<pre><code>(produccionmezz) [centos@salmorejo iaw_mezzanine]$ pip install mysql-connector-python
+
+(desarrollo) [root@salmorejo mezzanineernesto]# sudo rm /var/www/mezzanineernesto/dev.db 
+</code></pre>
+
+<p>Borramos el siguiente fichero:</p>
+
+<p>Antes de borrar este fichero tendremos que copiar la <strong>SECRET_KEY</strong> y la <strong>NEVERCACHE_KEY</strong> en el fichero de configuración <strong>settings.py</strong> .</p>
+
+<pre><code>(desarrollo) [root@salmorejo mezzanineernesto]# rm local_settings.py 
+</code></pre>
+
+<p>Migración de la base de datos:</p>
+
+<pre><code>(produccionmezz) [centos@salmorejo iaw_mezzanine]$ python3 manage.py migrate
+
+Operations to perform:
+  Apply all migrations: admin, auth, blog, conf, contenttypes, core, django_comments, forms, galleries, generic, pages, redirects, sessions, sites, twitter
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying sites.0001_initial... OK
+  Applying blog.0001_initial... OK
+  Applying blog.0002_auto_20150527_1555... OK
+  Applying blog.0003_auto_20170411_0504... OK
+  Applying conf.0001_initial... OK
+  Applying core.0001_initial... OK
+  Applying core.0002_auto_20150414_2140... OK
+  Applying django_comments.0001_initial... OK
+  Applying django_comments.0002_update_user_email_field_length... OK
+  Applying django_comments.0003_add_submit_date_index... OK
+  Applying pages.0001_initial... OK
+  Applying forms.0001_initial... OK
+  Applying forms.0002_auto_20141227_0224... OK
+  Applying forms.0003_emailfield... OK
+  Applying forms.0004_auto_20150517_0510... OK
+  Applying forms.0005_auto_20151026_1600... OK
+  Applying forms.0006_auto_20170425_2225... OK
+  Applying galleries.0001_initial... OK
+  Applying galleries.0002_auto_20141227_0224... OK
+  Applying generic.0001_initial... OK
+  Applying generic.0002_auto_20141227_0224... OK
+  Applying generic.0003_auto_20170411_0504... OK
+  Applying pages.0002_auto_20141227_0224... OK
+  Applying pages.0003_auto_20150527_1555... OK
+  Applying pages.0004_auto_20170411_0504... OK
+  Applying redirects.0001_initial... OK
+  Applying sessions.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+  Applying twitter.0001_initial... OK
+</code></pre>
+
+<pre><code>(produccionmezz) [centos@salmorejo iaw_mezzanine]$ python3 manage.py loaddata CopiaBaseDatos.json
+
+Installed 151 object(s) from 1 fixture(s)
+</code></pre>
+
+<p>Ya podremos instalar <strong>gunicorn</strong></p>
+
+<pre><code>(produccionmezz) [centos@salmorejo iaw_mezzanine]$ pip install gunicorn
+
+Collecting gunicorn
+  Using cached https://files.pythonhosted.org/packages/69/ca/926f7cd3a2014b16870086b2d0fdc84a9e49473c68a8dff8b57f7c156f43/gunicorn-20.0.4-py2.py3-none-any.whl
+Requirement already satisfied: setuptools&gt;=3.0 in /home/centos/produccionmezz/lib/python3.6/site-packages (from gunicorn) (39.2.0)
+Installing collected packages: gunicorn
+Successfully installed gunicorn-20.0.4
+</code></pre>
+
+<p><strong>Socket Gunicorn</strong></p>
+
+<pre><code>(produccionmezz) [centos@salmorejo iaw_mezzanine]$ sudo nano /etc/systemd/system/gunicorn.socket
+
+[Unit]
+Description=gunicorn socket
+
+[Socket]
+ListenStream=/run/gunicorn.sock
+
+[Install]
+WantedBy=sockets.target
+</code></pre>
+
+<p><strong>Unidad de systemd</strong> para gunicorn</p>
+
+<pre><code>(produccionmezz) [centos@salmorejo iaw_mezzanine]$ sudo nano /etc/systemd/system/gunicorn.service
+
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+WorkingDirectory=/usr/share/nginx/html/iaw_mezzanine
+ExecStart=/bin/bash /usr/share/nginx/html/iaw_mezzanine/script.sh
+ExecReload=/bin/bash /usr/share/nginx/html/iaw_mezzanine/script.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

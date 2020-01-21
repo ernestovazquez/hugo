@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      PL/SQL vs PL/PGSQL - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/blog/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/blog/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/blog/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title">PL/SQL vs PL/PGSQL</h2>
+      <section class="post-meta">
+        <time class="post-date">November 09, 2019</time>
+      </section>
+    </header>
+    <section class="post-content">
+      
+
+<h4 id="vamos-a-ver-las-principales-diferencias-entre-estos-dos-gestores">Vamos a ver las principales diferencias entre estos dos gestores.</h4>
+
+<h6 id="diferencias-en-cursores">Diferencias en cursores:</h6>
+
+<p>Recorreremos los cursores de formas diferentes en los dos gestores.</p>
+
+<ul>
+<li>PL/SQL:</li>
+</ul>
+
+<pre><code>CURSOR c_cursor
+IS
+SELECT ...
+FROM nombretabla;
+
+FOR i IN c_cursor LOOP
+
+END LOOP;
+</code></pre>
+
+<ul>
+<li>PL/PGSQL:</li>
+</ul>
+
+<pre><code>FOR c_cursor IN SELECT ... FROM table LOOP;
+
+END LOOP;
+</code></pre>
+
+<h6 id="en-cuanto-a-triggers-en-pl-pgsql-primero-creamos-la-función-y-después-llamamos-a-dicha-función">En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función</h6>
+
+<pre><code>CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$
+DECLARE
+
+BEGIN
+
+END;
+$nombretrigger$ LANGUAGE PLPGSQL
+
+
+
+CREATE OR REPLACE nombretrigger
+(AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla
+FOR EACH(FILA O SENTENCIA) 
+EXECUTE FUNCTION nombrefuncion;
+</code></pre>
+
+<ul>
+<li>PL/SQL:</li>
+</ul>
+
+<pre><code>CREATE OR REPLACE TRIGGER name
+(AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla
+FOR EACH (fila o sentencia)
+BEGIN
+
+END;
+/
+</code></pre>
+
+<h6 id="también-tendremos-que-cambiar-la-forma-de-imprimir">También tendremos que cambiar la forma de imprimir.</h6>
+
+<ul>
+<li>Mientras que en Oracle es:</li>
+</ul>
+
+<pre><code>dbms_output.put_line(‘...’);
+</code></pre>
+
+<ul>
+<li>En PostgreSQL entremos que poner lo siguiente:</li>
+</ul>
+
+<pre><code>RAISE NOTICE ‘...’;
+</code></pre>
+
+<h6 id="en-los-errores-pasa-lo-mismo">En los errores pasa lo mismo</h6>
+
+<ul>
+<li>Oracle:</li>
+</ul>
+
+<pre><code>raise_application_error(-20002,'...');
+</code></pre>
+
+<ul>
+<li>PostgreSQL:</li>
+</ul>
+
+<pre><code>RAISE EXCEPTION '...';
+</code></pre>
+
+<h6 id="vamos-a-ver-cómo-se-crean-las-estructuras-de-las-funciones-y-la-principal-diferencia-con-respecto-a-oracle">Vamos a ver cómo se crean las estructuras de las funciones y la principal diferencia con respecto a Oracle</h6>
+
+<ul>
+<li>En Oracle terminaremos la función solamente con los siguiente:</li>
+</ul>
+
+<pre><code>end nombrefuncion;
+/
+</code></pre>
+
+<ul>
+<li>Mientras que en PostgreSQL:</li>
+</ul>
+
+<pre><code>end;
+$nombrefuncion$ LANGUAGE plpgsql;
+</code></pre>
+
+<h6 id="tablas-mutantes">Tablas mutantes</h6>
+
+<p>Por último, en cuanto a las tablas mutantes, en oracle se crea con paquetes y en postgres son con tablas temporales.</p>
+
+<p>Crear una tabla temporal</p>
+
+<pre><code>CREATE TEMP TABLE tbl AS
+SELECT * FROM tbl WHERE ... ;
+</code></pre>
+
+<p>No está seguro de si la tabla ya existe</p>
+
+<pre><code>CREATE TABLE IF not EXISTS ...
+</code></pre>
+
+<p>A continuación:</p>
+
+<pre><code>INSERT INTO tbl (col1, col2, ...)
+SELECT col1, col2, ...
+</code></pre>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

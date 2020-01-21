@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      T5. Actualización a CentOS 8. - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/blog/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/blog/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/blog/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title">T5. Actualización a CentOS 8.</h2>
+      <section class="post-meta">
+        <time class="post-date">November 11, 2019</time>
+      </section>
+    </header>
+    <section class="post-content">
+      <p>Instalamos los <strong>repositorios</strong> de <strong>EPEL</strong> :</p>
+
+<pre><code>[root@salmorejo centos]# yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+</code></pre>
+
+<p>Instalamos <strong>yum-utils</strong> :</p>
+
+<pre><code>[root@salmorejo centos]# yum -y install rpmconf yum-utils
+[root@salmorejo centos]# rpmconf -a
+</code></pre>
+
+<p><strong>Limpiamos</strong> paquetes innecesarios:</p>
+
+<pre><code>[root@salmorejo centos]# package-cleanup --leaves
+[root@salmorejo centos]# package-cleanup --orphans
+</code></pre>
+
+<p>Instalamos el software <strong>DNF</strong> :</p>
+
+<pre><code>[root@salmorejo centos]# yum -y install dnf
+</code></pre>
+
+<p>Eliminamos los paquetes manager:</p>
+
+<pre><code>[root@salmorejo centos]# dnf -y remove yum yum-metadata-parser
+[root@salmorejo centos]# rm -Rf /etc/yum
+</code></pre>
+
+<p><strong>Actualizamos</strong> el sistema con DNF:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo dnf -y upgrade
+</code></pre>
+
+<p>Instalamos la <strong>nueva versión</strong> :</p>
+
+<pre><code>[root@salmorejo centos]# dnf -y upgrade http://mirror.bytemark.co.uk/centos/8/BaseOS/x86_64/os/Packages/centos-release-8.0-0.1905.0.9.el8.x86_64.rpm
+</code></pre>
+
+<p><strong>Actualizamos</strong> los <strong>repositorios</strong> de EPEL:</p>
+
+<pre><code>[root@salmorejo centos]# dnf -y upgrade https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+</code></pre>
+
+<p><strong>Limpieza</strong> ficheros temporales:</p>
+
+<pre><code>[root@salmorejo centos]# dnf clean all
+</code></pre>
+
+<p>Eliminamos los kernel:</p>
+
+<pre><code>[root@salmorejo centos]# rpm -e `rpm -q kernel`
+[root@salmorejo centos]# rpm -e --nodeps sysvinit-tools
+</code></pre>
+
+<pre><code>[root@salmorejo centos]# dnf -y --releasever=8 --allowerasing --setopt=deltarpm=false distro-sync
+</code></pre>
+
+<p>Confirmamos la instalación del kernel-core:</p>
+
+<pre><code>[root@salmorejo centos]# rpm -e kernel-core
+[root@salmorejo centos]# dnf -y install kernel-core
+</code></pre>
+
+<p>Confirmacion del <strong>grub</strong> :</p>
+
+<pre><code>[root@salmorejo centos]# ROOTDEV=`ls /dev/*da|head -1`;
+[root@salmorejo centos]# echo &quot;Detected root as $ROOTDEV...&quot;
+[root@salmorejo centos]# grub2-install $ROOTDEV
+</code></pre>
+
+<p>Instalación de <strong>minimal package</strong>:</p>
+
+<pre><code>[root@salmorejo centos]# dnf -y groupupdate &quot;Core&quot; &quot;Minimal Install&quot; --skip-broken
+</code></pre>
+
+<p>Vemos la <strong>versión</strong> de <strong>CentOS</strong></p>
+
+<pre><code>[centos@salmorejo ~]$ cat /etc/centos-release
+</code></pre>
+
+<p>Quitamos este paquete que da problemas de dependencia</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo rpm --nodeps -e gdbm-1.10-8.el7.x86_64
+</code></pre>
+
+<p><img src="/img/centos8.png" alt="centos8" /></p>
+
+<p>Vamos a ver si funcionan correctamente los <strong>servicios previos</strong> :</p>
+
+<p><img src="/img/centos8nginx.png" alt="centos8nginx" /></p>
+
+<p><img src="/img/centos8php.png" alt="centos8php" /></p>
+
+<p><img src="/img/centos8wordpress.png" alt="centos8wordpress" /></p>
+
+<p><img src="/img/centos8nextcloud.png" alt="centos8nextcloud" /></p>
+
+<p>Tenemos que solucionar los errores y conflictos que tenemos despues de la actualización.</p>
+
+<p>En mi caso me sale error de la librería libzip para ello, tenemos que borrarla.</p>
+
+<pre><code>sudo dnf remove libzip
+sudo dnf update
+</code></pre>
+
+<p>El error de la librería libgdbm, haremos lo siguiente:</p>
+
+<pre><code>sudo rpm --nodeps -e gdbm
+sudo dnf -y upgrade --best --allowerasing
+sudo dnf update
+</code></pre>
+
+<hr />
+
+<p>Instalación del nuevo kernel:</p>
+
+<pre><code>sudo rpmconf -a
+
+sudo rpm -e kernel-core
+sudo dnf -y install kernel-core
+</code></pre>
+
+<p>Cambios para el buen funcionamiento de los servicios instalados antes de la actualización a CentOS 8.</p>
+
+<p>He tenido que instalar de nuevo nginx y php-fpm</p>
+
+<p>Nos dirigimos al fichero de configuración de nextcloud y wordpress y añadimos lo siguiente:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo nano /etc/nginx/conf.d/nextcloud.conf 
+[centos@salmorejo ~]$ sudo nano /etc/nginx/conf.d/wordpress.conf 
+
+    fastcgi_pass unix:/var/run/php-fpm/www.sock;
+</code></pre>
+
+<p>Cambio en el fichero de configuración de php-fpm</p>
+
+<pre><code>[centos@salmorejo ~]$ nano /etc/php-fpm.d/www.conf 
+
+    listen = /var/run/php-fpm/www.sock;
+    user = nginx
+    group = nginx
+    listen.owner = nginx
+    listen.group = nginx
+</code></pre>
+
+<p>Si la página web no se puede cargar, probablemente deba abrir el puerto 80 y 443 en el firewall.
+Cambios en el firewall:</p>
+
+<pre><code>[root@salmorejo centos]# firewall-cmd --permanent --zone=public --add-service=http
+[root@salmorejo centos]# firewall-cmd --permanent --zone=public --add-service=https
+[root@salmorejo centos]# systemctl reload firewalld
+</code></pre>
+
+<p>Cambio de permisos</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo chown -R nginx:nginx /var/lib/php/session
+</code></pre>
+
+<p>También como se ha cambiado la red interna del servidor he tenido que cambiar manualmente la configuración del acceso remoto al servidor de la base de datos, en este caso a tortilla. Cambiamos la ip del servidor (10.0.0.14 &ndash;&gt; 10.0.0.4)</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo nano /var/www/nextcloud/config/config.php 
+
+    'dbhost' =&gt; '10.0.0.4',
+
+[centos@salmorejo ~]$ sudo nano /var/www/wordpress/wp-config.php 
+
+    /** MySQL hostname */
+    define( 'DB_HOST', '10.0.0.4' );
+</code></pre>
+
+<p>Reiniciamos los servicios.</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo systemctl restart php-fpm
+[centos@salmorejo ~]$ sudo systemctl restart nginx
+</code></pre>
+
+<p>Comprobaciones de actualización:</p>
+
+<pre><code>[centos@salmorejo ~]$ dnf check-update
+</code></pre>
+
+<p>Remi&rsquo;s Modular repository for Enterprise Linux 8 - x86_64                                                             222 kB/s | 518 kB     00:02<br />
+Safe Remi&rsquo;s RPM repository for Enterprise Linux 8 - x86_64                                                            428 kB/s | 1.4 MB     00:03<br />
+Remi&rsquo;s RPM repository for Enterprise Linux 8 - x86_64                                                                 820 kB/s | 2.6 MB     00:03</p>
+
+<p>Comprobaciones del kérnel:</p>
+
+<pre><code>[root@salmorejo ~]# uname -r
+
+4.18.0-80.11.2.el8_0.x86_64
+</code></pre>
+
+<p>Comprobaciones:</p>
+
+<p><img src="/img/statusphp.png" alt="statusphp" /></p>
+
+<p><img src="/img/statusnginx.png" alt="statusnginx" /></p>
+
+<p><img src="/img/webwordpress.png" alt="webwordpress" /></p>
+
+<p><img src="/img/webcloud.png" alt="webcloud" /></p>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

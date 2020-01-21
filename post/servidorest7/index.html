@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      T7. Hosting. - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/blog/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/blog/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/blog/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title">T7. Hosting.</h2>
+      <section class="post-meta">
+        <time class="post-date">December 11, 2019</time>
+      </section>
+    </header>
+    <section class="post-content">
+      <p>Vamos a instalar <strong>phpMyAdmin</strong>:</p>
+
+<p>Extensión para conectar php con la <strong>base de datos</strong>:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo dnf install -y php-json php-mbstring
+</code></pre>
+
+<p>Instalamos <strong>phpMyAdmin</strong></p>
+
+<pre><code>[centos@salmorejo ~]$ sudo wget https://files.phpmyadmin.net/phpMyAdmin/4.9.0.1/phpMyAdmin-4.9.0.1-all-languages.tar.gz
+[centos@salmorejo ~]$ sudo tar -zxvf phpMyAdmin-4.9.0.1-all-languages.tar.gz 
+[centos@salmorejo ~]$ mv phpMyAdmin-4.9.0.1-all-languages /usr/share/phpMyAdmin
+</code></pre>
+
+<p>Configuramos php:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php
+[centos@salmorejo ~]$ sudo mkdir -p /var/lib/phpmyadmin/tmp
+[centos@salmorejo ~]$ sudo chown -R nginx:nginx /var/lib/phpmyadmin
+[centos@salmorejo ~]$ sudo nano /usr/share/phpMyAdmin/config.inc.ph
+</code></pre>
+
+<p>Añadimos lo siguiente en el fichero:</p>
+
+<pre><code>$cfg['blowfish_secret'] = 'o,]G;E8c,.O.EkhANLhLhd0e}g]L}XaN'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
+$cfg['TempDir'] = '/var/lib/phpmyadmin/tmp';
+$cfg['Servers'][$i]['host'] = '10.0.0.4';
+</code></pre>
+
+<p>Para generar el <strong>blowfish</strong>, lo hacemos mediante el siguiente generador: <a href="https://phpsolved.com/phpmyadmin-blowfish-secret-generator/?g=5cecac771c51c">https://phpsolved.com/phpmyadmin-blowfish-secret-generator/?g=5cecac771c51c</a></p>
+
+<p>Importamos la base de datos:</p>
+
+<pre><code>[centos@salmorejo ~]$ mysql &lt; /usr/share/phpMyAdmin/sql/create_tables.sql --host=10.0.0.4 -u salmorejo -p phpmyadmin
+</code></pre>
+
+<p>Virtual Host para <strong>phpMyAdmin</strong>:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo nano /etc/nginx/conf.d/phpMyAdmin.conf
+
+server {
+   listen 80;
+   server_name sql.ernesto.gonzalonazareno.org;
+   root /usr/share/phpMyAdmin;
+
+   location / {
+      index index.php;
+   }
+
+## Images and static content is treated different
+   location ~* ^.+.(jpg|jpeg|gif|css|png|js|ico|xml)$ {
+      access_log off;
+      expires 30d;
+   }
+
+   location ~ /\.ht {
+      deny all;
+   }
+
+   location ~ /(libraries|setup/frames|setup/libs) {
+      deny all;
+      return 404;
+   }
+
+   location ~ \.php$ {
+      include /etc/nginx/fastcgi_params;
+#      fastcgi_pass 127.0.0.1:9000;
+      fastcgi_pass unix:/var/run/php-fpm/www.sock;
+      fastcgi_index index.php;
+      fastcgi_param SCRIPT_FILENAME /usr/share/phpMyAdmin$fastcgi_script_name;
+   }
+}
+</code></pre>
+
+<p>Creamos el directorio <strong>tmp</strong> y le cambiamos los permisos:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo mkdir /usr/share/phpMyAdmin/tmp
+[centos@salmorejo ~]$ sudo chmod 777 /usr/share/phpMyAdmin/tmp
+[centos@salmorejo ~]$ sudo chown -R nginx:nginx /usr/share/phpMyAdmin
+</code></pre>
+
+<p>Reiniciamos los servicios:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo systemctl restart nginx 
+[centos@salmorejo ~]$ sudo systemctl restart php-fpm
+</code></pre>
+
+<p>Reglas del firewall para http:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo semanage fcontext -a -t httpd_sys_content_t &quot;/usr/share/phpMyAdmin(/.*)?&quot;
+[centos@salmorejo ~]$ sudo restorecon -Rv /usr/share/phpMyAdmin
+</code></pre>
+
+<pre><code>[centos@salmorejo ~]$ sudo firewall-cmd --permanent --add-service=http
+Warning: ALREADY_ENABLED: http
+success
+
+[centos@salmorejo ~]$ sudo firewall-cmd --reload
+success
+</code></pre>
+
+<p><img src="/img/phpmyadmin.png" alt="phpmyadmin" /></p>
+
+<p>Instalamos <strong>FTP</strong> :</p>
+
+<p>Repositorios EPEL:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudp wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+[centos@salmorejo ~]$ sudo dnf install epel-release-latest-7.noarch.rpm -y --allowerasing
+</code></pre>
+
+<p>Instalamos <strong>proftpd</strong> y los paquetes necesarios:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo wget http://mirror.centos.org/centos/7/os/x86_64/Packages/GeoIP-1.5.0-14.el7.x86_64.rpm
+[centos@salmorejo ~]$ sudo dnf install GeoIP-1.5.0-14.el7.x86_64.rpm  --allowerasing
+
+[centos@salmorejo ~]$ wget http://mirror.centos.org/centos/7/os/x86_64/Packages/tcp_wrappers-7.6-77.el7.x86_64.rpm
+[centos@salmorejo ~]$ sudo dnf install tcp_wrappers-7.6-77.el7.x86_64.rpm
+
+[centos@salmorejo ~]$ sudo dnf install proftpd -y
+</code></pre>
+
+<p>Puertos del firewall:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo firewall-cmd --add-service=ftp --permanent --zone=public
+success
+
+[centos@salmorejo ~]$ sudo firewall-cmd --reload
+success
+</code></pre>
+
+<p>Iniciamos los servicios:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo systemctl start proftpd
+
+[centos@salmorejo ~]$ sudo systemctl enable proftpd
+Created symlink /etc/systemd/system/multi-user.target.wants/proftpd.service → /usr/lib/systemd/system/proftpd.service.
+</code></pre>
+
+<p>Creamos el <strong>Virtual Host</strong>:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo nano /etc/nginx/conf.d/user_ernesto.conf
+
+server {
+  listen 80;
+
+  root /var/www/user_ernesto;
+  index index.html index.php;
+
+  server_name informatica.ernesto.gonzalonazareno.org;
+
+  location / {
+      try_files $uri $uri/ /index.php?$args;
+      autoindex on;
+      disable_symlinks if_not_owner;
+  }
+
+  location ~ \.php$ {
+    fastcgi_pass unix:/var/run/php-fpm/www.sock;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_index index.php;
+    include fastcgi_params;
+  }
+}
+</code></pre>
+
+<p>Creamos el directorio:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo mkdir /usr/share/nginx/html/user_ernesto
+[centos@salmorejo ~]$ sudo chown -R nginx:nginx /usr/share/nginx/html/user_ernesto/
+[centos@salmorejo ~]$ sudo find /usr/share/nginx/html/user_ernesto -type f -exec chmod 0644 {} \;
+[centos@salmorejo ~]$ sudo find /usr/share/nginx/html/user_ernesto -type d -exec chmod 0755 {} \;
+[centos@salmorejo ~]$ sudo chcon -t httpd_sys_content_t /usr/share/nginx/html/user_ernesto -R
+</code></pre>
+
+<p>Cambiamos el directorio del usuario:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo mv /usr/share/nginx/html/user_ernesto /var/www/
+</code></pre>
+
+<p>Reiniciamos el servicio:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo systemctl restart nginx
+[centos@salmorejo ~]$ sudo systemctl restart php-fpm
+</code></pre>
+
+<p>Creamos el usuario (passwd: evazgar123):</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo useradd user_ernesto
+[centos@salmorejo ~]$ sudo passwd user_ernesto
+</code></pre>
+
+<p>Configuración FTP:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo nano /etc/proftpd.conf 
+
+DefaultRoot                     /var/www/%u
+</code></pre>
+
+<p>Reiniciamos:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo systemctl restart proftpd
+</code></pre>
+
+<p><img src="/img/informaticaphp.png" alt="informaticaphp" /></p>
+
+<p>Agregamos el regla del grupo de seguridad de openstack: <strong>TCP   21</strong></p>
+
+<p>Añadimos la regla SELinux:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo firewall-cmd --add-service=ftp --permanent
+Warning: ALREADY_ENABLED: ftp
+success
+
+[centos@salmorejo ~]$ sudo firewall-cmd --reload
+success
+
+[centos@salmorejo ~]$ sudo setsebool -P allow_ftpd_anon_write=1
+[centos@salmorejo ~]$ sudo setsebool -P allow_ftpd_full_access=1
+[centos@salmorejo ~]$ sudo setsebool -P allow_ftpd_use_cifs=1
+[centos@salmorejo ~]$ sudo setsebool -P allow_ftpd_use_nfs=1
+[centos@salmorejo ~]$ sudo setsebool -P ftpd_connect_all_unreserved=1
+[centos@salmorejo ~]$ sudo setsebool -P ftpd_connect_db=1
+[centos@salmorejo ~]$ sudo systemctl restart proftpd
+[centos@salmorejo ~]$ sudo systemctl enable proftpd
+[centos@salmorejo ~]$ sudo systemctl start proftpd
+</code></pre>
+
+<p>Probamos si en localhost funciona:</p>
+
+<pre><code>[centos@salmorejo ~]$ ftp localhost
+
+Trying ::1...
+Connected to localhost (::1).
+220 FTP Server ready.
+Name (localhost:centos): user_ernesto
+331 Password required for user_ernesto
+Password:
+
+230 User user_ernesto logged in
+Remote system type is UNIX.
+Using binary mode to transfer files.
+
+ftp&gt; ls
+229 Entering Extended Passive Mode (|||54923|)
+150 Opening ASCII mode data connection for file list
+-rw-r--r--   1 user_ernesto user_ernesto       69 Dec 16 08:41 phpinfo.php
+-rw-r--r--   1 user_ernesto user_ernesto       20 Dec 17 09:07 prueba.txt
+226 Transfer complete
+
+ftp&gt; 221 Goodbye.
+</code></pre>
+
+<p>Nos conectamos mediante nuestra máquina:</p>
+
+<pre><code>ernesto@honda:~$ ftp ftp.ernesto.gonzalonazareno.org
+
+Connected to salmorejo.ernesto.gonzalonazareno.org.
+220 FTP Server ready.
+Name (ftp.ernesto.gonzalonazareno.org:ernesto): user_ernesto
+331 Password required for user_ernesto
+Password:
+
+230 User user_ernesto logged in
+Remote system type is UNIX.
+Using binary mode to transfer files.
+
+ftp&gt; ls
+200 PORT command successful
+150 Opening ASCII mode data connection for file list
+-rw-r--r--   1 user_ernesto user_ernesto       69 Dec 16 08:41 phpinfo.php
+-rw-r--r--   1 user_ernesto user_ernesto       20 Dec 17 09:07 prueba.txt
+226 Transfer complete
+
+ftp&gt; 
+</code></pre>
+
+<p>Prueba desde <strong>filezilla</strong>:</p>
+
+<p><img src="/img/user_ernestofilezilla.png" alt="user_ernestofilezilla" /></p>
+
+<p>Descargamos wordpress para hacer la prueba de la funcion del ftp desde el equipo:</p>
+
+<p>Subimos wordpress y ya podremos instalarlo en el directorio del usuario:</p>
+
+<p><img src="/img/wordpressuser_ernesto.png" alt="wordpressuser_ernesto" /></p>
+
+<p>Creamos los usuarios y la base de datos:</p>
+
+<pre><code>MariaDB [(none)]&gt; CREATE USER &quot;my_ernesto&quot; IDENTIFIED BY &quot;my_ernesto&quot;;
+Query OK, 0 rows affected (0.03 sec)
+
+MariaDB [(none)]&gt; CREATE DATABASE db_ernesto;
+Query OK, 1 row affected (0.04 sec)
+
+MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON db_ernesto.* TO my_ernesto;
+Query OK, 0 rows affected (0.04 sec)
+</code></pre>
+
+<p>Lo añadimos para crear un blog nuevo:</p>
+
+<p><img src="/img/loginuser_ernesto.png" alt="loginuser_ernesto" /></p>
+
+<p>Y tendriamos creado el blog de este usuario.</p>
+
+<p><img src="/img/accesouser_ernesto.png" alt="accesouser_ernesto" /></p>
+
+<p><img src="/img/enduser_ernesto.png" alt="enduser_ernesto" /></p>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

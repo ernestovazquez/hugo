@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      Introducción a la integración continua - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/blog/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/blog/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/blog/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title">Introducción a la integración continua</h2>
+      <section class="post-meta">
+        <time class="post-date">December 15, 2019</time>
+      </section>
+    </header>
+    <section class="post-content">
+      <p>Vamos a crear el repositorio donde vamos a trabajar.
+También vamos a crear la rama gh-pages, donde estarán los ficheros generados por Hugo.</p>
+
+<p>Fichero de configuración <strong>.travis.yml</strong> .</p>
+
+<pre><code>ernesto@honda:~/blog$ sudo nano .travis.yml
+
+install:
+  - wget https://github.com/gohugoio/hugo/releases/download/v0.53/hugo_0.53_Linux-64bit.deb &amp;&amp; sudo dpkg -i hugo*.deb
+  - git clone https://github.com/ernestovazquez/blog.git
+
+script:
+  - rm hugo*.deb
+  - hugo new site sitio
+  - mkdir -p sitio/content/post
+  - mv blog/content/post/* sitio/content/post
+  - mv blog/config.toml sitio/
+  - cd sitio/themes &amp;&amp; git clone https://github.com/nirocfz/arabica &amp;&amp; cd ..
+  - hugo -t arabica
+  - rm -rf themes/arabica
+
+deploy:
+  provider: pages
+  local-dir: sitio/public
+  skip-cleanup: true
+  github-token: $GH_TOKEN
+  keep-history: true
+  on:
+    branch: master
+</code></pre>
+
+<p>Fichero <strong>config.toml</strong> :</p>
+
+<pre><code>ernesto@honda:~/blog$ sudo nano config.toml
+
+baseURL = &quot;/blog&quot;
+title = &quot;De Rookie a Leyenda&quot;
+author = &quot;Ernesto Vázquez&quot;
+paginate = 3
+theme = &quot;arabica&quot;
+
+[params]
+description = &quot;Ernesto Vázquez García&quot;
+</code></pre>
+
+<p>Pasamos los ficheros Markdown que vamos a utilizar.</p>
+
+<pre><code>ernesto@honda:~$ ls blog/content/post/
+
+oraclevspostgresql.md  servidorest1.md  servidorest3.md  servidorest6.md  servidorest8.md
+resources              servidorest2.md  servidorest5.md  servidorest7.md
+</code></pre>
+
+<p>Generamos el <strong>TOKEN</strong></p>
+
+<p>Nos dirigimos a <strong>Settings, Developer settings y  Personal access tokens</strong></p>
+
+<p>Vamos a <strong>Travis</strong> y entramos en los ajustes del repositorio:</p>
+
+<p>Generamos un fichero de pruebas:</p>
+
+<pre><code>ernesto@honda:~/blog$ sudo nano content/post/pruebatravis.md 
+[sudo] password for ernesto: 
+ernesto@honda:~/blog$ git add *
+ernesto@honda:~/blog$ git commit -m &quot;prueba&quot;
+[master b897f97] prueba
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+ernesto@honda:~/blog$ git push
+Enumerando objetos: 9, listo.
+Contando objetos: 100% (9/9), listo.
+Compresión delta usando hasta 4 hilos
+Comprimiendo objetos: 100% (4/4), listo.
+Escribiendo objetos: 100% (5/5), 449 bytes | 449.00 KiB/s, listo.
+Total 5 (delta 2), reusado 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To github.com:ernestovazquez/blog.git
+   31cee85..b897f97  master -&gt; master
+</code></pre>
+
+<p>Se inica travis automaticamente y una vez pasado la integración podremos ver la página.</p>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

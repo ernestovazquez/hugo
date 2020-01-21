@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      T3. Instalación aplicaciones web. - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/blog/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/blog/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/blog/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/blog/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title">T3. Instalación aplicaciones web.</h2>
+      <section class="post-meta">
+        <time class="post-date">October 30, 2019</time>
+      </section>
+    </header>
+    <section class="post-content">
+      <p>Creamos la base de datos llamada <strong>wordpress</strong></p>
+
+<pre><code>root@tortilla:/home/ubuntu# mysql -u root
+</code></pre>
+
+<pre><code>MariaDB [(none)]&gt; CREATE DATABASE wordpress;
+MariaDB [(none)]&gt; use wordpress;
+MariaDB [wordpress]&gt; GRANT ALL PRIVILEGES ON *.* TO 'salmorejo'@'10.0.0.7' IDENTIFIED BY 'salmorejo' WITH GRANT OPTION;
+</code></pre>
+
+<p>Nos conectamos remotamente:</p>
+
+<pre><code>[centos@salmorejo ~]$ mysql --host=10.0.0.14 -u salmorejo -p wordpress
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 39
+Server version: 10.1.41-MariaDB-0ubuntu0.18.04.1 Ubuntu 18.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [wordpress]&gt; 
+</code></pre>
+
+<p>Configuración de <strong>wordpress.conf</strong></p>
+
+<pre><code>[centos@salmorejo ~]$ sudo nano /etc/nginx/conf.d/wordpress.conf 
+
+server {
+  listen 80;
+
+  root /var/www/wordpress;
+  index index.html index.php;
+
+  server_name www.ernesto.gonzalonazareno.org;
+
+
+  location ~ \.php$ {
+    fastcgi_pass 127.0.0.1:9000;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_index index.php;
+    include fastcgi_params;
+  }
+}
+
+</code></pre>
+
+<p>Instalamos <strong>Wordpress</strong>:
+Posteriormente he modificado el directorio donde está <strong>ubicado</strong> la aplicación <strong>wordpress</strong> y ahora está situado en <strong>/var/www/wordpress</strong></p>
+
+<pre><code>[centos@salmorejo]$ cd /usr/share/nginx/html/
+[centos@salmorejo ~]$ wget https://wordpress.org/latest.tar.gz
+[centos@salmorejo ~]$ tar xzvf latest.tar.gz
+</code></pre>
+
+<p>Permisos:</p>
+
+<pre><code>[centos@salmorejo html]$ sudo chown nginx:nginx -R /usr/share/nginx/html/wordpress/
+[centos@salmorejo ~]$ cd /usr/share/nginx/html/
+[centos@salmorejo html]$ cd wordpress/
+[centos@salmorejo wordpress]$ sudo mv * ..
+</code></pre>
+
+<pre><code>[centos@salmorejo html]$ sudo find /usr/share/nginx/html -type f -exec chmod 0644 {} \;
+[centos@salmorejo html]$ sudo find /usr/share/nginx/html -type d -exec chmod 0755 {} \;
+</code></pre>
+
+<p><img src="/img/wordpress.png" alt="wordpress" /></p>
+
+<p>Activamos Selinux:</p>
+
+<pre><code>[centos@salmorejo ~]$ setsebool -P httpd_can_network_connect_db=1
+[centos@salmorejo ~]$ getsebool -a | grep httpd
+    httpd_can_network_connect_db --&gt; on
+</code></pre>
+
+<p><img src="/img/instalawordpress.png" alt="instalawordpress" /></p>
+
+<p><img src="/img/instalawordpress2.png" alt="instalawordpress2" /></p>
+
+<p><img src="/img/instalawordpress3.png" alt="instalawordpress3" /></p>
+
+<p>Agregamos en el fichero de configuración lo siguiente:</p>
+
+<pre><code>        location / {
+            index index.php index.htm;
+        }
+</code></pre>
+
+<p>Ya tendremos <strong>wordpress instalado</strong> y funcionando.</p>
+
+<p><img src="/img/wordpress8.png" alt="wordpress8" /></p>
+
+<p>Creamos la base de datos llamada <strong>nextcloud</strong></p>
+
+<pre><code>root@tortilla:/home/ubuntu# mysql -u root -p 
+</code></pre>
+
+<pre><code>MariaDB [(none)]&gt; CREATE DATABASE nextcloud;
+MariaDB [(none)]&gt; use nextcloud;
+MariaDB [nextcloud]&gt; GRANT ALL PRIVILEGES ON nextcloud.* TO salmorejo@10.0.0.7;
+</code></pre>
+
+<p>Nos conectamos remotamente:</p>
+
+<pre><code>[centos@salmorejo ~]$ mysql --host=10.0.0.14 -u salmorejo -p nextcloud
+Enter password:
+
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 87
+Server version: 10.1.41-MariaDB-0ubuntu0.18.04.1 Ubuntu 18.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [nextcloud]&gt; 
+</code></pre>
+
+<p>Descargamos <strong>nextcloud</strong> y lo descomprimimos</p>
+
+<pre><code>[root@salmorejo centos]# cd /tmp/
+[root@salmorejo tmp]# wget https://download.nextcloud.com/server/releases/nextcloud-17.0.1.zip
+[root@salmorejo tmp]# unzip nextcloud-17.0.1.zip -d /usr/share/nginx/
+</code></pre>
+
+<p>Archivo de <strong>configuración</strong> de <strong>nextcloud</strong>:</p>
+
+<pre><code>[root@salmorejo ~]# nano /etc/nginx/conf.d/nextcloud.conf
+</code></pre>
+
+<pre><code>server {
+    listen 80;
+    server_name cloud.ernesto.gonzalonazareno.org;
+
+    # Add headers to serve security related headers
+    add_header X-Content-Type-Options nosniff;
+    add_header X-XSS-Protection &quot;1; mode=block&quot;;
+    add_header X-Robots-Tag none;
+    add_header X-Download-Options noopen;
+    add_header X-Permitted-Cross-Domain-Policies none;
+    add_header Referrer-Policy no-referrer;
+
+    #I found this header is needed on Debian/Ubuntu/CentOS/RHEL, but not on Arch Linux.
+    add_header X-Frame-Options &quot;SAMEORIGIN&quot;;
+
+    # Path to the root of your installation
+    root /var/www/nextcloud/;
+
+    access_log /var/log/nginx/nextcloud.access;
+    error_log /var/log/nginx/nextcloud.error;
+
+    location = /robots.txt {
+        allow all;
+        log_not_found off;
+        access_log off;
+    }
+
+    # The following 2 rules are only needed for the user_webfinger app.
+    # Uncomment it if you're planning to use this app.
+    #rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
+    #rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json
+    # last;
+
+    location = /.well-known/carddav {
+        return 301 $scheme://$host/remote.php/dav;
+    }
+    location = /.well-known/caldav {
+       return 301 $scheme://$host/remote.php/dav;
+    }
+
+    location ~ /.well-known/acme-challenge {
+      allow all;
+    }
+
+    # set max upload size
+    client_max_body_size 512M;
+    fastcgi_buffers 64 4K;
+
+    # Disable gzip to avoid the removal of the ETag header
+    gzip off;
+
+    # Uncomment if your server is build with the ngx_pagespeed module
+    # This module is currently not supported.
+    #pagespeed off;
+
+    error_page 403 /core/templates/403.php;
+    error_page 404 /core/templates/404.php;
+
+    location / {
+       rewrite ^ /index.php$uri;
+    }
+
+    location ~ ^/(?:build|tests|config|lib|3rdparty|templates|data)/ {
+       deny all;
+    }
+    location ~ ^/(?:\.|autotest|occ|issue|indie|db_|console) {
+       deny all;
+     }
+
+    location ~ ^/(?:index|remote|public|cron|core/ajax/update|status|ocs/v[12]|updater/.+|ocs-provider/.+|core/templates/40[34])\.php(?:$|/) {
+       include fastcgi_params;
+       fastcgi_split_path_info ^(.+\.php)(/.*)$;
+       fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+       fastcgi_param PATH_INFO $fastcgi_path_info;
+       #Avoid sending the security headers twice
+       fastcgi_param modHeadersAvailable true;
+       fastcgi_param front_controller_active true;
+       fastcgi_pass unix:/var/run/php-fpm.sock;
+#     fastcgi_pass 127.0.0.1:9000;
+       fastcgi_intercept_errors on;
+       fastcgi_request_buffering off;
+       fastcgi_read_timeout 300;
+    }
+
+    location ~ ^/(?:updater|ocs-provider)(?:$|/) {
+       try_files $uri/ =404;
+       index index.php;
+    }
+
+    # Adding the cache control header for js and css files
+    # Make sure it is BELOW the PHP block
+    location ~* \.(?:css|js)$ {
+        try_files $uri /index.php$uri$is_args$args;
+        add_header Cache-Control &quot;public, max-age=7200&quot;;
+        # Add headers to serve security related headers (It is intended to
+        # have those duplicated to the ones above)
+        add_header X-Content-Type-Options nosniff;
+        add_header X-XSS-Protection &quot;1; mode=block&quot;;
+        add_header X-Robots-Tag none;
+        add_header X-Download-Options noopen;
+        add_header X-Permitted-Cross-Domain-Policies none;
+        # Optional: Don't log access to assets
+        access_log off;
+   }
+
+   location ~* \.(?:svg|gif|png|html|ttf|woff|ico|jpg|jpeg)$ {
+        try_files $uri /index.php$uri$is_args$args;
+        # Optional: Don't log access to other assets
+        access_log off;
+   }
+}
+</code></pre>
+
+<p>Probamos con un <strong>test</strong> y si todo va bien activamos los servicios de <strong>nginx</strong>:</p>
+
+<pre><code>[root@salmorejo ~]# nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+[root@salmorejo ~]# systemctl restart nginx
+</code></pre>
+
+<p>Ejecutamos el siguientes comandos para instalar los módulos PHP requeridos o recomendados por NextCloud.</p>
+
+<pre><code>[root@salmorejo ~]# yum install php-common php-gd php-json php-curl php-zip php-xml php-mbstring php-bz2 php-intl
+</code></pre>
+
+<p>Configuramos <strong>SELinux</strong> para que permita que PHP-FPM use <strong>execmem</strong>.</p>
+
+<pre><code>[root@salmorejo ~]# setsebool -P httpd_execmem 1
+[root@salmorejo ~]# systemctl reload php-fpm
+</code></pre>
+
+<p>Configuración de <strong>permisos</strong></p>
+
+<p>Permisos de lectura y escritura sobre el directorio de trabajo</p>
+
+<pre><code>chcon -t httpd_sys_rw_content_t /usr/share/nginx/nextcloud/ -R
+setsebool -P httpd_can_network_connect 1
+</code></pre>
+
+<p>Cambio de propietarios en estos 3 archivos, de apache a nginx.</p>
+
+<pre><code>setfacl -R -m u:nginx:rwx /var/lib/php/opcache/
+setfacl -R -m u:nginx:rwx /var/lib/php/session/
+setfacl -R -m u:nginx:rwx /var/lib/php/wsdlcache/
+</code></pre>
+
+<pre><code>[root@salmorejo www]# chown -R nginx: nextcloud/
+</code></pre>
+
+<p>Configuración <strong>SELinux:</strong></p>
+
+<pre><code>[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/data(/.*)?'
+[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/config(/.*)?'
+[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/apps(/.*)?'
+[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/assets(/.*)?'
+[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/.htaccess'
+[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/.user.ini'
+[root@salmorejo nextcloud]# restorecon -Rv '/var/www/nextcloud/'
+</code></pre>
+
+<p><img src="/img/nextcloud.png" alt="nextcloud" /></p>
+
+<p>Instalamos el <strong>módulo PHP</strong> :</p>
+
+<pre><code>[root@salmorejo ~]# yum install php73-php-pecl-zip.x86_64
+</code></pre>
+
+<p><img src="/img/nextcloud2.png" alt="nextcloud2" /></p>
+
+<p>Nos da el error <strong>504 Gateway Timeout error</strong>:</p>
+
+<pre><code>[root@salmorejo ~]# sudo nano /etc/php.ini
+
+    max_execution_time = 300
+</code></pre>
+
+<pre><code>[root@salmorejo ~]# sudo nano /etc/php-fpm.d/www.conf
+
+    request_terminate_timeout = 300
+</code></pre>
+
+<pre><code>[root@salmorejo ~]# sudo nano /etc/nginx/conf.d/nextcloud.conf
+
+    fastcgi_read_timeout 300;
+</code></pre>
+
+<p>Tras el error 404 añadimos lo siguiente en el fichero de configuración de <strong>nextcloud</strong></p>
+
+<pre><code>  location / {
+    try_files $uri $uri/ /index.php?$args;
+    }
+</code></pre>
+
+<p>Cuando intento <strong>iniciar sesión</strong> , no entra en mi cuenta administrador:</p>
+
+<p><img src="/img/loginnextcloud.png" alt="loginnextcloud" /></p>
+
+<p>Para que funcione correctamente y entre he modificado lo siguiente:</p>
+
+<pre><code>[root@salmorejo ~]# nano /etc/php-fpm.d/www.conf 
+
+user = nginx
+group = nginx
+
+;listen = 127.0.0.1:9000
+listen = /var/run/php-fpm.sock
+
+listen.owner = nginx
+listen.group = nginx
+</code></pre>
+
+<p>En el archivo de configuración de nextcloud he cambiado lo siguiente:</p>
+
+<pre><code>fastcgi_pass unix:/var/run/php-fpm.sock;
+</code></pre>
+
+<p>También he intentado a reinstalar el nextcloud con lo siguiente:</p>
+
+<pre><code>[root@salmorejo ~]# rm /var/www/nextcloud/config/config.php
+[root@salmorejo ~]# touch /var/www/nextcloud/config/CAN_INSTALL
+[root@salmorejo ~]# chown nginx:nginx /var/www/nextcloud/config/CAN_INSTALL 
+</code></pre>
+
+<pre><code>[root@salmorejo ~]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/lib/php/'
+[root@salmorejo ~]# restorecon -Rv '/var/lib/php/'
+</code></pre>
+
+<p>Ya estaría configurado y <strong>funcionando</strong> el servicio de <strong>nextcloud</strong> en nuestro <strong>servidor web nginx</strong></p>
+
+<p><img src="/img/nextcloudend.png" alt="nextcloudend" /></p>
+
+<p><img src="/img/nextcloudend1.png" alt="nextcloudend" /></p>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

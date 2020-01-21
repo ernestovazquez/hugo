@@ -1,0 +1,9 @@
+baseURL = "/blog"
+title = "De Rookie a Leyenda"
+author = "Ernesto Vázquez"
+paginate = 3
+theme = "arabica"
+
+[params]
+description = "Ernesto Vázquez García"
+twitter = "ernestovazgar"

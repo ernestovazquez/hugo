@@ -6,7 +6,9 @@ script:
   - rm hugo*.deb
   - hugo new site sitio
   - mkdir -p sitio/content/post
+  - mkdir -p sitio/static/img
   - mv hugo/content/post/* sitio/content/post
+  - mv hugo//static/img/* sitio/static/img
   - mv hugo/config.toml sitio/
   - cd sitio/themes && git clone https://github.com/nirocfz/arabica && cd ..
   - hugo -t arabica

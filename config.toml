@@ -1,4 +1,4 @@
-baseURL = "/blog"
+baseURL = "/hugo"
 title = "De Rookie a Leyenda"
 author = "Ernesto Vázquez"
 paginate = 3

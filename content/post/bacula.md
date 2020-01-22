@@ -34,7 +34,7 @@ Instalación de **bacula**:
 debian@serranito:~$ sudo apt install bacula bacula-client bacula-common-mysql bacula-director-mysql bacula-server
 ```
 
-!bacula1.png!
+![bacula1](https://raw.githubusercontent.com/ernestovazquez/hugo/gh-pages/img/bacula1.png)
 
 Le damos a **Yes** y ponemos la contraseña.
 

@@ -11,7 +11,7 @@ Vamos a instalar dos aplicaciones web php en nuestros servidores:
 
 Modifica las aplicaciones web y personalizalas para que se demuestre que son tus aplicaciones. Entrega una breve descripción de los pasos dados para conseguir la instalación de las aplicaciones web. Usando resolución estática entrega algunas capturas donde se demuestre que las aplicaciones están funcionando.
 
-
+***
 
 Creamos la base de datos llamada **wordpress**
 

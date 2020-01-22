@@ -20,7 +20,7 @@ Crea un fichero .travis.yml para realizar de los tests en travis. Entrega el fic
 
 Entrega un breve descripción de los pasos más importantes para realizar el despliegue desde travis. (3 puntos)
 
-
+***
 
 Vamos a crear el repositorio donde vamos a trabajar.
 También vamos a crear la rama gh-pages, donde estarán los ficheros generados por Hugo.

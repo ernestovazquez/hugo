@@ -15,7 +15,7 @@ Crear tres máquinas en el cloud con los siguientes nombres y sistemas operativo
 - Croqueta y Tortilla usan un volumen como unidad de disco principal.
 - Se creará un usuario "profesor" con el que podrán acceder los profesores usando claves RSA.
 
-
+***
 
 #### **Croqueta: 172.22.200.111**
 

@@ -23,7 +23,7 @@ Entrega el resultado de las siguientes consultas a los servidores de nuestra red
 - Una resolución de un nombre de un servicio
 - Un resolución inversa de IP fija, y otra resolución inversa de IP flotante. (Esta consulta la debes hacer directamente preguntando a tu servidor).
 
-
+***
 
 Asignamos **zonas** :
 

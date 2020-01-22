@@ -11,7 +11,7 @@ En esta tarea vamos a desplegar un CMS python. Hemos elegido Mezzanine, pero pue
 - Guarda los ficheros generados durante la instalación en un repositorio github. Guarda también en ese repositorio la copia de seguridad de la bese de datos.
 - Realiza el despliegue de la aplicación en tu entorno de producción (servidor web y servidor de base de datos en el cloud). Utiliza un entorno virtual. Como servidor de aplicación puedes usar gunicorn o uwsgi (crea una unidad systemd para gestionar este servicio). La aplicación será accesible en la url python.tunombre.gonzalonazareno.org.
 
-
+***
 
 Creamos el entorno virtual en nuestra máquina.
 

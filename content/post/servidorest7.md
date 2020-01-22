@@ -17,7 +17,7 @@ Tarea: Configura manualmente los distintos servicios para crear un nuevo usuario
 Mejora 1: Modifica la configuración del sistema para que se usen usuarios virtuales para el acceso por FTP, cuya información este guardada en vuestro directorio ldap.
 Mejora 2: Realiza un script que automatice la creación/borrado de nuevos usuarios en el hosting.
 
-
+***
 
 Vamos a instalar **phpMyAdmin**:
 

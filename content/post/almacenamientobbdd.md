@@ -1,6 +1,6 @@
 ---
 title: "Diferencias entre MySQL y PostgreSQL respecto a Oracle para gestionar el almacenamiento"
-date: 2020-01-23T23:04:52+01:00
+date: 2020-01-22T09:20:52+01:00
 draft: false
 ---
 

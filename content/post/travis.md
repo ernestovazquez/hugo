@@ -12,7 +12,7 @@ En esta práctica investiga como generar una página web estática con la herram
 - La página se debe generar en el sistema de integración continúa, por lo tanto debemos instalar las herramientas necesarias.
 - Investiga si podemos desplegar de forma automática en el servicio elegido (si es necesario cambia el servicio de hosting para el despliegue).
 
-Tarea 2: Integración continúa de aplicación django (Test + Deploy) (6 puntos)Permalink
+Tarea 2: Integración continúa de aplicación django (Test + Deploy) (6 puntos)
 
 Estudia las distintas pruebas que se han realizado, y modifica el código de la aplicación para que al menos una de ella no se ejecute de manera exitosa. (1 punto)
 

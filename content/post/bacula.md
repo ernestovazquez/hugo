@@ -22,4 +22,24 @@ La corrección consistirá tanto en la restauración puntual de un fichero en cu
 
 ***
 
-Primero vamos a crear una nueva máquina en el cloud
+Instalación de **mysql**:
+
+```
+debian@serranito:~$ sudo apt install mariadb-server mariadb-client
+```
+
+Instalación de **bacula**:
+
+```
+debian@serranito:~$ sudo apt install bacula bacula-client bacula-common-mysql bacula-director-mysql bacula-server
+```
+
+!bacula1.png!
+
+Le damos a **Yes** y ponemos la contraseña.
+
+Vamos al fichero de configuración:
+
+```
+debian@serranito:~$ sudo cat /etc/bacula/bacula-dir.conf
+```

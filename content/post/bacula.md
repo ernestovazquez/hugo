@@ -20,6 +20,6 @@ Implementar un sistema de copias de seguridad para las instancias del cloud, ten
 
 La corrección consistirá tanto en la restauración puntual de un fichero en cualquier fecha como la restauración completa de una de las instancias la última semana de curso.
 
------------------------------------------------------------------
+***
 
 Primero vamos a crear una nueva máquina en el cloud

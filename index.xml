@@ -5,10 +5,19 @@
     <link>/hugo/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 22 Jan 2020 08:04:52 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jan 2020 09:20:52 +0100</lastBuildDate>
     
 	<atom:link href="/hugo/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Diferencias entre MySQL y PostgreSQL respecto a Oracle para gestionar el almacenamiento</title>
+      <link>/hugo/post/almacenamientobbdd/</link>
+      <pubDate>Wed, 22 Jan 2020 09:20:52 +0100</pubDate>
+      
+      <guid>/hugo/post/almacenamientobbdd/</guid>
+      <description>Realizaremos un pequeño artículo o una entrada para un blog técnico explicando las limitaciones que presentan MySQL y Postgres para gestionar el almacenamiento de los datos respecto a ORACLE, si es que presentan alguna.</description>
+    </item>
     
     <item>
       <title>Sistema de copias de seguridad</title>

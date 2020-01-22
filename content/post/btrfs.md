@@ -11,4 +11,4 @@ Elige uno de los dos sistemas de ficheros "avanzados" que hemos visto en clase.
   - Configura los discos en RAID, haciendo pruebas de fallo de algún disco y sustitución, restauración del RAID. Comenta ventajas e inconvenientes respecto al uso de RAID software con mdadm.
   - Realiza ejercicios con pruebas de funcionamiento de las principales funcionalidades: compresión, cow, deduplicación, cifrado, etc.
 
-![paella](https://github.com/ernestovazquez/hugo/blob/gh-pages/img/paella.jpeg)
+![paella](/gh-pages/img/paella.jpeg)

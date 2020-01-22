@@ -752,6 +752,299 @@ ubuntu@tortilla:~$ sudo apt install bacula-client
 [centos@salmorejo ~]$ sudo dnf install bacula-client
 </code></pre>
 
+<pre><code>debian@serranito:~$ sudo nano /etc/bacula/bacula-fd.conf 
+debian@croqueta:~$ sudo nano /etc/bacula/bacula-fd.conf 
+ubuntu@tortilla:~$ sudo nano /etc/bacula/bacula-fd.conf 
+
+Director {
+ Name = directorserranito
+ Password = &quot;ernestovazquez11&quot;
+}
+
+Director {
+ Name = serranito-mon
+ Password = &quot;ernestovazquez11&quot;
+ Monitor = yes
+}
+
+FileDaemon {
+ Name = serranito-fd
+ FDport = 9102
+ WorkingDirectory = /var/lib/bacula
+ Pid Directory = /run/bacula
+ Maximum Concurrent Jobs = 20
+ Plugin Directory = /usr/lib/bacula
+ FDAddress = 10.0.0.11
+}
+
+Messages {
+ Name = Standard
+ director = directorserranito = all, !skipped, !restored
+}
+</code></pre>
+
+<pre><code>[centos@salmorejo ~]$ sudo nano /etc/bacula/bacula-fd.conf 
+
+Director {
+ Name = directorserranito
+ Password = &quot;ernestovazquez11&quot;
+}
+
+Director {
+ Name = serranito-mon
+ Password = &quot;ernestovazquez11&quot;
+ Monitor = yes
+}
+
+FileDaemon {
+  Name = salmorejo-fd
+  FDport = 9102
+  WorkingDirectory = /var/spool/bacula
+  Pid Directory = /var/run
+  Maximum Concurrent Jobs = 20
+  Plugin Directory = /usr/lib64/bacula
+}
+
+Messages {
+ Name = Standard
+ director = directorserranito = all, !skipped, !restored
+}
+</code></pre>
+
+<p>Reiniciamos los servicios:</p>
+
+<pre><code>debian@serranito:~$ sudo systemctl restart bacula-fd.service
+debian@croqueta:~$ sudo systemctl restart bacula-fd.service
+ubuntu@tortilla:~$ sudo systemctl restart bacula-fd.service
+[centos@salmorejo ~]$ sudo systemctl restart bacula-fd.service
+</code></pre>
+
+<p>Reiniciamos los servicios en <strong>serranito</strong></p>
+
+<pre><code>debian@serranito:~$ sudo systemctl restart bacula-sd.service
+debian@serranito:~$ sudo systemctl restart bacula-director.service
+</code></pre>
+
+<p>Abrimos el puerto 9102/TCP en OpenstacK  y en salmorejo lo habilitamos mediante <strong>firewall-cmd</strong>:</p>
+
+<pre><code>[root@salmorejo ~]# firewall-cmd --zone=public --permanent --add-port 9102/tcp
+success
+
+[root@salmorejo ~]# firewall-cmd --reload
+success
+</code></pre>
+
+<p>Estados de los clientes.</p>
+
+<p>Serranito:</p>
+
+<pre><code>debian@serranito:~$ sudo bconsole
+Connecting to Director 10.0.0.11:9101
+1000 OK: 103 directorserranito Version: 9.4.2 (04 February 2019)
+Enter a period to cancel a command.
+*
+*status client
+The defined Client resources are:
+     1: serranito-fd
+     2: croqueta-fd
+     3: tortilla-fd
+     4: salmorejo-fd
+Select Client (File daemon) resource (1-4): 1
+Connecting to Client serranito-fd at 10.0.0.11:9102
+
+serranito-fd Version: 9.4.2 (04 February 2019)  x86_64-pc-linux-gnu debian buster/sid
+Daemon started 22-Jan-20 15:31. Jobs: run=0 running=0.
+ Heap: heap=114,688 smbytes=22,024 max_bytes=22,041 bufs=68 max_bufs=68
+ Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
+ Plugin: bpipe-fd.so 
+
+Running Jobs:
+Director connected at: 22-Jan-20 15:40
+No Jobs running.
+====
+
+Terminated Jobs:
+====
+</code></pre>
+
+<p>Croqueta:</p>
+
+<pre><code>*status client
+The defined Client resources are:
+     1: serranito-fd
+     2: croqueta-fd
+     3: tortilla-fd
+     4: salmorejo-fd
+Select Client (File daemon) resource (1-4): 2
+Connecting to Client croqueta-fd at 10.0.0.10:9102
+
+croqueta-fd Version: 9.4.2 (04 February 2019)  x86_64-pc-linux-gnu debian buster/sid
+Daemon started 22-Jan-20 15:30. Jobs: run=0 running=0.
+ Heap: heap=114,688 smbytes=22,022 max_bytes=22,039 bufs=68 max_bufs=68
+ Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
+ Plugin: bpipe-fd.so 
+
+Running Jobs:
+Director connected at: 22-Jan-20 15:46
+No Jobs running.
+====
+
+Terminated Jobs:
+====
+</code></pre>
+
+<p>Tortilla:</p>
+
+<pre><code>*status client
+The defined Client resources are:
+     1: serranito-fd
+     2: croqueta-fd
+     3: tortilla-fd
+     4: salmorejo-fd
+Select Client (File daemon) resource (1-4): 3
+Connecting to Client tortilla-fd at 10.0.0.4:9102
+
+tortilla-fd Version: 9.0.6 (20 November 2017) x86_64-pc-linux-gnu ubuntu 18.04
+Daemon started 22-Jan-20 15:30. Jobs: run=0 running=0.
+ Heap: heap=110,592 smbytes=21,993 max_bytes=22,010 bufs=68 max_bufs=68
+ Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
+ Plugin: bpipe-fd.so 
+
+Running Jobs:
+Director connected at: 22-Jan-20 15:47
+No Jobs running.
+====
+
+Terminated Jobs:
+====
+</code></pre>
+
+<p>Salmorejo:</p>
+
+<pre><code>*status client
+The defined Client resources are:
+     1: serranito-fd
+     2: croqueta-fd
+     3: tortilla-fd
+     4: salmorejo-fd
+Select Client (File daemon) resource (1-4): 4
+Connecting to Client salmorejo-fd at 10.0.0.13:9102
+
+salmorejo-fd Version: 9.0.6 (20 November 2017) x86_64-redhat-linux-gnu redhat (Core)
+Daemon started 22-Jan-20 15:30. Jobs: run=0 running=0.
+ Heap: heap=102,400 smbytes=21,996 max_bytes=22,013 bufs=68 max_bufs=68
+ Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
+ Plugin: bpipe-fd.so 
+
+Running Jobs:
+Director connected at: 22-Jan-20 15:48
+No Jobs running.
+====
+
+Terminated Jobs:
+====
+</code></pre>
+
+<p>Label:</p>
+
+<pre><code>debian@serranito:~$ sudo bconsole
+Connecting to Director 10.0.0.11:9101
+1000 OK: 103 directorserranito Version: 9.4.2 (04 February 2019)
+Enter a period to cancel a command.
+*label
+Automatically selected Catalog: mysql-bacula
+Using Catalog &quot;mysql-bacula&quot;
+Automatically selected Storage: FileSerranito
+Enter new Volume name: backups
+Defined Pools:
+     1: Daily
+     2: Default
+     3: File
+     4: Monthly
+     5: Scratch
+     6: Vol-Backup
+     7: Weekly
+Select the Pool (1-7): 6
+Connecting to Storage daemon FileSerranito at 10.0.0.11:9103 ...
+Sending label command for Volume &quot;backups&quot; Slot 0 ...
+3000 OK label. VolBytes=226 VolABytes=0 VolType=1 Volume=&quot;backups&quot; Device=&quot;DCopia&quot; (/bacula/Copias)
+Catalog record for Volume &quot;backups&quot;, Slot 0  successfully created.
+Requesting to mount FileAutochanger1 ...
+3906 File device &quot;&quot;DCopia&quot; (/bacula/Copias)&quot; is always mounted.
+</code></pre>
+
+<p>Ya esta configurado para que se hagan de manera programada.
+Prueba manual:</p>
+
+<pre><code>*run
+A job name must be specified.
+The defined Job resources are:
+     1: BackupDiarioSerranito
+     2: BackupDiarioCroqueta
+     3: BackupDiarioTortilla
+     4: BackupDiarioSalmorejo
+     5: BackupSemanalSerranito
+     6: BackupSemanalCroqueta
+     7: BackupSemanalTortilla
+     8: BackupSemanalSalmorejo
+     9: BackupMensualSerranito
+    10: BackupMensualCroqueta
+    11: BackupMensualTortilla
+    12: BackupMensualSalmorejo
+    13: Serranitorestaurar
+    14: Croquetarestaurar
+    15: Tortillarestaurar
+    16: Salmorejorestaurar
+Select Job resource (1-16): 2
+Run Backup job
+JobName:  BackupDiarioCroqueta
+Level:    Incremental
+Client:   croqueta-fd
+FileSet:  CopiaCroqueta
+Pool:     Daily (From Job resource)
+Storage:  FileSerranito (From Job resource)
+When:     2020-01-22 16:06:06
+Priority: 10
+OK to run? (yes/mod/no): yes
+Job queued. JobId=5
+You have messages.
+</code></pre>
+
+<p>Vemos el <strong>estado</strong> del mismo:
+Primero pasa a estado de &ldquo;Running Jobs&rdquo; hasta que termine de realizar la copia de seguridad y pasará a &ldquo;Terminated Jobs&rdquo;</p>
+
+<pre><code>*status client
+The defined Client resources are:
+     1: serranito-fd
+     2: croqueta-fd
+     3: tortilla-fd
+     4: salmorejo-fd
+Select Client (File daemon) resource (1-4): 2
+Connecting to Client croqueta-fd at 10.0.0.10:9102
+
+croqueta-fd Version: 9.4.2 (04 February 2019)  x86_64-pc-linux-gnu debian buster/sid
+Daemon started 22-Jan-20 15:30. Jobs: run=0 running=0.
+ Heap: heap=114,688 smbytes=48,265 max_bytes=48,282 bufs=113 max_bufs=113
+ Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
+ Plugin: bpipe-fd.so 
+
+Running Jobs:
+JobId 5 Job BackupDiarioCroqueta.2020-01-22_16.06.36_04 is running.
+    Full Backup Job started: 22-Jan-20 16:06
+    Files=0 Bytes=0 AveBytes/sec=0 LastBytes/sec=0 Errors=0
+    Bwlimit=0 ReadBytes=0
+    Files: Examined=0 Backed up=0
+    SDReadSeqNo=6 fd=5 SDtls=0
+Director connected at: 22-Jan-20 16:09
+====
+
+Terminated Jobs:
+====
+</code></pre>
+
+<pre><code>illo
+</code></pre>
+
     </section>
     <footer class="post-footer">
       

@@ -82,7 +82,24 @@
 
 <hr />
 
-<p>Primero vamos a crear una nueva máquina en el cloud</p>
+<p>Instalación de <strong>mysql</strong>:</p>
+
+<pre><code>debian@serranito:~$ sudo apt install mariadb-server mariadb-client
+</code></pre>
+
+<p>Instalación de <strong>bacula</strong>:</p>
+
+<pre><code>debian@serranito:~$ sudo apt install bacula bacula-client bacula-common-mysql bacula-director-mysql bacula-server
+</code></pre>
+
+<p>!bacula1.png!</p>
+
+<p>Le damos a <strong>Yes</strong> y ponemos la contraseña.</p>
+
+<p>Vamos al fichero de configuración:</p>
+
+<pre><code>debian@serranito:~$ sudo cat /etc/bacula/bacula-dir.conf
+</code></pre>
 
     </section>
     <footer class="post-footer">

@@ -1,4 +1,8 @@
-# Sistemas de ficheros "avanzados" ZFS/Btrfs
+---
+title: "Sistemas de ficheros avanzados Btrfs"
+date: 2020-01-23T08:04:52+01:00
+draft: false
+---
 
 Elige uno de los dos sistemas de ficheros "avanzados" que hemos visto en clase.
 - Crea un escenario que incluya una máquina y varios discos asociados a ella.

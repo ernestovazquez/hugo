@@ -3,11 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/hugo/post/btrfs/</loc>
-    <lastmod>2020-01-23T12:04:52+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/hugo/post/almacenamientobbdd/</loc>
     <lastmod>2020-01-22T09:20:52+01:00</lastmod>
   </url>
@@ -69,13 +64,13 @@
   
   <url>
     <loc>/hugo/</loc>
-    <lastmod>2020-01-23T12:04:52+01:00</lastmod>
+    <lastmod>2020-01-22T09:20:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/hugo/post/</loc>
-    <lastmod>2020-01-23T12:04:52+01:00</lastmod>
+    <lastmod>2020-01-22T09:20:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   

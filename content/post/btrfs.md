@@ -1,6 +1,6 @@
 ---
 title: "Sistemas de ficheros avanzados Btrfs"
-date: 2020-01-23T08:04:52+01:00
+date: 2020-01-23T12:04:52+01:00
 draft: false
 ---
 

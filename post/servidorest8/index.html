@@ -328,37 +328,57 @@ Installing collected packages: gunicorn
 Successfully installed gunicorn-20.0.4
 </code></pre>
 
-<p><strong>Socket Gunicorn</strong></p>
+<p>VirtualHost:</p>
 
-<pre><code>(produccionmezz) [centos@salmorejo iaw_mezzanine]$ sudo nano /etc/systemd/system/gunicorn.socket
+<pre><code>(entornoproduccion) [centos@salmorejo iaw_mezzanine1]$ sudo nano /etc/nginx/conf.d/wordpress.conf 
 
-[Unit]
-Description=gunicorn socket
+server {
+  listen 80;
 
-[Socket]
-ListenStream=/run/gunicorn.sock
+  root /var/www/wordpress;
+  index index.html index.php;
 
-[Install]
-WantedBy=sockets.target
+  server_name www.ernesto.gonzalonazareno.org;
+
+
+  location ~ \.php$ {
+    fastcgi_pass unix:/var/run/php-fpm/www.sock;
+#    fastcgi_pass 127.0.0.1:9000;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_index index.php;
+    include fastcgi_params;
+  }
+}
 </code></pre>
 
-<p><strong>Unidad de systemd</strong> para gunicorn</p>
+<p>Cambiamos los <strong>permisos</strong> al directorio <strong>static</strong>:</p>
 
-<pre><code>(produccionmezz) [centos@salmorejo iaw_mezzanine]$ sudo nano /etc/systemd/system/gunicorn.service
-
-[Unit]
-Description=gunicorn daemon
-After=network.target
-
-[Service]
-WorkingDirectory=/usr/share/nginx/html/iaw_mezzanine
-ExecStart=/bin/bash /usr/share/nginx/html/iaw_mezzanine/script.sh
-ExecReload=/bin/bash /usr/share/nginx/html/iaw_mezzanine/script.sh
-RemainAfterExit=yes
-
-[Install]
-WantedBy=multi-user.target
+<pre><code>[centos@salmorejo iaw_mezzanine1]$ sudo chown -R centos:centos /var/www/iaw_mezzanine1
+[centos@salmorejo iaw_mezzanine1]$ python3 manage.py collectstatic
+[centos@salmorejo iaw_mezzanine1]$ sudo chown -R nginx:nginx /var/www/iaw_mezzanine1
 </code></pre>
+
+<p>Reglas de SELinux:</p>
+
+<pre><code>[centos@salmorejo iaw_mezzanine1]$ sudo setsebool -P httpd_can_network_connect on
+[centos@salmorejo iaw_mezzanine1]$ sudo find /var/www/iaw_mezzanine1 -type f -exec chmod 0644 {} \;
+[centos@salmorejo iaw_mezzanine1]$ sudo find /var/www/iaw_mezzanine1 -type d -exec chmod 0755 {} \;
+[centos@salmorejo iaw_mezzanine1]$ sudo chcon -t httpd_sys_rw_content_t /var/www/iaw_mezzanine1 -R
+</code></pre>
+
+<p>Y ponemos el servidor <strong>gunicorn</strong> en funcionamiento:</p>
+
+<pre><code>(entornoproduccion) [centos@salmorejo iaw_mezzanine1]$ gunicorn -w 2 -b :8080 iaw_mezzanine.wsgi:application &amp;
+</code></pre>
+
+<p>Añadimos una nueva entrada al <strong>DNS</strong></p>
+
+<pre><code>python          IN      CNAME   salmorejo
+</code></pre>
+
+<p><img src="https://raw.githubusercontent.com/ernestovazquez/hugo/gh-pages/img/pythonernestogonzalo.png" alt="pythonernestogonzalo" /></p>
+
+<p><img src="https://raw.githubusercontent.com/ernestovazquez/hugo/gh-pages/img/pythonernesto.png" alt="pythonernesto" /></p>
 
     </section>
     <footer class="post-footer">

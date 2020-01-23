@@ -44,7 +44,7 @@ Vamos al fichero de configuración:
 debian@serranito:~$ sudo cat /etc/bacula/bacula-dir.conf
 
 Director {
-  Name = directorserranito
+  Name = serranito-dir
   DIRport = 9101
   QueryFile = "/etc/bacula/scripts/query.sql"
   WorkingDirectory = "/var/lib/bacula"
@@ -52,17 +52,18 @@ Director {
   Maximum Concurrent Jobs = 20
   Password = "ernestovazquez11"
   Messages = Daemon
-  DirAddress = 10.0.0.11
+  DirAddress = 10.0.0.8
 }
 
+
 JobDefs {
-  Name = "JobDaily"
+  Name = "Tarea-Diaria"
   Type = Backup
   Level = Incremental
   Client = serranito-fd
-  Schedule = "HorarioDiario"
+  Schedule = "Programa-Diario"
   Pool = Daily
-  Storage = FileSerranito
+  Storage = Vol-Serranito
   Messages = Standard
   SpoolAttributes = yes
   Priority = 10
@@ -71,12 +72,12 @@ JobDefs {
 
 
 JobDefs {
-  Name = "JobWeekly"
+  Name = "Tarea-Semanal"
   Type = Backup
   Client = serranito-fd
-  Schedule = "HorarioSemanal"
+  Schedule = "Programa-Semanal"
   Pool = Weekly
-  Storage = FileSerranito
+  Storage = Vol-Serranito
   Messages = Standard
   SpoolAttributes = yes
   Priority = 10
@@ -85,12 +86,12 @@ JobDefs {
 
 
 JobDefs {
-  Name = "JobMonthly"
+  Name = "Tarea-Mensual"
   Type = Backup
   Client = serranito-fd
-  Schedule = "HorarioMensual"
+  Schedule = "Programa-Mensual"
   Pool = Monthly
-  Storage = FileSerranito
+  Storage = Vol-Serranito
   Messages = Standard
   SpoolAttributes = yes
   Priority = 10
@@ -98,143 +99,141 @@ JobDefs {
 }
 
 
+
+# Diariamente
+
 Job {
- Name = "BackupDiarioSerranito"
- JobDefs = "JobDaily"
+ Name = "Daily-Backup-Serranito"
+ JobDefs = "Tarea-Diaria"
  Client = "serranito-fd"
- FileSet= "CopiaSerranito"
+ FileSet= "Copia-Serranito"
 }
 
-
 Job {
- Name = "BackupDiarioCroqueta"
- JobDefs = "JobDaily"
+ Name = "Daily-Backup-Croqueta"
+ JobDefs = "Tarea-Diaria"
  Client = "croqueta-fd"
- FileSet= "CopiaCroqueta"
+ FileSet= "Copia-Croqueta"
 }
 
-
 Job {
- Name = "BackupDiarioTortilla"
- JobDefs = "JobDaily"
+ Name = "Daily-Backup-Tortilla"
+ JobDefs = "Tarea-Diaria"
  Client = "tortilla-fd"
- FileSet= "CopiaTortilla"
+ FileSet= "Copia-Tortilla"
 }
 
-
 Job {
- Name = "BackupDiarioSalmorejo"
- JobDefs = "JobDaily"
+ Name = "Daily-Backup-Salmorejo"
+ JobDefs = "Tarea-Diaria"
  Client = "salmorejo-fd"
- FileSet= "CopiaSalmorejo"
+ FileSet= "Copia-Salmorejo"
 }
 
+# Semanalmente
 
 Job {
- Name = "BackupSemanalSerranito"
- JobDefs = "JobWeekly"
+ Name = "Weekly-Backup-Serranito"
+ JobDefs = "Tarea-Semanal"
  Client = "serranito-fd"
- FileSet= "CopiaSerranito"
+ FileSet= "Copia-Serranito"
 }
 
-
 Job {
- Name = "BackupSemanalCroqueta"
- JobDefs = "JobWeekly"
+ Name = "Weekly-Backup-Croqueta"
+ JobDefs = "Tarea-Semanal"
  Client = "croqueta-fd"
- FileSet= "CopiaCroqueta"
+ FileSet= "Copia-Croqueta"
 }
 
 Job {
- Name = "BackupSemanalTortilla"
- JobDefs = "JobWeekly"
+ Name = "Weekly-Backup-Tortilla"
+ JobDefs = "Tarea-Semanal"
  Client = "tortilla-fd"
- FileSet= "CopiaTortilla"
+ FileSet= "Copia-Tortilla"
 }
 
 Job {
- Name = "BackupSemanalSalmorejo"
- JobDefs = "JobWeekly"
+ Name = "Weekly-Backup-Salmorejo"
+ JobDefs = "Tarea-Semanal"
  Client = "salmorejo-fd"
- FileSet= "CopiaSalmorejo"
+ FileSet= "Copia-Salmorejo"
 }
 
+# Mensualmente
 
 Job {
- Name = "BackupMensualSerranito"
- JobDefs = "JobMonthly"
+ Name = "Monthly-Backup-Serranito"
+ JobDefs = "Tarea-Mensual"
  Client = "serranito-fd"
- FileSet= "CopiaSerranito"
+ FileSet= "Copia-Serranito"
 }
 
-
 Job {
- Name = "BackupMensualCroqueta"
- JobDefs = "JobMonthly"
+ Name = "Monthly-Backup-Croqueta"
+ JobDefs = "Tarea-Mensual"
  Client = "croqueta-fd"
- FileSet= "CopiaCroqueta"
+ FileSet= "Copia-Croqueta"
 }
 
-
 Job {
- Name = "BackupMensualTortilla"
- JobDefs = "JobMonthly"
+ Name = "Monthly-Backup-Tortilla"
+ JobDefs = "Tarea-Mensual"
  Client = "tortilla-fd"
- FileSet= "CopiaTortilla"
+ FileSet= "Copia-Tortilla"
 }
 
-
 Job {
- Name = "BackupMensualSalmorejo"
- JobDefs = "JobMonthly"
+ Name = "Monthly-Backup-Salmorejo"
+ JobDefs = "Tarea-Mensual"
  Client = "salmorejo-fd"
- FileSet= "CopiaSalmorejo"
+ FileSet= "Copia-Salmorejo"
 }
 
 
 Job {
- Name = "Serranitorestaurar"
+ Name = "Restore-Serranito"
  Type = Restore
  Client=serranito-fd
- FileSet= "CopiaSerranito"
- Storage = FileSerranito
+ FileSet= "Copia-Serranito"
+ Storage = Vol-Serranito
  Pool = Vol-Backup
  Messages = Standard
 }
 
 Job {
- Name = "Croquetarestaurar"
+ Name = "Restore-Croqueta"
  Type = Restore
  Client=croqueta-fd
- FileSet= "CopiaCroqueta"
- Storage = FileSerranito
+ FileSet= "Copia-Croqueta"
+ Storage = Vol-Serranito
  Pool = Vol-Backup
  Messages = Standard
 }
 
 Job {
- Name = "Tortillarestaurar"
+ Name = "Restore-Tortilla"
  Type = Restore
  Client=tortilla-fd
- FileSet= "CopiaTortilla"
- Storage = FileSerranito
+ FileSet= "Copia-Tortilla"
+ Storage = Vol-Serranito
  Pool = Vol-Backup
  Messages = Standard
 }
 
 Job {
- Name = "Salmorejorestaurar"
+ Name = "Restore-Salmorejo"
  Type = Restore
  Client=salmorejo-fd
- FileSet= "CopiaSalmorejo"
- Storage = FileSerranito
+ FileSet= "Copia-Salmorejo"
+ Storage = Vol-Serranito
  Pool = Vol-Backup
  Messages = Standard
 }
 
 
 FileSet {
- Name = "CopiaSerranito"
+ Name = "Copia-Serranito"
  Include {
     Options {
         signature = MD5
@@ -258,7 +257,7 @@ FileSet {
 }
 
 FileSet {
- Name = "CopiaCroqueta"
+ Name = "Copia-Croqueta"
  Include {
     Options {
         signature = MD5
@@ -281,7 +280,7 @@ FileSet {
 }
 
 FileSet {
- Name = "CopiaTortilla"
+ Name = "Copia-Tortilla"
  Include {
     Options {
         signature = MD5
@@ -305,7 +304,7 @@ FileSet {
 }
 
 FileSet {
- Name = "CopiaSalmorejo"
+ Name = "Copia-Salmorejo"
  Include {
     Options {
         signature = MD5
@@ -331,24 +330,25 @@ FileSet {
 
 
 Schedule {
- Name = "HorarioDiario"
- Run = Level=Incremental Pool=Daily daily at 21:30
+ Name = "Programa-Diario"
+ Run = Level=Incremental Pool=Daily daily at 20:59
 }
 
 Schedule {
- Name = "HorarioSemanal"
- Run = Level=Full Pool=Weekly sat at 20:00
+ Name = "Programa-Semanal"
+ Run = Level=Full Pool=Weekly sat at 23:50
 }
 
 Schedule {
- Name = "HorarioMensual"
- Run = Level=Full Pool=Monthly 1st sun at 22:00 
+ Name = "Programa-Mensual"
+ Run = Level=Full Pool=Monthly 1st sun at 23:50 
 }
 
+# Indicar los cliente
 
 Client {
  Name = serranito-fd
- Address = 10.0.0.11
+ Address = 10.0.0.8
  FDPort = 9102
  Catalog = mysql-bacula
  Password = "ernestovazquez11"
@@ -356,7 +356,6 @@ Client {
  Job Retention = 6 months
  AutoPrune = yes
 }
-
 
 Client {
  Name = croqueta-fd
@@ -369,7 +368,6 @@ Client {
  AutoPrune = yes
 }
 
-
 Client {
  Name = tortilla-fd
  Address = 10.0.0.4
@@ -380,7 +378,6 @@ Client {
  Job Retention = 6 months
  AutoPrune = yes
 }
-
 
 Client {
  Name = salmorejo-fd
@@ -394,9 +391,10 @@ Client {
 }
 
 
+
 Storage {
- Name = FileSerranito
- Address = 10.0.0.11
+ Name = Vol-Serranito
+ Address = 10.0.0.8
  SDPort = 9103
  Password = "ernestovazquez11"
  Device = FileAutochanger1
@@ -404,6 +402,7 @@ Storage {
  Maximum Concurrent Jobs = 10
 }
 
+# Indicar la base de datos
 
 Catalog {
  Name = mysql-bacula
@@ -448,9 +447,12 @@ Pool {
  Volume Retention = 365 days 
  Maximum Volume Bytes = 50G
  Maximum Volumes = 100
- Label Format = "Volumenlabel"
+ Label Format = "Remoto"
 }
 
+
+# Por defecto
+# -------------------------------------------------------
 
 # Reasonable message delivery -- send most everything to email address
 #  and to the console
@@ -515,30 +517,35 @@ Pool {
 #
 Console {
   Name = serranito-mon
-  Password = "fIw4a5kGo9eA-lUCL9vyFEpbrANkwG1K4"
+  Password = "6URHdHljsXACPlryk6so_xCbGqrmkYgFb"
   CommandACL = status, .status
 }
 ```
 
-Asignamos el **volumen** nuevo en OpenStack.
+
+Vamos a configurar el volumen.
 
 ```
 debian@serranito:~$ lsblk -f
-NAME   FSTYPE LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINT
-vda                                                                     
-└─vda1 ext4         6197e068-a892-45cb-9672-a05813e800ee    7.3G    22% /
-vdb                                                                     
+
+NAME FSTYPE LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINT
+vda                                                                   
+└─vda1
+     ext4         6197e068-a892-45cb-9672-a05813e800ee      8G    14% /
+vdb                                                                   
 ```
 
+Creamos una partición con:
+
 ```
-debian@serranito:~$ sudo fdisk /dev/vdb
+debian@serranito:~$ sudo fdisk /dev/vdb 
 
 Welcome to fdisk (util-linux 2.33.1).
 Changes will remain in memory only, until you decide to write them.
 Be careful before using the write command.
 
 Device does not contain a recognized partition table.
-Created a new DOS disklabel with disk identifier 0xe688ea79.
+Created a new DOS disklabel with disk identifier 0x73b8d268.
 
 Command (m for help): n
 Partition type
@@ -557,7 +564,7 @@ Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disklabel type: dos
-Disk identifier: 0xe688ea79
+Disk identifier: 0x73b8d268
 
 Device     Boot Start      End  Sectors Size Id Type
 /dev/vdb1        2048 10485759 10483712   5G 83 Linux
@@ -568,14 +575,14 @@ Calling ioctl() to re-read partition table.
 Syncing disks.
 ```
 
-Formateamos la partición
+La formateamos con:
 
 ```
 debian@serranito:~$ sudo mkfs.ext4 /dev/vdb1 
 
 mke2fs 1.44.5 (15-Dec-2018)
 Creating filesystem with 1310464 4k blocks and 327680 inodes
-Filesystem UUID: 92d0b792-c34f-4866-a8fd-48380d4513ad
+Filesystem UUID: d65f629a-be7a-43a9-a93c-a5d2a507d8fc
 Superblock backups stored on blocks: 
 	32768, 98304, 163840, 229376, 294912, 819200, 884736
 
@@ -585,42 +592,37 @@ Creating journal (16384 blocks): done
 Writing superblocks and filesystem accounting information: done 
 ```
 
-```
-debian@serranito:~$ lsblk -f
-
-NAME   FSTYPE LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINT
-vda                                                                     
-└─vda1 ext4         6197e068-a892-45cb-9672-a05813e800ee    7.3G    22% /
-vdb                                                                     
-└─vdb1 ext4         92d0b792-c34f-4866-a8fd-48380d4513ad    
-```            
-
-Vamos a montarlo, para ello vamos a crear una carpeta donde estarán las copias de seguridad.
+Creamos el directorio para las copias y le cambiamos los permisos:
 
 ```
-debian@serranito:~$ sudo mkdir -p /bacula/Copias
-```
-Editamos el fichero de configuración y agregamos lo siguiente:
-
-```
-debian@serranito:~$ sudo nano /etc/fstab 
-
-UUID=92d0b792-c34f-4866-a8fd-48380d4513ad       /bacula/Copias  ext4    defaults        0       0
+debian@serranito:~$ sudo mkdir -p /bacula/Copias_de_Seguridad
+debian@serranito:~$ sudo chown bacula:bacula /bacula -R
+debian@serranito:~$ sudo chmod 755 /bacula -R
 ```
 
-Dicho UUID se obtiene de esta manera:
+Necesitaremos el identificador siguiente para el fichero /etc/fstab.
 
 ```
-debian@serranito:~$ lsblk -f | egrep "vdb1 *" | cut -d" " -f11
-92d0b792-c34f-4866-a8fd-48380d4513ad
+debian@serranito:~$ lsblk -f | egrep "vdb1 *"
+└─vdb1 ext4         d65f629a-be7a-43a9-a93c-a5d2a507d8fc                
+
+debian@serranito:~$ sudo nano /etc/fstab
+UUID=d65f629a-be7a-43a9-a93c-a5d2a507d8fc     /bacula/Copias_de_Seguridad     ext4     defaults     0     0
 ```
 
-### Configuración bacula-sd.conf
+```
+debian@serranito:~$ lsblk -l
+NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+vda  254:0    0  10G  0 disk 
+vda1 254:1    0  10G  0 part /
+vdb  254:16   0   5G  0 disk 
+vdb1 254:17   0   5G  0 part /bacula/Copias_de_Seguridad
+```
 
-Editamos el siguiente fichero de configuración:
+Vamos a configurar el otro fichero de configuración bacula-sd.conf
 
 ```
-debian@serranito:~$ sudo nano /etc/bacula/bacula-sd.conf 
+debian@serranito:~$ sudo nano /etc/bacula/bacula-sd.conf
 
 Storage { 
  Name = serranito-sd
@@ -628,12 +630,12 @@ Storage {
  WorkingDirectory = "/var/lib/bacula"
  Pid Directory = "/run/bacula"
  Maximum Concurrent Jobs = 20
- SDAddress = 10.0.0.11
+ SDAddress = 10.0.0.8
 }
 
 
 Director {
- Name = directorserranito
+ Name = serranito-dir
  Password = "ernestovazquez11"
 }
 
@@ -668,48 +670,39 @@ Device {
 
 Messages {
   Name = Standard
-  director = directorserranito = all
+  director = serranito-dir = all
 }
-```
+``` 
 
-Reiniciamos los servicios
-
-```
-debian@serranito:~$ sudo systemctl restart bacula-director.service
-debian@serranito:~$ sudo systemctl restart bacula-sd.service
-```
-
-Modificamos el fichero **bconsole.conf**:
+Editamos el siguiente fichero:
 
 ```
-debian@serranito:~$ sudo nano /etc/bacula/bconsole.conf 
+debian@serranito:~$ sudo nano /etc/bacula/bconsole.conf
 
 Director {
-  Name = directorserranito
+  Name = serranito-dir
   DIRport = 9101
-  address = 10.0.0.11
-  Password = "ernestovazquez11" 
+  address = 10.0.0.8
+  Password = "ernestovazquez11"
 }
 ```
 
-### Clientes
-
-Vamos a instalar los clientes en los diferentes servidores del cloud.
+Instalamos los clientes de bacula:
 
 ```
-debian@serranito:~$ sudo apt install bacula-client
 debian@croqueta:~$ sudo apt install bacula-client
 ubuntu@tortilla:~$ sudo apt install bacula-client
-[centos@salmorejo ~]$ sudo dnf install bacula-client
+debian@serranito:~$ sudo apt install bacula-client
+[root@salmorejo ~]# sudo dnf -y install bacula-client
 ```
 
+A continuación pondremos la configuración en el siguiente fichero:
+
 ```
-debian@serranito:~$ sudo nano /etc/bacula/bacula-fd.conf 
-debian@croqueta:~$ sudo nano /etc/bacula/bacula-fd.conf 
-ubuntu@tortilla:~$ sudo nano /etc/bacula/bacula-fd.conf 
+debian@croqueta:~$ sudo nano /etc/bacula/bacula-fd.conf
 
 Director {
- Name = directorserranito
+ Name = serranito-dir
  Password = "ernestovazquez11"
 }
 
@@ -720,26 +713,26 @@ Director {
 }
 
 FileDaemon {
- Name = serranito-fd
+ Name = croqueta-fd
  FDport = 9102
  WorkingDirectory = /var/lib/bacula
  Pid Directory = /run/bacula
  Maximum Concurrent Jobs = 20
  Plugin Directory = /usr/lib/bacula
- FDAddress = 10.0.0.11
+ FDAddress = 10.0.0.10
 }
 
 Messages {
  Name = Standard
- director = directorserranito = all, !skipped, !restored
+ director = serranito-dir = all, !skipped, !restored
 }
 ```
 
 ```
-[centos@salmorejo ~]$ sudo nano /etc/bacula/bacula-fd.conf 
+[root@salmorejo ~]# sudo nano /etc/bacula/bacula-fd.conf
 
 Director {
- Name = directorserranito
+ Name = serranito-dir
  Password = "ernestovazquez11"
 }
 
@@ -760,253 +753,33 @@ FileDaemon {
 
 Messages {
  Name = Standard
- director = directorserranito = all, !skipped, !restored
+ director = serranito-dir = all, !skipped, !restored
 }
 ```
 
-Reiniciamos los servicios:
+Reinciamos los servicios:
 
 ```
 debian@serranito:~$ sudo systemctl restart bacula-fd.service
 debian@croqueta:~$ sudo systemctl restart bacula-fd.service
 ubuntu@tortilla:~$ sudo systemctl restart bacula-fd.service
-[centos@salmorejo ~]$ sudo systemctl restart bacula-fd.service
+[root@salmorejo ~]# sudo systemctl restart bacula-fd.service
 ```
 
-Reiniciamos los servicios en **serranito**
+Reiniciamos servicios del servidor en serranito:
 
 ```
 debian@serranito:~$ sudo systemctl restart bacula-sd.service
 debian@serranito:~$ sudo systemctl restart bacula-director.service
 ```
 
-Abrimos el puerto 9102/TCP en OpenstacK  y en salmorejo lo habilitamos mediante **firewall-cmd**:
+Abrimos los puertos 9102/TCP en Openstack
+
+Puertos en salmorejo:
 
 ```
 [root@salmorejo ~]# firewall-cmd --zone=public --permanent --add-port 9102/tcp
-success
-
 [root@salmorejo ~]# firewall-cmd --reload
-success
-```
-
-Estados de los clientes.
-
-Serranito:
-
-```
-debian@serranito:~$ sudo bconsole
-Connecting to Director 10.0.0.11:9101
-1000 OK: 103 directorserranito Version: 9.4.2 (04 February 2019)
-Enter a period to cancel a command.
-*
-*status client
-The defined Client resources are:
-     1: serranito-fd
-     2: croqueta-fd
-     3: tortilla-fd
-     4: salmorejo-fd
-Select Client (File daemon) resource (1-4): 1
-Connecting to Client serranito-fd at 10.0.0.11:9102
-
-serranito-fd Version: 9.4.2 (04 February 2019)  x86_64-pc-linux-gnu debian buster/sid
-Daemon started 22-Jan-20 15:31. Jobs: run=0 running=0.
- Heap: heap=114,688 smbytes=22,024 max_bytes=22,041 bufs=68 max_bufs=68
- Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
- Plugin: bpipe-fd.so 
-
-Running Jobs:
-Director connected at: 22-Jan-20 15:40
-No Jobs running.
-====
-
-Terminated Jobs:
-====
-```
-
-Croqueta:
-
-```
-*status client
-The defined Client resources are:
-     1: serranito-fd
-     2: croqueta-fd
-     3: tortilla-fd
-     4: salmorejo-fd
-Select Client (File daemon) resource (1-4): 2
-Connecting to Client croqueta-fd at 10.0.0.10:9102
-
-croqueta-fd Version: 9.4.2 (04 February 2019)  x86_64-pc-linux-gnu debian buster/sid
-Daemon started 22-Jan-20 15:30. Jobs: run=0 running=0.
- Heap: heap=114,688 smbytes=22,022 max_bytes=22,039 bufs=68 max_bufs=68
- Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
- Plugin: bpipe-fd.so 
-
-Running Jobs:
-Director connected at: 22-Jan-20 15:46
-No Jobs running.
-====
-
-Terminated Jobs:
-====
-```
-
-Tortilla:
-
-```
-*status client
-The defined Client resources are:
-     1: serranito-fd
-     2: croqueta-fd
-     3: tortilla-fd
-     4: salmorejo-fd
-Select Client (File daemon) resource (1-4): 3
-Connecting to Client tortilla-fd at 10.0.0.4:9102
-
-tortilla-fd Version: 9.0.6 (20 November 2017) x86_64-pc-linux-gnu ubuntu 18.04
-Daemon started 22-Jan-20 15:30. Jobs: run=0 running=0.
- Heap: heap=110,592 smbytes=21,993 max_bytes=22,010 bufs=68 max_bufs=68
- Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
- Plugin: bpipe-fd.so 
-
-Running Jobs:
-Director connected at: 22-Jan-20 15:47
-No Jobs running.
-====
-
-Terminated Jobs:
-====
-```
-
-Salmorejo:
-
-```
-*status client
-The defined Client resources are:
-     1: serranito-fd
-     2: croqueta-fd
-     3: tortilla-fd
-     4: salmorejo-fd
-Select Client (File daemon) resource (1-4): 4
-Connecting to Client salmorejo-fd at 10.0.0.13:9102
-
-salmorejo-fd Version: 9.0.6 (20 November 2017) x86_64-redhat-linux-gnu redhat (Core)
-Daemon started 22-Jan-20 15:30. Jobs: run=0 running=0.
- Heap: heap=102,400 smbytes=21,996 max_bytes=22,013 bufs=68 max_bufs=68
- Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
- Plugin: bpipe-fd.so 
-
-Running Jobs:
-Director connected at: 22-Jan-20 15:48
-No Jobs running.
-====
-
-Terminated Jobs:
-====
-```
-
-Label:
-
-```
-debian@serranito:~$ sudo bconsole
-Connecting to Director 10.0.0.11:9101
-1000 OK: 103 directorserranito Version: 9.4.2 (04 February 2019)
-Enter a period to cancel a command.
-*label
-Automatically selected Catalog: mysql-bacula
-Using Catalog "mysql-bacula"
-Automatically selected Storage: FileSerranito
-Enter new Volume name: backups
-Defined Pools:
-     1: Daily
-     2: Default
-     3: File
-     4: Monthly
-     5: Scratch
-     6: Vol-Backup
-     7: Weekly
-Select the Pool (1-7): 6
-Connecting to Storage daemon FileSerranito at 10.0.0.11:9103 ...
-Sending label command for Volume "backups" Slot 0 ...
-3000 OK label. VolBytes=226 VolABytes=0 VolType=1 Volume="backups" Device="DCopia" (/bacula/Copias)
-Catalog record for Volume "backups", Slot 0  successfully created.
-Requesting to mount FileAutochanger1 ...
-3906 File device ""DCopia" (/bacula/Copias)" is always mounted.
-```
-
-Ya esta configurado para que se hagan de manera programada.
-Prueba manual:
-
-```
-*run
-A job name must be specified.
-The defined Job resources are:
-     1: BackupDiarioSerranito
-     2: BackupDiarioCroqueta
-     3: BackupDiarioTortilla
-     4: BackupDiarioSalmorejo
-     5: BackupSemanalSerranito
-     6: BackupSemanalCroqueta
-     7: BackupSemanalTortilla
-     8: BackupSemanalSalmorejo
-     9: BackupMensualSerranito
-    10: BackupMensualCroqueta
-    11: BackupMensualTortilla
-    12: BackupMensualSalmorejo
-    13: Serranitorestaurar
-    14: Croquetarestaurar
-    15: Tortillarestaurar
-    16: Salmorejorestaurar
-Select Job resource (1-16): 2
-Run Backup job
-JobName:  BackupDiarioCroqueta
-Level:    Incremental
-Client:   croqueta-fd
-FileSet:  CopiaCroqueta
-Pool:     Daily (From Job resource)
-Storage:  FileSerranito (From Job resource)
-When:     2020-01-22 16:06:06
-Priority: 10
-OK to run? (yes/mod/no): yes
-Job queued. JobId=5
-You have messages.
-```
-
-Vemos el **estado** del mismo:
-Primero pasa a estado de "Running Jobs" hasta que termine de realizar la copia de seguridad y pasará a "Terminated Jobs"
-
-```
-*status client
-The defined Client resources are:
-     1: serranito-fd
-     2: croqueta-fd
-     3: tortilla-fd
-     4: salmorejo-fd
-Select Client (File daemon) resource (1-4): 2
-Connecting to Client croqueta-fd at 10.0.0.10:9102
-
-croqueta-fd Version: 9.4.2 (04 February 2019)  x86_64-pc-linux-gnu debian buster/sid
-Daemon started 22-Jan-20 15:30. Jobs: run=0 running=0.
- Heap: heap=114,688 smbytes=48,265 max_bytes=48,282 bufs=113 max_bufs=113
- Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
- Plugin: bpipe-fd.so 
-
-Running Jobs:
-JobId 5 Job BackupDiarioCroqueta.2020-01-22_16.06.36_04 is running.
-    Full Backup Job started: 22-Jan-20 16:06
-    Files=0 Bytes=0 AveBytes/sec=0 LastBytes/sec=0 Errors=0
-    Bwlimit=0 ReadBytes=0
-    Files: Examined=0 Backed up=0
-    SDReadSeqNo=6 fd=5 SDtls=0
-Director connected at: 22-Jan-20 16:09
-====
-
-Terminated Jobs:
-====
-```
-
-```
-illo
 ```
 
 

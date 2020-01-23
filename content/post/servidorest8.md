@@ -13,6 +13,8 @@ En esta tarea vamos a desplegar un CMS python. Hemos elegido Mezzanine, pero pue
 
 ***
 
+#### Entorno de producción
+
 Creamos el entorno virtual en nuestra máquina.
 
 Instalamos **Mezzanine** con:
@@ -123,7 +125,7 @@ To github.com:ernestovazquez/mezzanineernesto.git
    a262af4..79aa9ef  master -> master
 ```
 
-4. Trabajamos en el entorno de **desarrollo** .
+#### Trabajamos en el entorno de **desarrollo** .
 
 Clonamos el repositorio en el **DocumentRoot**
 

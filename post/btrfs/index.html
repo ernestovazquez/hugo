@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      Sistemas de ficheros avanzados Btrfs - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/hugo/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/hugo/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/hugo/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title">Sistemas de ficheros avanzados Btrfs</h2>
+      <section class="post-meta">
+        <time class="post-date">January 23, 2020</time>
+      </section>
+    </header>
+    <section class="post-content">
+      
+
+<p>Elige uno de los dos sistemas de ficheros &ldquo;avanzados&rdquo; que hemos visto en clase.
+- Crea un escenario que incluya una máquina y varios discos asociados a ella.
+- Instala si es necesario el software de ZFS/Btrfs
+- Gestiona los discos adicionales con ZFS/Btrfs.
+- Configura los discos en RAID, haciendo pruebas de fallo de algún disco y sustitución, restauración del RAID. Comenta ventajas e inconvenientes respecto al uso de RAID software con mdadm
+- Realiza ejercicios con pruebas de funcionamiento de las principales funcionalidades: compresión, cow, deduplicación, cifrado, etc.</p>
+
+<hr />
+
+<p>Vamos a crear una máquina Debian con tres discos asociados a ella.</p>
+
+<p>Los discos serán de 1GB, 2GB y de 3GB.</p>
+
+<p>Vagranfile:</p>
+
+<pre><code>Vagrant.configure(&quot;2&quot;) do |config|
+disco1='.vagrant/disco01.vdi'
+disco2='.vagrant/disco02.vdi'
+disco3='.vagrant/disco03.vdi'
+ config.vm.define :btrfs do |btrfs|
+  btrfs.vm.box = &quot;debian/buster64&quot;
+  btrfs.vm.hostname = &quot;btrfs&quot;
+  btrfs.vm.provider :virtualbox do |v|
+  v.customize [&quot;createhd&quot;, &quot;--filename&quot;, disco1, &quot;--size&quot;, 1024]
+  v.customize [&quot;storageattach&quot;, :id, &quot;--storagectl&quot;, &quot;SATA Controller&quot;,
+  &quot;--port&quot;, 1, &quot;--device&quot;, 0, &quot;--type&quot;, &quot;hdd&quot;,
+  &quot;--medium&quot;, disco1]
+  v.customize [&quot;createhd&quot;, &quot;--filename&quot;, disco2, &quot;--size&quot;, 2048]
+  v.customize [&quot;storageattach&quot;, :id, &quot;--storagectl&quot;, &quot;SATA Controller&quot;,
+  &quot;--port&quot;, 2, &quot;--device&quot;, 0, &quot;--type&quot;, &quot;hdd&quot;,
+  &quot;--medium&quot;, disco2]
+  v.customize [&quot;createhd&quot;, &quot;--filename&quot;, disco3, &quot;--size&quot;, 3072]
+  v.customize [&quot;storageattach&quot;, :id, &quot;--storagectl&quot;, &quot;SATA Controller&quot;,
+  &quot;--port&quot;, 3, &quot;--device&quot;, 0, &quot;--type&quot;, &quot;hdd&quot;,
+  &quot;--medium&quot;, disco3]
+  end
+end
+end
+</code></pre>
+
+<h4 id="gestión-de-discos-adicionales">Gestión de discos adicionales</h4>
+
+<p>Primero tenemos que instalar btrfs:</p>
+
+<pre><code>root@btrfs:~# apt install btrfs-tools
+</code></pre>
+
+<p>Vamos a formatear los discos con Btrfs:</p>
+
+<pre><code>root@btrfs:~# mkfs.btrfs /dev/sdc 
+btrfs-progs v4.20.1 
+See http://btrfs.wiki.kernel.org for more information.
+
+Label:              (null)
+UUID:               6dcf0480-3dbd-4497-b4b8-658ca3509c99
+Node size:          16384
+Sector size:        4096
+Filesystem size:    2.00GiB
+Block group profiles:
+  Data:             single            8.00MiB
+  Metadata:         DUP             102.38MiB
+  System:           DUP               8.00MiB
+SSD detected:       no
+Incompat features:  extref, skinny-metadata
+Number of devices:  1
+Devices:
+   ID        SIZE  PATH
+    1     2.00GiB  /dev/sdc
+</code></pre>
+
+<p>Para montar un disco haremos lo siguiente:</p>
+
+<pre><code>root@btrfs:~# mount /dev/sdb /mnt
+</code></pre>
+
+<p>Para ver la salida del disco que hemos montado pondremos lo siguiente:
+Donde pondremos la ruta de montaje del disco.</p>
+
+<pre><code>root@btrfs:~# btrfs fi usage /mnt
+Overall:
+    Device size:		   1.00GiB
+    Device allocated:		 126.38MiB
+    Device unallocated:		 897.62MiB
+    Device missing:		     0.00B
+    Used:			 256.00KiB
+    Free (estimated):		 905.62MiB	(min: 456.81MiB)
+    Data ratio:			      1.00
+    Metadata ratio:		      2.00
+    Global reserve:		  16.00MiB	(used: 0.00B)
+
+Data,single: Size:8.00MiB, Used:0.00B
+   /dev/sdb	   8.00MiB
+
+Metadata,DUP: Size:51.19MiB, Used:112.00KiB
+   /dev/sdb	 102.38MiB
+
+System,DUP: Size:8.00MiB, Used:16.00KiB
+   /dev/sdb	  16.00MiB
+
+Unallocated:
+   /dev/sdb	 897.62MiB
+</code></pre>
+
+<p>Vamos añadir un nuevo disco a dicha ruta de montaje (/mnt):
+La opción <strong>-f</strong> es necesaria ya que dicho disco ya tiene <strong>Btrfs</strong>.
+Ahora aumentará el tamaño disponible de la ruta <strong>/mnt</strong></p>
+
+<pre><code>root@btrfs:~# btrfs device add -f /dev/sdc /mnt
+</code></pre>
+
+<p>Vemos la salida de la ruta de montaje:</p>
+
+<pre><code>root@btrfs:~# btrfs fi usage /mnt
+Overall:
+    Device size:		   3.00GiB
+    Device allocated:		 126.38MiB
+    Device unallocated:		   2.88GiB
+    Device missing:		     0.00B
+    Used:			 256.00KiB
+    Free (estimated):		   2.88GiB	(min: 1.45GiB)
+    Data ratio:			      1.00
+    Metadata ratio:		      2.00
+    Global reserve:		  16.00MiB	(used: 0.00B)
+
+Data,single: Size:8.00MiB, Used:0.00B
+   /dev/sdb	   8.00MiB
+
+Metadata,DUP: Size:51.19MiB, Used:112.00KiB
+   /dev/sdb	 102.38MiB
+
+System,DUP: Size:8.00MiB, Used:16.00KiB
+   /dev/sdb	  16.00MiB
+
+Unallocated:
+   /dev/sdb	 897.62MiB
+   /dev/sdc	   2.00GiB
+</code></pre>
+
+<p>Vamos a crear un fichero de pruebas de 2GB, dentro de <strong>/mnt</strong></p>
+
+<pre><code>root@btrfs:~# fallocate -l 2G /mnt/prueba
+</code></pre>
+
+<p>Ahora ya estaría el disco <strong>/dev/sdb</strong> con un tamaño de <strong>3GB</strong>.
+<strong>/dev/sdb</strong> y <strong>/dev/sdc</strong> están en la misma ruta.</p>
+
+<p>Se puede ver con el siguiente comando:</p>
+
+<pre><code>root@btrfs:~# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+udev            228M     0  228M   0% /dev
+tmpfs            49M  3.3M   46M   7% /run
+/dev/sda1        19G  1.1G   17G   6% /
+tmpfs           242M     0  242M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           242M     0  242M   0% /sys/fs/cgroup
+tmpfs            49M     0   49M   0% /run/user/1000
+/dev/sdb        3.0G  2.1G  904M  70% /mnt
+</code></pre>
+
+<p>Si queremos quitar alguno de estos, de dicha ruta en este caso, /mnt solamente tendremos que ejecutar el siguiente comando</p>
+
+<pre><code>root@btrfs:~# btrfs device del /dev/sdc /mnt
+</code></pre>
+
+<h4 id="raid">RAID</h4>
+
+<p>Crear <strong>RAID 1</strong>:</p>
+
+<pre><code>root@btrfs:~# btrfs balance start -v -mconvert=raid1 -dconvert=raid1 /mnt
+Dumping filters: flags 0x7, state 0x0, force is off
+  DATA (flags 0x100): converting, target=16, soft is off
+  METADATA (flags 0x100): converting, target=16, soft is off
+  SYSTEM (flags 0x100): converting, target=16, soft is off
+Done, had to relocate 3 out of 3 chunks
+</code></pre>
+
+<p>El siguiente comando nos muestra la salida para ver si disponemos de un RAID</p>
+
+<pre><code>root@btrfs:~# btrfs fi df /mnt
+
+Data, RAID1: total=320.00MiB, used=128.00KiB
+System, RAID1: total=32.00MiB, used=16.00KiB
+Metadata, RAID1: total=256.00MiB, used=112.00KiB
+GlobalReserve, single: total=16.00MiB, used=0.00B
+</code></pre>
+
+<pre><code>root@btrfs:~# btrfs fi usage /mnt
+
+Overall:
+    Device size:		   3.00GiB
+    Device allocated:		   1.19GiB
+    Device unallocated:		   1.81GiB
+    Device missing:		     0.00B
+    Used:			 512.00KiB
+    Free (estimated):		   1.22GiB	(min: 1.22GiB)
+    Data ratio:			      2.00
+    Metadata ratio:		      2.00
+    Global reserve:		  16.00MiB	(used: 0.00B)
+
+Data,RAID1: Size:320.00MiB, Used:128.00KiB
+   /dev/sdb	 320.00MiB
+   /dev/sdc	 320.00MiB
+
+Metadata,RAID1: Size:256.00MiB, Used:112.00KiB
+   /dev/sdb	 256.00MiB
+   /dev/sdc	 256.00MiB
+
+System,RAID1: Size:32.00MiB, Used:16.00KiB
+   /dev/sdb	  32.00MiB
+   /dev/sdc	  32.00MiB
+
+Unallocated:
+   /dev/sdb	 416.00MiB
+   /dev/sdc	   1.41GiB
+</code></pre>
+
+<p>En el caso de querer otro disco en el RAID pondremos lo siguiente:</p>
+
+<pre><code>root@btrfs:~# btrfs device add -f /dev/sdd /mnt
+</code></pre>
+
+<p>En el caso de querer volver al normal pondremos lo siguiente:</p>
+
+<pre><code>root@btrfs:~# btrfs balance start -dconvert=single -mconvert=raid1 /mnt
+</code></pre>
+
+<h4 id="restauración-del-raid">Restauración del RAID</h4>
+
+<p>Vamos a ver la manera de restaurar el RAID 1 que hemos montado. En el caso de que falle algun disco lo pondremos en <strong>modo degraded</strong>:</p>
+
+<pre><code>root@btrfs:~# mount -o degraded /dev/sdb /mnt
+</code></pre>
+
+<p>A continuación, y una vez que tengamos el siguiente disco listo pondremos el siguiente comando para sustituir el anterior:</p>
+
+<p>Aquí podremos configurar la información que va a obtener del anterior disco, en el caso de no querer pondremos la opción (-r).</p>
+
+<pre><code>root@btrfs:~# btrfs replace start /dev/sdb /dev/sdd /mnt
+</code></pre>
+
+<h4 id="ventajas-e-inconvenientes-respecto-al-uso-de-raid-software-con-mdadm">Ventajas e inconvenientes respecto al uso de RAID software con mdadm</h4>
+
+<p>La principal diferencia es puede crear un <strong>RAID 1</strong> con <strong>Btrfs</strong> con varios discos de diferentes tamaños, incluso con la posibilidad de ampliar discos, mientras que con <strong>mdadm</strong> es necesario el mismo tamaño en los dos discos.</p>
+
+<p>Una ventaja de RAID con mdadm es que se entiende bien, es estable y tiene un mejor rendimiento</p>
+
+<p>Btrfs tiene una mejor seguridad de los datos.</p>
+
+<p>En conclusión el uso de RAID con Btrfs tiene muchas características útiles que mdadm no tiene y es una mejor opción.</p>
+
+<h4 id="compresión">Compresión</h4>
+
+<p>Ya que por defecto no usa ningun tipo de compresión, tendremos que indicarle el deseado.</p>
+
+<p>Hay diferentes métodos de compresión: <strong>ZLIB, LZO, ZSTD&hellip;</strong></p>
+
+<p>Pruebas:</p>
+
+<ul>
+<li>ZLIB</li>
+</ul>
+
+<p>Este método de compresión es capaz de comprimir un gran fichero en poco tamaño.</p>
+
+<p>Montamos con:</p>
+
+<pre><code>root@btrfs:~# mount -o compress=zlib /dev/sdb /mnt
+</code></pre>
+
+<p>Creamos y comprobamos el fichero con:</p>
+
+<pre><code>root@btrfs:~# dd if=/dev/zero of=/mnt/prueba bs=2048
+10838301+0 records in
+10838300+0 records out
+22196838400 bytes (22 GB, 21 GiB) copied, 102.862 s, 216 MB/s
+
+root@btrfs:~# ls -hal /mnt/prueba 
+-rw-r--r-- 1 root root 21G Jan 23 09:17 /mnt/prueba
+
+root@btrfs:~# btrfs fi usage /mnt
+Overall:
+    Device size:		   1.00GiB
+    Device allocated:		1023.00MiB
+    Device unallocated:		   1.00MiB
+    Device missing:		     0.00B
+    Used:			 750.12MiB
+    Free (estimated):		     0.00B	(min: 0.00B)
+    Data ratio:			      1.00
+    Metadata ratio:		      2.00
+    Global reserve:		  16.00MiB	(used: 0.00B)
+
+Data,single: Size:692.00MiB, Used:692.00MiB
+   /dev/sdb	 692.00MiB
+
+Metadata,DUP: Size:157.50MiB, Used:29.05MiB
+   /dev/sdb	 315.00MiB
+
+System,DUP: Size:8.00MiB, Used:16.00KiB
+   /dev/sdb	  16.00MiB
+
+Unallocated:
+   /dev/sdb	   1.00MiB
+</code></pre>
+
+<p>Vemos que es capaz de comprimir un fichero de <strong>21G</strong> en <strong>750.12MiB</strong>.</p>
+
+<ul>
+<li>LZO</li>
+</ul>
+
+<p>Montamos con:</p>
+
+<pre><code>root@btrfs:~# mount -o compress=lzo /dev/sdb /mnt
+</code></pre>
+
+<p>Creamos y comprobamos el fichero con:</p>
+
+<pre><code>root@btrfs:~# dd if=/dev/zero of=/mnt/prueba bs=2048
+dd: error writing '/mnt/prueba': No space left on device
+9367395+0 records in
+9367394+0 records out
+19184422912 bytes (19 GB, 18 GiB) copied, 69.657 s, 275 MB/s
+
+root@btrfs:~# ls -hal /mnt/prueba 
+-rw-r--r-- 1 root root 18G Jan 23 09:30 /mnt/prueba
+
+root@btrfs:~# btrfs fi usage /mnt
+Overall:
+    Device size:		   1.00GiB
+    Device allocated:		1023.00MiB
+    Device unallocated:		   1.00MiB
+    Device missing:		     0.00B
+    Used:			 751.06MiB
+    Free (estimated):		     0.00B	(min: 0.00B)
+    Data ratio:			      1.00
+    Metadata ratio:		      2.00
+    Global reserve:		  16.08MiB	(used: 0.00B)
+
+Data,single: Size:692.00MiB, Used:692.00MiB
+   /dev/sdb	 692.00MiB
+
+Metadata,DUP: Size:157.50MiB, Used:29.52MiB
+   /dev/sdb	 315.00MiB
+
+System,DUP: Size:8.00MiB, Used:16.00KiB
+   /dev/sdb	  16.00MiB
+
+Unallocated:
+   /dev/sdb	   1.00MiB
+</code></pre>
+
+<p>Este método de compresión es menos eficiente que el anterior, <strong>ZLIB</strong>. Pero sigue dando buenos resultados.</p>
+
+<h4 id="cow">COW</h4>
+
+<p>Este sistema de ficheros como dice en el nombre, <strong>Copy-on-write (COW)</strong>, creará una copia del fichero para modificarlo y guardarlo.</p>
+
+<p>Vamos a crear un fichero de <strong>200 MiB:</strong></p>
+
+<pre><code>root@btrfs:~# dd if=/dev/zero of=/mnt/prueba bs=2048 count=100k
+102400+0 records in
+102400+0 records out
+209715200 bytes (210 MB, 200 MiB) copied, 0.533322 s, 393 MB/s
+
+root@btrfs:~# btrfs fi usage /mnt
+Overall:
+    Device size:		   1.00GiB
+    Device allocated:		1023.00MiB
+    Device unallocated:		   1.00MiB
+    Device missing:		     0.00B
+    Used:			 832.00KiB
+    Free (estimated):		 691.44MiB	(min: 691.44MiB)
+    Data ratio:			      1.00
+    Metadata ratio:		      2.00
+    Global reserve:		  16.00MiB	(used: 0.00B)
+</code></pre>
+
+<p>Tiene un tamaño de <strong>691.44MiB</strong></p>
+
+<p>Copia:
+Vamos a ponerle la opción <strong>reflink</strong> para que permita controlar dichas copias</p>
+
+<pre><code>root@btrfs:~# cp --reflink=always /mnt/prueba /mnt/pruebacow
+
+root@btrfs:~# btrfs fi usage /mnt
+Overall:
+    Device size:		   1.00GiB
+    Device allocated:		 339.00MiB
+    Device unallocated:		 685.00MiB
+    Device missing:		     0.00B
+    Used:			 876.00KiB
+    Free (estimated):		 692.39MiB	(min: 349.89MiB)
+    Data ratio:			      1.00
+    Metadata ratio:		      2.00
+    Global reserve:		  16.00MiB	(used: 0.00B)
+</code></pre>
+
+<p>Una vez realizada dicha copia, podemos ver el cambio en las copias y que estas no ocupan el espacio en el disco, ya que no se ha modificado.</p>
+
+<h4 id="deduplicación">Deduplicación</h4>
+
+<p>Identifica cuándo los datos se han escrito dos veces y combinándolos en una misma extensión del disco, con el objetivo de optimizar al máximo el espacio de almacenamiento utilizado, eliminando copias duplicadas o repetidas de datos.</p>
+
+<h4 id="balance">Balance</h4>
+
+<p>Se puede hacer que el peso del fichero no quede en un solo disco, de esta manera el peso del fichero quedaria repartido entre los discos del directorio montado.</p>
+
+<pre><code>root@btrfs:~# btrfs fi balance --full-balance /mnt
+Done, had to relocate 4 out of 4 chunks
+</code></pre>
+
+<h4 id="subvolumen">Subvolumen</h4>
+
+<p>Vamos a ver el uso de los subvolúmenes</p>
+
+<p>Con el siguiente comando podemos ver como se crean dichos subvolúmenes:
+También vamos a crear un fichero llamado <strong>pruebasub</strong>.</p>
+
+<pre><code>root@btrfs:/mnt# btrfs subvolume create subvolumen
+Create subvolume './subvolumen'
+
+root@btrfs:/mnt# touch subvolumen/pruebasub
+</code></pre>
+
+<p>El subvolumen es un directorio con más funcionalidades que un directorio común.</p>
+
+<p>Podremos cambiar la ruta de montaje en la que está dicho subvolumen.</p>
+
+<p>Primero necesitaremos el identificador y posteriormente ya podremos cambiarlo.</p>
+
+<pre><code>root@btrfs:/mnt# btrfs subvolume list /mnt
+ID 265 gen 182 top level 5 path subvolumen
+</code></pre>
+
+<p>Con este ID, ya podemos ejecutar el cambio:</p>
+
+<pre><code>root@btrfs:~# mount -o subvolid=265 /dev/sdb /subvol
+
+root@btrfs:~# cd /subvol/
+root@btrfs:/subvol# ls -l
+total 0
+-rw-r--r-- 1 root root 0 Jan 23 09:49 pruebasub
+</code></pre>
+
+<p>Podremos borrar el subvolumen con:</p>
+
+<pre><code>root@btrfs:~# btrfs subvolume delete /mnt/subvolumen/
+</code></pre>
+
+<h4 id="snapshots">Snapshots</h4>
+
+<p>Vamos a realizar una snapshot, una copia instantanea del estado del sistema.</p>
+
+<p>Voy a crear un escenario de 2 subvolúmenes, este primero con un par de ficheros con un tamaño especifico. para el ejemplo.</p>
+
+<p>Creación de los subvolúmenes:</p>
+
+<pre><code>root@btrfs:/mnt# btrfs subvolume create subvolumen1
+Create subvolume './subvolumen1'
+
+root@btrfs:/mnt# btrfs subvolume create subvolumen2
+Create subvolume './subvolumen2'
+</code></pre>
+
+<p>Creamos los dos ficheros del mismo tamaño cada uno:</p>
+
+<pre><code>root@btrfs:/mnt/subvolumen1# dd if=/dev/zero of=archivo1.txt bs=1024 count=209715
+209715+0 records in
+209715+0 records out
+214748160 bytes (215 MB, 205 MiB) copied, 1.058 s, 203 MB/s
+
+205M -rw-r--r-- 1 root root 205M Jan 23 19:14 archivo2.txt
+root@btrfs:/mnt/subvolumen1# dd if=/dev/zero of=archivo2.txt bs=1024 count=209715
+209715+0 records in
+209715+0 records out
+214748160 bytes (215 MB, 205 MiB) copied, 0.89513 s, 240 MB/s
+
+root@btrfs:/mnt/subvolumen1# ls -lsh
+total 410M
+205M -rw-r--r-- 1 root root 205M Jan 23 19:14 archivo1.txt
+205M -rw-r--r-- 1 root root 205M Jan 23 19:14 archivo2.txt
+</code></pre>
+
+<pre><code>root@btrfs:/mnt/subvolumen1# btrfs fi usage /mnt
+Overall:
+    Device size:		   2.00GiB
+    Device allocated:		 644.75MiB
+    Device unallocated:		   1.37GiB
+    Device missing:		     0.00B
+    Used:			 410.97MiB
+    Free (estimated):		   1.38GiB	(min: 715.81MiB)
+    Data ratio:			      1.00
+    Metadata ratio:		      2.00
+    Global reserve:		  16.00MiB	(used: 0.00B)
+</code></pre>
+
+<p>Vemos que tiene <strong>410.97MiB</strong></p>
+
+<p>Vamos a realizar un <strong>snapshot</strong> del subvolumen:</p>
+
+<pre><code>root@btrfs:/mnt# btrfs subvolume snapshot /mnt/subvolumen1 /mnt/snapshotprueba
+Create a snapshot of '/mnt/subvolumen1' in '/mnt/snapshotprueba'
+</code></pre>
+
+<p>Una vez hemos creado la snapshot vemos su contenido, tiene que ser el mismo que teniamos en el subvolumen ya que este es una copia suya, pero esta snapshot no ocupa espacio en el disco.</p>
+
+<pre><code>root@btrfs:/mnt# ls
+snapshotprueba	subvolumen1  subvolumen2
+
+root@btrfs:/mnt# cd snapshotprueba/
+
+root@btrfs:/mnt/snapshotprueba# ls -lsh
+total 410M
+205M -rw-r--r-- 1 root root 205M Jan 23 19:14 archivo1.txt
+205M -rw-r--r-- 1 root root 205M Jan 23 19:14 archivo2.txt
+   0 drwxr-xr-x 1 root root    0 Jan 23 19:16 directorioprueba
+</code></pre>
+
+<pre><code>root@btrfs:/mnt# btrfs fi usage /mnt
+Overall:
+    Device size:		   2.00GiB
+    Device allocated:		 644.75MiB
+    Device unallocated:		   1.37GiB
+    Device missing:		     0.00B
+    Used:			 411.00MiB
+    Free (estimated):		   1.38GiB	(min: 715.81MiB)
+    Data ratio:			      1.00
+    Metadata ratio:		      2.00
+    Global reserve:		  16.00MiB	(used: 0.00B)
+</code></pre>
+
+<p>Como hemos comentado antes, esta snapshot no ocupa sitio (tenemos practicamente el mismo espacio <strong>411.00MiB</strong>), esto se debe a que la copia ocupará su espacio una vez que los ficheros se modifiquen.</p>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

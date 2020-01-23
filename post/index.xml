@@ -5,10 +5,19 @@
     <link>/hugo/post/</link>
     <description>Recent content in Posts on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 22 Jan 2020 09:20:52 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 23 Jan 2020 21:20:52 +0100</lastBuildDate>
     
 	<atom:link href="/hugo/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Sistemas de ficheros avanzados Btrfs</title>
+      <link>/hugo/post/btrfs/</link>
+      <pubDate>Thu, 23 Jan 2020 21:20:52 +0100</pubDate>
+      
+      <guid>/hugo/post/btrfs/</guid>
+      <description>Elige uno de los dos sistemas de ficheros &amp;ldquo;avanzados&amp;rdquo; que hemos visto en clase. - Crea un escenario que incluya una máquina y varios discos asociados a ella. - Instala si es necesario el software de ZFS/Btrfs - Gestiona los discos adicionales con ZFS/Btrfs. - Configura los discos en RAID, haciendo pruebas de fallo de algún disco y sustitución, restauración del RAID. Comenta ventajas e inconvenientes respecto al uso de RAID software con mdadm - Realiza ejercicios con pruebas de funcionamiento de las principales funcionalidades: compresión, cow, deduplicación, cifrado, etc.</description>
+    </item>
     
     <item>
       <title>Diferencias entre MySQL y PostgreSQL respecto a Oracle para gestionar el almacenamiento</title>

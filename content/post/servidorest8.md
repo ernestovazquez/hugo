@@ -125,7 +125,7 @@ To github.com:ernestovazquez/mezzanineernesto.git
    a262af4..79aa9ef  master -> master
 ```
 
-#### Trabajamos en el entorno de **desarrollo** .
+#### Trabajamos en el entorno de **desarrollo**.
 
 Clonamos el repositorio en el **DocumentRoot**
 

@@ -13,11 +13,6 @@
   </url>
   
   <url>
-    <loc>/hugo/post/btrfs/</loc>
-    <lastmod>2020-01-21T23:04:52+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/hugo/post/travis/</loc>
     <lastmod>2019-12-15T15:29:57+01:00</lastmod>
   </url>
@@ -60,6 +55,10 @@
   <url>
     <loc>/hugo/post/servidorest1/</loc>
     <lastmod>2019-10-13T10:36:33+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/hugo/post/btrfs/</loc>
   </url>
   
   <url>

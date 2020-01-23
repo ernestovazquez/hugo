@@ -31,16 +31,6 @@
     </item>
     
     <item>
-      <title>Sistemas de ficheros avanzados ZFS/Btrfs</title>
-      <link>/hugo/post/btrfs/</link>
-      <pubDate>Tue, 21 Jan 2020 23:04:52 +0100</pubDate>
-      
-      <guid>/hugo/post/btrfs/</guid>
-      <description>Elige uno de los dos sistemas de ficheros &amp;ldquo;avanzados&amp;rdquo; que hemos visto en clase.
- Crea un escenario que incluya una máquina y varios discos asociados a ella. Instala si es necesario el software de ZFS/Btrfs Gestiona los discos adicionales con ZFS/Btrfs. Configura los discos en RAID, haciendo pruebas de fallo de algún disco y sustitución, restauración del RAID. Comenta ventajas e inconvenientes respecto al uso de RAID software con mdadm.</description>
-    </item>
-    
-    <item>
       <title>Introducción a la integración continua</title>
       <link>/hugo/post/travis/</link>
       <pubDate>Sun, 15 Dec 2019 15:29:57 +0100</pubDate>
@@ -139,6 +129,15 @@ Crear tres máquinas en el cloud con los siguientes nombres y sistemas operativo
 Croqueta (Debian 10) Tortilla (Ubunut 18.04) Salmorejo (CentOs 7)
  Croqueta y Tortilla usan un volumen como unidad de disco principal. Se creará un usuario &amp;ldquo;profesor&amp;rdquo; con el que podrán acceder los profesores usando claves RSA.  Croqueta: 172.22.200.111 Vamos a cambiar el nombre de dominio.
 Editamos el fichero /etc/hostname</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>/hugo/post/btrfs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/hugo/post/btrfs/</guid>
+      <description></description>
     </item>
     
   </channel>

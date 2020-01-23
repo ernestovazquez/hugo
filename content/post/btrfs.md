@@ -5,6 +5,7 @@ draft: false
 ---
 
 Elige uno de los dos sistemas de ficheros "avanzados" que hemos visto en clase.
+
 - Crea un escenario que incluya una máquina y varios discos asociados a ella.
 - Instala si es necesario el software de ZFS/Btrfs
 - Gestiona los discos adicionales con ZFS/Btrfs.

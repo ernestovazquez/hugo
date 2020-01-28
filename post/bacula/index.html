@@ -92,491 +92,13 @@
 <pre><code>debian@serranito:~$ sudo apt install bacula bacula-client bacula-common-mysql bacula-director-mysql bacula-server
 </code></pre>
 
-<p><img src="https://raw.githubusercontent.com/ernestovazquez/hugo/gh-pages/img/bacula1.png" alt="bacula1" /></p>
+<p>!bacula1.png!</p>
 
-<p>Le damos a <strong>Yes</strong> y ponemos la contraseña.</p>
+<p>Le damos a <strong>Si</strong> y ponemos la contraseña.</p>
 
-<p>Vamos al fichero de configuración:</p>
+<p>Vamos el fichero de configuración:</p>
 
-<pre><code>debian@serranito:~$ sudo cat /etc/bacula/bacula-dir.conf
-
-Director {
-  Name = serranito-dir
-  DIRport = 9101
-  QueryFile = &quot;/etc/bacula/scripts/query.sql&quot;
-  WorkingDirectory = &quot;/var/lib/bacula&quot;
-  PidDirectory = &quot;/run/bacula&quot;
-  Maximum Concurrent Jobs = 20
-  Password = &quot;ernestovazquez11&quot;
-  Messages = Daemon
-  DirAddress = 10.0.0.8
-}
-
-
-JobDefs {
-  Name = &quot;Tarea-Diaria&quot;
-  Type = Backup
-  Level = Incremental
-  Client = serranito-fd
-  Schedule = &quot;Programa-Diario&quot;
-  Pool = Daily
-  Storage = Vol-Serranito
-  Messages = Standard
-  SpoolAttributes = yes
-  Priority = 10
-  Write Bootstrap = &quot;/var/lib/bacula/%c.bsr&quot;
-}
-
-
-JobDefs {
-  Name = &quot;Tarea-Semanal&quot;
-  Type = Backup
-  Client = serranito-fd
-  Schedule = &quot;Programa-Semanal&quot;
-  Pool = Weekly
-  Storage = Vol-Serranito
-  Messages = Standard
-  SpoolAttributes = yes
-  Priority = 10
-  Write Bootstrap = &quot;/var/lib/bacula/%c.bsr&quot;
-}
-
-
-JobDefs {
-  Name = &quot;Tarea-Mensual&quot;
-  Type = Backup
-  Client = serranito-fd
-  Schedule = &quot;Programa-Mensual&quot;
-  Pool = Monthly
-  Storage = Vol-Serranito
-  Messages = Standard
-  SpoolAttributes = yes
-  Priority = 10
-  Write Bootstrap = &quot;/var/lib/bacula/%c.bsr&quot;
-}
-
-
-
-# Diariamente
-
-Job {
- Name = &quot;Daily-Backup-Serranito&quot;
- JobDefs = &quot;Tarea-Diaria&quot;
- Client = &quot;serranito-fd&quot;
- FileSet= &quot;Copia-Serranito&quot;
-}
-
-Job {
- Name = &quot;Daily-Backup-Croqueta&quot;
- JobDefs = &quot;Tarea-Diaria&quot;
- Client = &quot;croqueta-fd&quot;
- FileSet= &quot;Copia-Croqueta&quot;
-}
-
-Job {
- Name = &quot;Daily-Backup-Tortilla&quot;
- JobDefs = &quot;Tarea-Diaria&quot;
- Client = &quot;tortilla-fd&quot;
- FileSet= &quot;Copia-Tortilla&quot;
-}
-
-Job {
- Name = &quot;Daily-Backup-Salmorejo&quot;
- JobDefs = &quot;Tarea-Diaria&quot;
- Client = &quot;salmorejo-fd&quot;
- FileSet= &quot;Copia-Salmorejo&quot;
-}
-
-# Semanalmente
-
-Job {
- Name = &quot;Weekly-Backup-Serranito&quot;
- JobDefs = &quot;Tarea-Semanal&quot;
- Client = &quot;serranito-fd&quot;
- FileSet= &quot;Copia-Serranito&quot;
-}
-
-Job {
- Name = &quot;Weekly-Backup-Croqueta&quot;
- JobDefs = &quot;Tarea-Semanal&quot;
- Client = &quot;croqueta-fd&quot;
- FileSet= &quot;Copia-Croqueta&quot;
-}
-
-Job {
- Name = &quot;Weekly-Backup-Tortilla&quot;
- JobDefs = &quot;Tarea-Semanal&quot;
- Client = &quot;tortilla-fd&quot;
- FileSet= &quot;Copia-Tortilla&quot;
-}
-
-Job {
- Name = &quot;Weekly-Backup-Salmorejo&quot;
- JobDefs = &quot;Tarea-Semanal&quot;
- Client = &quot;salmorejo-fd&quot;
- FileSet= &quot;Copia-Salmorejo&quot;
-}
-
-# Mensualmente
-
-Job {
- Name = &quot;Monthly-Backup-Serranito&quot;
- JobDefs = &quot;Tarea-Mensual&quot;
- Client = &quot;serranito-fd&quot;
- FileSet= &quot;Copia-Serranito&quot;
-}
-
-Job {
- Name = &quot;Monthly-Backup-Croqueta&quot;
- JobDefs = &quot;Tarea-Mensual&quot;
- Client = &quot;croqueta-fd&quot;
- FileSet= &quot;Copia-Croqueta&quot;
-}
-
-Job {
- Name = &quot;Monthly-Backup-Tortilla&quot;
- JobDefs = &quot;Tarea-Mensual&quot;
- Client = &quot;tortilla-fd&quot;
- FileSet= &quot;Copia-Tortilla&quot;
-}
-
-Job {
- Name = &quot;Monthly-Backup-Salmorejo&quot;
- JobDefs = &quot;Tarea-Mensual&quot;
- Client = &quot;salmorejo-fd&quot;
- FileSet= &quot;Copia-Salmorejo&quot;
-}
-
-
-Job {
- Name = &quot;Restore-Serranito&quot;
- Type = Restore
- Client=serranito-fd
- FileSet= &quot;Copia-Serranito&quot;
- Storage = Vol-Serranito
- Pool = Vol-Backup
- Messages = Standard
-}
-
-Job {
- Name = &quot;Restore-Croqueta&quot;
- Type = Restore
- Client=croqueta-fd
- FileSet= &quot;Copia-Croqueta&quot;
- Storage = Vol-Serranito
- Pool = Vol-Backup
- Messages = Standard
-}
-
-Job {
- Name = &quot;Restore-Tortilla&quot;
- Type = Restore
- Client=tortilla-fd
- FileSet= &quot;Copia-Tortilla&quot;
- Storage = Vol-Serranito
- Pool = Vol-Backup
- Messages = Standard
-}
-
-Job {
- Name = &quot;Restore-Salmorejo&quot;
- Type = Restore
- Client=salmorejo-fd
- FileSet= &quot;Copia-Salmorejo&quot;
- Storage = Vol-Serranito
- Pool = Vol-Backup
- Messages = Standard
-}
-
-
-FileSet {
- Name = &quot;Copia-Serranito&quot;
- Include {
-    Options {
-        signature = MD5
-        compression = GZIP
-    }
-    File = /home
-    File = /etc
-    File = /var
-    File = /bacula
- }
- Exclude {
-    File = /nonexistant/path/to/file/archive/dir
-    File = /proc
-    File = /var/cache
-    File = /var/tmp
-    File = /tmp
-    File = /sys
-    File = /.journal
-    File = /.fsck
- }
-}
-
-FileSet {
- Name = &quot;Copia-Croqueta&quot;
- Include {
-    Options {
-        signature = MD5
-        compression = GZIP
-    }
-    File = /home
-    File = /etc
-    File = /var
- }
- Exclude {
-    File = /var/lib/bacula
-    File = /nonexistant/path/to/file/archive/dir
-    File = /proc
-    File = /var/tmp
-    File = /tmp
-    File = /sys
-    File = /.journal
-    File = /.fsck
- }
-}
-
-FileSet {
- Name = &quot;Copia-Tortilla&quot;
- Include {
-    Options {
-        signature = MD5
-        compression = GZIP
-    }
-    File = /home
-    File = /etc
-    File = /var
- }
- Exclude {
-    File = /var/lib/bacula
-    File = /nonexistant/path/to/file/archive/dir
-    File = /proc
-    File = /var/cache
-    File = /var/tmp
-    File = /tmp
-    File = /sys
-    File = /.journal
-    File = /.fsck
- }
-}
-
-FileSet {
- Name = &quot;Copia-Salmorejo&quot;
- Include {
-    Options {
-        signature = MD5
-        compression = GZIP
-    }
-    File = /home
-    File = /etc
-    File = /var
-    File = /usr/share/nginx
- }
- Exclude {
-    File = /var/lib/bacula
-    File = /nonexistant/path/to/file/archive/dir
-    File = /proc
-    File = /var/cache
-    File = /var/tmp
-    File = /tmp
-    File = /sys
-    File = /.journal
-    File = /.fsck
- }
-}
-
-
-Schedule {
- Name = &quot;Programa-Diario&quot;
- Run = Level=Incremental Pool=Daily daily at 20:59
-}
-
-Schedule {
- Name = &quot;Programa-Semanal&quot;
- Run = Level=Full Pool=Weekly sat at 23:50
-}
-
-Schedule {
- Name = &quot;Programa-Mensual&quot;
- Run = Level=Full Pool=Monthly 1st sun at 23:50 
-}
-
-# Indicar los cliente
-
-Client {
- Name = serranito-fd
- Address = 10.0.0.8
- FDPort = 9102
- Catalog = mysql-bacula
- Password = &quot;ernestovazquez11&quot;
- File Retention = 90 days
- Job Retention = 6 months
- AutoPrune = yes
-}
-
-Client {
- Name = croqueta-fd
- Address = 10.0.0.10
- FDPort = 9102
- Catalog = mysql-bacula
- Password = &quot;ernestovazquez11&quot;
- File Retention = 90 days
- Job Retention = 6 months
- AutoPrune = yes
-}
-
-Client {
- Name = tortilla-fd
- Address = 10.0.0.4
- FDPort = 9102
- Catalog = mysql-bacula
- Password = &quot;ernestovazquez11&quot;
- File Retention = 90 days
- Job Retention = 6 months
- AutoPrune = yes
-}
-
-Client {
- Name = salmorejo-fd
- Address = 10.0.0.13
- FDPort = 9102
- Catalog = mysql-bacula
- Password = &quot;ernestovazquez11&quot;
- File Retention = 90 days
- Job Retention = 6 months
- AutoPrune = yes
-}
-
-
-
-Storage {
- Name = Vol-Serranito
- Address = 10.0.0.8
- SDPort = 9103
- Password = &quot;ernestovazquez11&quot;
- Device = FileAutochanger1
- Media Type = File
- Maximum Concurrent Jobs = 10
-}
-
-# Indicar la base de datos
-
-Catalog {
- Name = mysql-bacula
- dbname = &quot;bacula&quot;; DB Address = &quot;localhost&quot;; dbuser = &quot;bacula&quot;; dbpassword = &quot;ernestovazquez11&quot;
-}
-
-
-Pool {
- Name = Daily
- Use Volume Once = yes
- Pool Type = Backup
- AutoPrune = yes
- VolumeRetention = 10d
- Recycle = yes
-}
-
-
-Pool {
- Name = Weekly
- Use Volume Once = yes
- Pool Type = Backup
- AutoPrune = yes
- VolumeRetention = 30d
- Recycle = yes
-}
-
-
-Pool {
- Name = Monthly
- Use Volume Once = yes
- Pool Type = Backup
- AutoPrune = yes
- VolumeRetention = 365d
- Recycle = yes
-}
-
-Pool {
- Name = Vol-Backup
- Pool Type = Backup
- Recycle = yes 
- AutoPrune = yes
- Volume Retention = 365 days 
- Maximum Volume Bytes = 50G
- Maximum Volumes = 100
- Label Format = &quot;Remoto&quot;
-}
-
-
-# Por defecto
-# -------------------------------------------------------
-
-# Reasonable message delivery -- send most everything to email address
-#  and to the console
-Messages {
-  Name = Standard
-#
-# NOTE! If you send to two email or more email addresses, you will need
-#  to replace the %r in the from field (-f part) with a single valid
-#  email address in both the mailcommand and the operatorcommand.
-#  What this does is, it sets the email address that emails would display
-#  in the FROM field, which is by default the same email as they're being
-#  sent to.  However, if you send email to more than one address, then
-#  you'll have to set the FROM address manually, to a single address.
-#  for example, a 'no-reply@mydomain.com', is better since that tends to
-#  tell (most) people that its coming from an automated source.
-
-#
-  mailcommand = &quot;/usr/sbin/bsmtp -h localhost -f \&quot;\(Bacula\) \&lt;%r\&gt;\&quot; -s \&quot;Bacula: %t %e of %c %l\&quot; %r&quot;
-  operatorcommand = &quot;/usr/sbin/bsmtp -h localhost -f \&quot;\(Bacula\) \&lt;%r\&gt;\&quot; -s \&quot;Bacula: Intervention needed for %j\&quot; %r&quot;
-  mail = root = all, !skipped
-  operator = root = mount
-  console = all, !skipped, !saved
-#
-# WARNING! the following will create a file that you must cycle from
-#          time to time as it will grow indefinitely. However, it will
-#          also keep all your messages if they scroll off the console.
-#
-  append = &quot;/var/log/bacula/bacula.log&quot; = all, !skipped
-  catalog = all
-}
-
-
-#
-# Message delivery for daemon messages (no job).
-Messages {
-  Name = Daemon
-  mailcommand = &quot;/usr/sbin/bsmtp -h localhost -f \&quot;\(Bacula\) \&lt;%r\&gt;\&quot; -s \&quot;Bacula daemon message\&quot; %r&quot;
-  mail = root = all, !skipped
-  console = all, !skipped, !saved
-  append = &quot;/var/log/bacula/bacula.log&quot; = all, !skipped
-}
-
-# Default pool definition
-Pool {
-  Name = Default
-  Pool Type = Backup
-  Recycle = yes                       # Bacula can automatically recycle Volumes
-  AutoPrune = yes                     # Prune expired volumes
-  Volume Retention = 365 days         # one year
-  Maximum Volume Bytes = 50G          # Limit Volume size to something reasonable
-  Maximum Volumes = 100               # Limit number of Volumes in Pool
-}
-
-# Scratch pool definition
-Pool {
-  Name = Scratch
-  Pool Type = Backup
-}
-
-#
-# Restricted console used by tray-monitor to get the status of the director
-#
-Console {
-  Name = serranito-mon
-  Password = &quot;6URHdHljsXACPlryk6so_xCbGqrmkYgFb&quot;
-  CommandACL = status, .status
-}
+<pre><code>debian@serranito:~$ sudo nano /etc/bacula/bacula-dir.conf 
 </code></pre>
 
 <p>Vamos a configurar el volumen.</p>
@@ -672,55 +194,6 @@ vdb1 254:17   0   5G  0 part /bacula/Copias_de_Seguridad
 <p>Vamos a configurar el otro fichero de configuración bacula-sd.conf</p>
 
 <pre><code>debian@serranito:~$ sudo nano /etc/bacula/bacula-sd.conf
-
-Storage { 
- Name = serranito-sd
- SDPort = 9103 
- WorkingDirectory = &quot;/var/lib/bacula&quot;
- Pid Directory = &quot;/run/bacula&quot;
- Maximum Concurrent Jobs = 20
- SDAddress = 10.0.0.8
-}
-
-
-Director {
- Name = serranito-dir
- Password = &quot;ernestovazquez11&quot;
-}
-
-
-Director {
- Name = serranito-mon
- Password = &quot;bacula&quot;
- Monitor = yes
-}
-
-
-Autochanger {
- Name = FileAutochanger1
- Device = DispositivoCopia
- Changer Command = &quot;&quot;
- Changer Device = /dev/null
-}
-
-
-Device {
- Name = DispositivoCopia
- Media Type = File
- Archive Device = /bacula/Copias_de_Seguridad
- LabelMedia = yes;
- Random Access = Yes;
- AutomaticMount = yes;
- RemovableMedia = no;
- AlwaysOpen = no;
- Maximum Concurrent Jobs = 5
-}
-
-
-Messages {
-  Name = Standard
-  director = serranito-dir = all
-}
 </code></pre>
 
 <p>Editamos el siguiente fichero:</p>
@@ -733,6 +206,7 @@ Director {
   address = 10.0.0.8
   Password = &quot;ernestovazquez11&quot;
 }
+
 </code></pre>
 
 <p>Instalamos los clientes de bacula:</p>
@@ -774,34 +248,6 @@ Messages {
 }
 </code></pre>
 
-<pre><code>[root@salmorejo ~]# sudo nano /etc/bacula/bacula-fd.conf
-
-Director {
- Name = serranito-dir
- Password = &quot;ernestovazquez11&quot;
-}
-
-Director {
- Name = serranito-mon
- Password = &quot;ernestovazquez11&quot;
- Monitor = yes
-}
-
-FileDaemon {
-  Name = salmorejo-fd
-  FDport = 9102
-  WorkingDirectory = /var/spool/bacula
-  Pid Directory = /var/run
-  Maximum Concurrent Jobs = 20
-  Plugin Directory = /usr/lib64/bacula
-}
-
-Messages {
- Name = Standard
- director = serranito-dir = all, !skipped, !restored
-}
-</code></pre>
-
 <p>Reinciamos los servicios:</p>
 
 <pre><code>debian@serranito:~$ sudo systemctl restart bacula-fd.service
@@ -824,9 +270,224 @@ debian@serranito:~$ sudo systemctl restart bacula-director.service
 [root@salmorejo ~]# firewall-cmd --reload
 </code></pre>
 
-<p>Entraremos a la consola y creamos un label para cada tarea:</p>
+<p>Cambios para el funcionamiento:</p>
 
-<p>Ya estaria configurado y podemos realizar las copias de seguridad de manera programada.</p>
+<p>Tenemos que quitar la siguiente linea del fichero de configuración del director:</p>
+
+<pre><code>debian@serranito:~$ sudo nano /etc/bacula/bacula-dir.conf 
+
+Use Volume Once = yes
+</code></pre>
+
+<p>A continuación vamos a realizar una prueba con el siguiente comando:</p>
+
+<pre><code>*run
+Using Catalog &quot;mysql-bacula&quot;
+A job name must be specified.
+The defined Job resources are:
+     1: Daily-Backup-Serranito
+     2: Daily-Backup-Croqueta
+     3: Daily-Backup-Tortilla
+     4: Daily-Backup-Salmorejo
+     5: Weekly-Backup-Serranito
+     6: Weekly-Backup-Croqueta
+     7: Weekly-Backup-Tortilla
+     8: Weekly-Backup-Salmorejo
+     9: Monthly-Backup-Serranito
+    10: Monthly-Backup-Croqueta
+    11: Monthly-Backup-Tortilla
+    12: Monthly-Backup-Salmorejo
+    13: Restore-Serranito
+    14: Restore-Croqueta
+    15: Restore-Tortilla
+    16: Restore-Salmorejo
+Select Job resource (1-16): 2
+Run Backup job
+JobName:  Daily-Backup-Croqueta
+Level:    Incremental
+Client:   croqueta-fd
+FileSet:  Copia-Croqueta
+Pool:     Daily (From Job resource)
+Storage:  Vol-Serranito (From Job resource)
+When:     2020-01-24 08:15:11
+Priority: 10
+OK to run? (yes/mod/no): yes
+Job queued. JobId=6
+</code></pre>
+
+<pre><code>*status client
+The defined Client resources are:
+     1: serranito-fd
+     2: croqueta-fd
+     3: tortilla-fd
+     4: salmorejo-fd
+Select Client (File daemon) resource (1-4): 2
+Connecting to Client croqueta-fd at 10.0.0.10:9102
+
+croqueta-fd Version: 9.4.2 (04 February 2019)  x86_64-pc-linux-gnu debian buster/sid
+Daemon started 23-Jan-20 17:22. Jobs: run=1 running=0.
+ Heap: heap=114,688 smbytes=164,827 max_bytes=371,949 bufs=125 max_bufs=140
+ Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
+ Plugin: bpipe-fd.so 
+
+Running Jobs:
+JobId 6 Job Daily-Backup-Croqueta.2020-01-24_08.15.15_03 is running.
+    Full Backup Job started: 24-Jan-20 08:15
+    Files=0 Bytes=0 AveBytes/sec=0 LastBytes/sec=0 Errors=0
+    Bwlimit=0 ReadBytes=0
+    Files: Examined=0 Backed up=0
+    SDReadSeqNo=6 fd=5 SDtls=0
+Director connected at: 24-Jan-20 08:15
+====
+</code></pre>
+
+<p>Ahora vamos a configurar los <strong>labels</strong></p>
+
+<ul>
+<li>Label copia diaria</li>
+</ul>
+
+<pre><code>*label
+Automatically selected Catalog: mysql-bacula
+Using Catalog &quot;mysql-bacula&quot;
+Automatically selected Storage: Vol-Serranito
+Enter new Volume name: copiadiaria
+Defined Pools:
+     1: Daily
+     2: Default
+     3: File
+     4: Monthly
+     5: Scratch
+     6: Vol-Backup
+     7: Weekly
+Select the Pool (1-7): 1
+Connecting to Storage daemon Vol-Serranito at 10.0.0.8:9103 ...
+Sending label command for Volume &quot;copiadiaria&quot; Slot 0 ...
+3000 OK label. VolBytes=225 VolABytes=0 VolType=1 Volume=&quot;copiadiaria&quot; Device=&quot;DispositivoCopia&quot; (/bacula/Copias_de_Seguridad)
+Catalog record for Volume &quot;copiadiaria&quot;, Slot 0  successfully created.
+Requesting to mount FileAutochanger1 ...
+3001 OK mount requested. Device=&quot;DispositivoCopia&quot; (/bacula/Copias_de_Seguridad)
+</code></pre>
+
+<ul>
+<li>Label copia semanal</li>
+</ul>
+
+<pre><code>*label
+Automatically selected Storage: Vol-Serranito
+Enter new Volume name: copiasemanal
+Defined Pools:
+     1: Daily
+     2: Default
+     3: File
+     4: Monthly
+     5: Scratch
+     6: Vol-Backup
+     7: Weekly
+Select the Pool (1-7): 7
+Connecting to Storage daemon Vol-Serranito at 10.0.0.8:9103 ...
+Sending label command for Volume &quot;copiasemanal&quot; Slot 0 ...
+3000 OK label. VolBytes=227 VolABytes=0 VolType=1 Volume=&quot;copiasemanal&quot; Device=&quot;DispositivoCopia&quot; (/bacula/Copias_de_Seguridad)
+Catalog record for Volume &quot;copiasemanal&quot;, Slot 0  successfully created.
+Requesting to mount FileAutochanger1 ...
+3906 File device &quot;&quot;DispositivoCopia&quot; (/bacula/Copias_de_Seguridad)&quot; is always mounted.
+</code></pre>
+
+<ul>
+<li>Label copia mensual</li>
+</ul>
+
+<pre><code>*label
+Automatically selected Storage: Vol-Serranito
+Enter new Volume name: copiamensual
+Defined Pools:
+     1: Daily
+     2: Default
+     3: File
+     4: Monthly
+     5: Scratch
+     6: Vol-Backup
+     7: Weekly
+Select the Pool (1-7): 4
+Connecting to Storage daemon Vol-Serranito at 10.0.0.8:9103 ...
+Sending label command for Volume &quot;copiamensual&quot; Slot 0 ...
+3000 OK label. VolBytes=228 VolABytes=0 VolType=1 Volume=&quot;copiamensual&quot; Device=&quot;DispositivoCopia&quot; (/bacula/Copias_de_Seguridad)
+Catalog record for Volume &quot;copiamensual&quot;, Slot 0  successfully created.
+Requesting to mount FileAutochanger1 ...
+3906 File device &quot;&quot;DispositivoCopia&quot; (/bacula/Copias_de_Seguridad)&quot; is always mounted.
+</code></pre>
+
+<p>Ahora ya estarán las copias en funcionamiento como podemos ver a continuación:</p>
+
+<pre><code>*status client
+The defined Client resources are:
+     1: serranito-fd
+     2: croqueta-fd
+     3: tortilla-fd
+     4: salmorejo-fd
+Select Client (File daemon) resource (1-4): 2
+Connecting to Client croqueta-fd at 10.0.0.10:9102
+
+croqueta-fd Version: 9.4.2 (04 February 2019)  x86_64-pc-linux-gnu debian buster/sid
+Daemon started 23-Jan-20 17:22. Jobs: run=2 running=0.
+ Heap: heap=114,688 smbytes=283,225 max_bytes=531,545 bufs=95 max_bufs=149
+ Sizes: boffset_t=8 size_t=8 debug=0 trace=0 mode=0,0 bwlimit=0kB/s
+ Plugin: bpipe-fd.so 
+
+Running Jobs:
+Director connected at: 24-Jan-20 08:26
+No Jobs running.
+====
+
+Terminated Jobs:
+ JobId  Level    Files      Bytes   Status   Finished        Name 
+===================================================================
+     6  Full      3,265    66.46 M  OK       24-Jan-20 08:18 Daily-Backup-Croqueta
+====
+You have messages.
+</code></pre>
+
+<p>Vemos las copias tras unos dias:</p>
+
+<pre><code>debian@serranito:~$ sudo bconsole
+Connecting to Director 10.0.0.8:9101
+1000 OK: 103 serranito-dir Version: 9.4.2 (04 February 2019)
+Enter a period to cancel a command.
+*list jobs
+Automatically selected Catalog: mysql-bacula
+Using Catalog &quot;mysql-bacula&quot;
++-------+-------------------------+---------------------+------+-------+----------+-------------+-----------+
+| JobId | Name                    | StartTime           | Type | Level | JobFiles | JobBytes    | JobStatus |
++-------+-------------------------+---------------------+------+-------+----------+-------------+-----------+
+|     2 | Daily-Backup-Serranito  | 2020-01-23 20:59:00 | B    | F     |        0 |           0 | f         |
+|     3 | Daily-Backup-Croqueta   | 2020-01-23 20:59:00 | B    | I     |        0 |           0 | f         |
+|     4 | Daily-Backup-Tortilla   | 2020-01-23 20:59:00 | B    | F     |        0 |           0 | f         |
+|     5 | Daily-Backup-Salmorejo  | 2020-01-23 20:59:02 | B    | F     |        0 |           0 | f         |
+|     6 | Daily-Backup-Croqueta   | 2020-01-24 08:15:17 | B    | F     |    3,265 |  66,465,322 | T         |
+|     7 | Daily-Backup-Tortilla   | 2020-01-24 18:43:48 | B    | F     |    5,081 |  44,487,922 | T         |
+|     8 | Daily-Backup-Serranito  | 2020-01-24 20:00:00 | B    | F     |    3,626 | 109,089,625 | T         |
+|     9 | Daily-Backup-Croqueta   | 2020-01-24 20:00:00 | B    | I     |      151 |  52,232,068 | T         |
+|    10 | Daily-Backup-Tortilla   | 2020-01-24 20:00:00 | B    | I     |       17 |     408,189 | T         |
+|    11 | Daily-Backup-Salmorejo  | 2020-01-24 20:00:02 | B    | F     |   43,792 | 382,767,581 | T         |
+|    12 | Daily-Backup-Serranito  | 2020-01-25 20:00:00 | B    | I     |       92 |  40,268,522 | T         |
+|    13 | Daily-Backup-Croqueta   | 2020-01-25 20:00:00 | B    | I     |       68 |  17,457,020 | T         |
+|    14 | Daily-Backup-Tortilla   | 2020-01-25 20:00:00 | B    | I     |       71 |   5,501,461 | T         |
+|    15 | Daily-Backup-Salmorejo  | 2020-01-25 20:00:02 | B    | I     |       32 |   1,016,011 | T         |
+|    16 | Weekly-Backup-Serranito | 2020-01-25 23:00:00 | B    | F     |    3,644 | 114,646,015 | T         |
+|    17 | Weekly-Backup-Croqueta  | 2020-01-25 23:00:00 | B    | F     |    3,343 | 105,841,267 | T         |
+|    18 | Weekly-Backup-Tortilla  | 2020-01-25 23:00:00 | B    | F     |    5,081 |  44,519,985 | T         |
+|    19 | Weekly-Backup-Salmorejo | 2020-01-25 23:00:02 | B    | F     |   43,792 | 382,765,046 | T         |
+|    20 | Daily-Backup-Serranito  | 2020-01-26 20:00:01 | B    | I     |       99 |  30,279,626 | T         |
+|    21 | Daily-Backup-Croqueta   | 2020-01-26 20:00:01 | B    | I     |       79 |  23,448,247 | T         |
+|    22 | Daily-Backup-Tortilla   | 2020-01-26 20:00:01 | B    | I     |       72 |   2,061,292 | T         |
+|    23 | Daily-Backup-Salmorejo  | 2020-01-26 20:00:03 | B    | I     |       44 |   1,031,324 | T         |
+|    24 | Daily-Backup-Serranito  | 2020-01-27 20:00:00 | B    | I     |       99 |  36,099,298 | T         |
+|    25 | Daily-Backup-Croqueta   | 2020-01-27 20:00:00 | B    | I     |       66 |   4,784,258 | T         |
+|    26 | Daily-Backup-Tortilla   | 2020-01-27 20:00:00 | B    | I     |      119 |   7,934,669 | T         |
+|    27 | Daily-Backup-Salmorejo  | 2020-01-27 20:00:02 | B    | I     |    2,197 |  14,469,352 | T         |
++-------+-------------------------+---------------------+------+-------+----------+-------------+-----------+
+You have messages.
+</code></pre>
 
     </section>
     <footer class="post-footer">

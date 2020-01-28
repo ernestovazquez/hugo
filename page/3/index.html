@@ -14,19 +14,19 @@
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="alternate" type="application/rss&#43;xml" href="https://ernestovazquez.github.io/hugo/index.xml">
+    <link rel="alternate" type="application/rss&#43;xml" href="https://ernestovazquez.es/index.xml">
     
-    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/icons.css" />
-    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
     
     <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
     
 
     
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="/hugo/assets/bigfoot/dist/bigfoot.js"></script>
-    <link rel="stylesheet" type="text/css" href="/hugo/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript" src="/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/bigfoot/dist/bigfoot-number.css" />
     <script type="text/javascript">
         $.bigfoot();
     </script>
@@ -38,7 +38,7 @@
         <header class="main-header">
 	<div class="main-header-content">
 		<h1 class="blog-title">
-			<a href="/hugo/">
+			<a href="/">
 				
            De Rookie a Leyenda
 				
@@ -65,11 +65,11 @@
 
 <nav class="pagination" role="navigation">
     
-        <a class="newer-posts" href="/hugo/page/2/">&larr; Newer Posts</a>
+        <a class="newer-posts" href="/page/2/">&larr; Newer Posts</a>
     
     <span class="page-number">Page 3 of 5</span>
     
-        <a class="older-posts" href="/hugo/page/4/">Older Posts &rarr;</a>
+        <a class="older-posts" href="/page/4/">Older Posts &rarr;</a>
     
 </nav>
 
@@ -78,13 +78,13 @@
       <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/hugo/post/servidorest7/">T7. Hosting.</a></h2>
+		<h2 class="post-title"><a href="/post/servidorest7/">T7. Hosting.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
       Queremos que diferentes usuarios, puedan gestionar una página web en vuestro servidor que esté gestionada por medio de un FTP. También se creará una base de datos para cada usuario.
 Por ejemplo, el usuario josedom quiere hacer una página cuyo nombre será servicios:
- La página que vamos a crear será accesible en https://servicios.tunombre.gonzalonazareno.org. Se creará un usuario user_josedom, que tendrá una contraseña, para que accediendo a ftp.tunombre.gonzalonazareno.org, pueda gestionar los ficheros de su página web. &hellip; <a class="read-more" href="/hugo/post/servidorest7/">&raquo;</a>
+ La página que vamos a crear será accesible en https://servicios.tunombre.gonzalonazareno.org. Se creará un usuario user_josedom, que tendrá una contraseña, para que accediendo a ftp.tunombre.gonzalonazareno.org, pueda gestionar los ficheros de su página web. &hellip; <a class="read-more" href="/post/servidorest7/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -96,13 +96,13 @@ Por ejemplo, el usuario josedom quiere hacer una página cuyo nombre será servi
       <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/hugo/post/servidorest6/">T6. DNS.</a></h2>
+		<h2 class="post-title"><a href="/post/servidorest6/">T6. DNS.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
       Vamos a instalar un servidor dns que nos permita gestionar la resolución directa e inversa de nuestros nombres. Cada alumno va a poseer un servidor dns con autoridad sobre un subdominio de nuestro dominio principal gonzalonazareno.org, que se llamará tu_nombre.gonzalonazareno.org.
 Indica al profesor el nombre de tu dominio para que pueda realizar la delegación en el servidor DNS principal papion-dns.
-El servidor DNS se va a instalar en el servidor1 (croqueta). &hellip; <a class="read-more" href="/hugo/post/servidorest6/">&raquo;</a>
+El servidor DNS se va a instalar en el servidor1 (croqueta). &hellip; <a class="read-more" href="/post/servidorest6/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -114,7 +114,7 @@ El servidor DNS se va a instalar en el servidor1 (croqueta). &hellip; <a class="
       <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/hugo/post/servidorest5/">T5. Actualización a CentOS 8.</a></h2>
+		<h2 class="post-title"><a href="/post/servidorest5/">T5. Actualización a CentOS 8.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
@@ -123,7 +123,7 @@ Instalamos los repositorios de EPEL :
 [root@salmorejo centos]# yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm  Instalamos yum-utils :
 [root@salmorejo centos]# yum -y install rpmconf yum-utils [root@salmorejo centos]# rpmconf -a  Limpiamos paquetes innecesarios:
 [root@salmorejo centos]# package-cleanup --leaves [root@salmorejo centos]# package-cleanup --orphans  Instalamos el software DNF :
-[root@salmorejo centos]# yum -y install dnf  Eliminamos los paquetes manager: &hellip; <a class="read-more" href="/hugo/post/servidorest5/">&raquo;</a>
+[root@salmorejo centos]# yum -y install dnf  Eliminamos los paquetes manager: &hellip; <a class="read-more" href="/post/servidorest5/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -136,11 +136,11 @@ Instalamos los repositorios de EPEL :
 
 <nav class="pagination" role="navigation">
     
-        <a class="newer-posts" href="/hugo/page/2/">&larr; Newer Posts</a>
+        <a class="newer-posts" href="/page/2/">&larr; Newer Posts</a>
     
     <span class="page-number">Page 3 of 5</span>
     
-        <a class="older-posts" href="/hugo/page/4/">Older Posts &rarr;</a>
+        <a class="older-posts" href="/page/4/">Older Posts &rarr;</a>
     
 </nav>
 

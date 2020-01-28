@@ -14,19 +14,19 @@
 
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="alternate" type="application/rss&#43;xml" href="https://ernestovazquez.github.io/hugo/index.xml">
+    <link rel="alternate" type="application/rss&#43;xml" href="https://ernestovazquez.es/index.xml">
     
-    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/normalize.css" />
-    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/icons.css" />
-    <link rel="stylesheet" type="text/css" href="/hugo/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
     
     <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
     
 
     
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="/hugo/assets/bigfoot/dist/bigfoot.js"></script>
-    <link rel="stylesheet" type="text/css" href="/hugo/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript" src="/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/bigfoot/dist/bigfoot-number.css" />
     <script type="text/javascript">
         $.bigfoot();
     </script>
@@ -38,7 +38,7 @@
         <header class="main-header">
 	<div class="main-header-content">
 		<h1 class="blog-title">
-			<a href="/hugo/">
+			<a href="/">
 				
            De Rookie a Leyenda
 				
@@ -65,11 +65,11 @@
 
 <nav class="pagination" role="navigation">
     
-        <a class="newer-posts" href="/hugo/page/3/">&larr; Newer Posts</a>
+        <a class="newer-posts" href="/page/3/">&larr; Newer Posts</a>
     
     <span class="page-number">Page 4 of 5</span>
     
-        <a class="older-posts" href="/hugo/page/5/">Older Posts &rarr;</a>
+        <a class="older-posts" href="/page/5/">Older Posts &rarr;</a>
     
 </nav>
 
@@ -78,12 +78,12 @@
       <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/hugo/post/oraclevspostgresql/">PL/SQL vs PL/PGSQL</a></h2>
+		<h2 class="post-title"><a href="/post/oraclevspostgresql/">PL/SQL vs PL/PGSQL</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
       Vamos a ver las principales diferencias entre estos dos gestores. Diferencias en cursores: Recorreremos los cursores de formas diferentes en los dos gestores.
- PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir. &hellip; <a class="read-more" href="/hugo/post/oraclevspostgresql/">&raquo;</a>
+ PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir. &hellip; <a class="read-more" href="/post/oraclevspostgresql/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -95,12 +95,12 @@
       <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/hugo/post/servidorest3/">T3. Instalación aplicaciones web.</a></h2>
+		<h2 class="post-title"><a href="/post/servidorest3/">T3. Instalación aplicaciones web.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
       Vamos a instalar dos aplicaciones web php en nuestros servidores:
- En www.tunombre.gonzalonazareno.org vamos a instalar WordPress. En WordPress debemos configurar de forma correcta las URL limpias. En cloud.tunombre.gonzalonazareno.org vamos a instalar NextCloud.  Modifica las aplicaciones web y personalizalas para que se demuestre que son tus aplicaciones. Entrega una breve descripción de los pasos dados para conseguir la instalación de las aplicaciones web. Usando resolución estática entrega algunas capturas donde se demuestre que las aplicaciones están funcionando. &hellip; <a class="read-more" href="/hugo/post/servidorest3/">&raquo;</a>
+ En www.tunombre.gonzalonazareno.org vamos a instalar WordPress. En WordPress debemos configurar de forma correcta las URL limpias. En cloud.tunombre.gonzalonazareno.org vamos a instalar NextCloud.  Modifica las aplicaciones web y personalizalas para que se demuestre que son tus aplicaciones. Entrega una breve descripción de los pasos dados para conseguir la instalación de las aplicaciones web. Usando resolución estática entrega algunas capturas donde se demuestre que las aplicaciones están funcionando. &hellip; <a class="read-more" href="/post/servidorest3/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -112,13 +112,13 @@
       <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/hugo/post/servidorest2/">T2. Instalación de un servidor Web.</a></h2>
+		<h2 class="post-title"><a href="/post/servidorest2/">T2. Instalación de un servidor Web.</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
       Ante de realizar la instalación del servidor web vamos a configurar el nombre de nuestras máquinas, para ello:
 Piensa en un nombre de dominio, que sera un subdominio de gonzalonazareno.org, y que contenga tu nombre, por ejemplo: josedom.gonzalonazareno.org. Siguiendo con el ejemplo, los nombres de mis máquinas serán:
- croqueta.josedom.gonzalonazareno.org tortilla.josedom.gonzalonazareno.org salmorejo.josedom.gonzalonazareno.org  Comprueba que los servidores tienen configurados el nuevo nombre de dominio de forma adecuada después de volver a reiniciar el servidor (o tomar una nueva configuración DHCP). &hellip; <a class="read-more" href="/hugo/post/servidorest2/">&raquo;</a>
+ croqueta.josedom.gonzalonazareno.org tortilla.josedom.gonzalonazareno.org salmorejo.josedom.gonzalonazareno.org  Comprueba que los servidores tienen configurados el nuevo nombre de dominio de forma adecuada después de volver a reiniciar el servidor (o tomar una nueva configuración DHCP). &hellip; <a class="read-more" href="/post/servidorest2/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">
@@ -131,11 +131,11 @@ Piensa en un nombre de dominio, que sera un subdominio de gonzalonazareno.org, y
 
 <nav class="pagination" role="navigation">
     
-        <a class="newer-posts" href="/hugo/page/3/">&larr; Newer Posts</a>
+        <a class="newer-posts" href="/page/3/">&larr; Newer Posts</a>
     
     <span class="page-number">Page 4 of 5</span>
     
-        <a class="older-posts" href="/hugo/page/5/">Older Posts &rarr;</a>
+        <a class="older-posts" href="/page/5/">Older Posts &rarr;</a>
     
 </nav>
 

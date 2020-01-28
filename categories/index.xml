@@ -2,11 +2,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on De Rookie a Leyenda</title>
-    <link>https://ernestovazquez.github.io/hugo/categories/</link>
+    <link>https://ernestovazquez.es/categories/</link>
     <description>Recent content in Categories on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
     
-	<atom:link href="https://ernestovazquez.github.io/hugo/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ernestovazquez.es/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>

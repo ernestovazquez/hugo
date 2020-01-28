@@ -139,8 +139,6 @@ Le damos a guardar y ya tendremos el primero Dashboard guardado.
 
 ![](https://i.imgur.com/Y3oBrVb.png)
 
-Ahora va configurar otro dashboard para el uso de CPU:
-
 ## Clientes
 
 Vamos a ver la configuración que tenemos que realizar en los demás servidores para tener en la misma base de datos todos los servidores y se pueda ver y comparar las gráficas de una manera mas eficiente. 

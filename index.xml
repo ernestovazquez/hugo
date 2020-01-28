@@ -2,50 +2,50 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>De Rookie a Leyenda</title>
-    <link>/hugo/</link>
+    <link>http://ernestovazquez.github.io/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 23 Jan 2020 21:20:52 +0100</lastBuildDate>
     
-	<atom:link href="/hugo/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://ernestovazquez.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Sistemas de ficheros avanzados Btrfs</title>
-      <link>/hugo/post/btrfs/</link>
+      <link>http://ernestovazquez.github.io/post/btrfs/</link>
       <pubDate>Thu, 23 Jan 2020 21:20:52 +0100</pubDate>
       
-      <guid>/hugo/post/btrfs/</guid>
+      <guid>http://ernestovazquez.github.io/post/btrfs/</guid>
       <description>Elige uno de los dos sistemas de ficheros &amp;ldquo;avanzados&amp;rdquo; que hemos visto en clase.
  Crea un escenario que incluya una máquina y varios discos asociados a ella. Instala si es necesario el software de ZFS/Btrfs Gestiona los discos adicionales con ZFS/Btrfs. Configura los discos en RAID, haciendo pruebas de fallo de algún disco y sustitución, restauración del RAID. Comenta ventajas e inconvenientes respecto al uso de RAID software con mdadm Realiza ejercicios con pruebas de funcionamiento de las principales funcionalidades: compresión, cow, deduplicación, cifrado, etc.</description>
     </item>
     
     <item>
       <title>Diferencias entre MySQL y PostgreSQL respecto a Oracle para gestionar el almacenamiento</title>
-      <link>/hugo/post/almacenamientobbdd/</link>
+      <link>http://ernestovazquez.github.io/post/almacenamientobbdd/</link>
       <pubDate>Wed, 22 Jan 2020 09:20:52 +0100</pubDate>
       
-      <guid>/hugo/post/almacenamientobbdd/</guid>
+      <guid>http://ernestovazquez.github.io/post/almacenamientobbdd/</guid>
       <description>Realizaremos un pequeño artículo o una entrada para un blog técnico explicando las limitaciones que presentan MySQL y Postgres para gestionar el almacenamiento de los datos respecto a ORACLE, si es que presentan alguna.
 1.</description>
     </item>
     
     <item>
       <title>Sistema de copias de seguridad</title>
-      <link>/hugo/post/bacula/</link>
+      <link>http://ernestovazquez.github.io/post/bacula/</link>
       <pubDate>Wed, 22 Jan 2020 08:04:52 +0100</pubDate>
       
-      <guid>/hugo/post/bacula/</guid>
+      <guid>http://ernestovazquez.github.io/post/bacula/</guid>
       <description>Implementar un sistema de copias de seguridad para las instancias del cloud, teniendo en cuenta las siguientes características:
  Selecciona una aplicación para realizar el proceso: bacula, amanda, shell script con tar, rsync, dar, afio, etc. Utiliza una de las instancias como servidor de copias de seguridad, añadiéndole un volumen y almacenando localmente las copias de seguridad que consideres adecuadas en él. El proceso debe realizarse de forma completamente automática Selecciona qué información es necesaria guardar (listado de paquetes, ficheros de configuración, documentos, datos, etc.</description>
     </item>
     
     <item>
       <title>Introducción a la integración continua</title>
-      <link>/hugo/post/travis/</link>
+      <link>http://ernestovazquez.github.io/post/travis/</link>
       <pubDate>Sun, 15 Dec 2019 15:29:57 +0100</pubDate>
       
-      <guid>/hugo/post/travis/</guid>
+      <guid>http://ernestovazquez.github.io/post/travis/</guid>
       <description>Tarea 1: Despliegue de una página web estática (build, deploy) (4 puntos)
 En esta práctica investiga como generar una página web estática con la herramienta que elegiste en la práctica 1 de la asignatura y desplegarla en el servicio que utilizaste en esa práctica.
  En el repositorio GitHub sólo tienen que estar los ficheros markdown. La página se debe generar en el sistema de integración continúa, por lo tanto debemos instalar las herramientas necesarias.</description>
@@ -53,20 +53,20 @@ En esta práctica investiga como generar una página web estática con la herram
     
     <item>
       <title>T8. Instalación de aplicación python.</title>
-      <link>/hugo/post/servidorest8/</link>
+      <link>http://ernestovazquez.github.io/post/servidorest8/</link>
       <pubDate>Wed, 11 Dec 2019 15:29:57 +0100</pubDate>
       
-      <guid>/hugo/post/servidorest8/</guid>
+      <guid>http://ernestovazquez.github.io/post/servidorest8/</guid>
       <description>En esta tarea vamos a desplegar un CMS python. Hemos elegido Mezzanine, pero puedes elegir otro CMS python basado en django.
  Instala el CMS en el entorno de desarrollo. Debes utilizar un entorno virtual. Personaliza la página (cambia el nombre al blog y pon tu nombre) y añade contenido (algún artículo con alguna imagen). Guarda los ficheros generados durante la instalación en un repositorio github. Guarda también en ese repositorio la copia de seguridad de la bese de datos.</description>
     </item>
     
     <item>
       <title>T7. Hosting.</title>
-      <link>/hugo/post/servidorest7/</link>
+      <link>http://ernestovazquez.github.io/post/servidorest7/</link>
       <pubDate>Wed, 11 Dec 2019 14:29:52 +0100</pubDate>
       
-      <guid>/hugo/post/servidorest7/</guid>
+      <guid>http://ernestovazquez.github.io/post/servidorest7/</guid>
       <description>Queremos que diferentes usuarios, puedan gestionar una página web en vuestro servidor que esté gestionada por medio de un FTP. También se creará una base de datos para cada usuario.
 Por ejemplo, el usuario josedom quiere hacer una página cuyo nombre será servicios:
  La página que vamos a crear será accesible en https://servicios.tunombre.gonzalonazareno.org. Se creará un usuario user_josedom, que tendrá una contraseña, para que accediendo a ftp.tunombre.gonzalonazareno.org, pueda gestionar los ficheros de su página web.</description>
@@ -74,10 +74,10 @@ Por ejemplo, el usuario josedom quiere hacer una página cuyo nombre será servi
     
     <item>
       <title>T6. DNS.</title>
-      <link>/hugo/post/servidorest6/</link>
+      <link>http://ernestovazquez.github.io/post/servidorest6/</link>
       <pubDate>Tue, 19 Nov 2019 13:15:31 +0100</pubDate>
       
-      <guid>/hugo/post/servidorest6/</guid>
+      <guid>http://ernestovazquez.github.io/post/servidorest6/</guid>
       <description>Vamos a instalar un servidor dns que nos permita gestionar la resolución directa e inversa de nuestros nombres. Cada alumno va a poseer un servidor dns con autoridad sobre un subdominio de nuestro dominio principal gonzalonazareno.org, que se llamará tu_nombre.gonzalonazareno.org.
 Indica al profesor el nombre de tu dominio para que pueda realizar la delegación en el servidor DNS principal papion-dns.
 El servidor DNS se va a instalar en el servidor1 (croqueta).</description>
@@ -85,10 +85,10 @@ El servidor DNS se va a instalar en el servidor1 (croqueta).</description>
     
     <item>
       <title>T5. Actualización a CentOS 8.</title>
-      <link>/hugo/post/servidorest5/</link>
+      <link>http://ernestovazquez.github.io/post/servidorest5/</link>
       <pubDate>Mon, 11 Nov 2019 13:10:28 +0100</pubDate>
       
-      <guid>/hugo/post/servidorest5/</guid>
+      <guid>http://ernestovazquez.github.io/post/servidorest5/</guid>
       <description>Actualiza salmorejo a CentOS 8 garantizando que todos los servicios previamente configurados sigan funcionando correctamente.
 Instalamos los repositorios de EPEL :
 [root@salmorejo centos]# yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm  Instalamos yum-utils :
@@ -99,30 +99,30 @@ Instalamos los repositorios de EPEL :
     
     <item>
       <title>PL/SQL vs PL/PGSQL</title>
-      <link>/hugo/post/oraclevspostgresql/</link>
+      <link>http://ernestovazquez.github.io/post/oraclevspostgresql/</link>
       <pubDate>Sat, 09 Nov 2019 18:38:43 +0100</pubDate>
       
-      <guid>/hugo/post/oraclevspostgresql/</guid>
+      <guid>http://ernestovazquez.github.io/post/oraclevspostgresql/</guid>
       <description>Vamos a ver las principales diferencias entre estos dos gestores. Diferencias en cursores: Recorreremos los cursores de formas diferentes en los dos gestores.
  PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir.</description>
     </item>
     
     <item>
       <title>T3. Instalación aplicaciones web.</title>
-      <link>/hugo/post/servidorest3/</link>
+      <link>http://ernestovazquez.github.io/post/servidorest3/</link>
       <pubDate>Wed, 30 Oct 2019 12:20:59 +0100</pubDate>
       
-      <guid>/hugo/post/servidorest3/</guid>
+      <guid>http://ernestovazquez.github.io/post/servidorest3/</guid>
       <description>Vamos a instalar dos aplicaciones web php en nuestros servidores:
  En www.tunombre.gonzalonazareno.org vamos a instalar WordPress. En WordPress debemos configurar de forma correcta las URL limpias. En cloud.tunombre.gonzalonazareno.org vamos a instalar NextCloud.  Modifica las aplicaciones web y personalizalas para que se demuestre que son tus aplicaciones. Entrega una breve descripción de los pasos dados para conseguir la instalación de las aplicaciones web. Usando resolución estática entrega algunas capturas donde se demuestre que las aplicaciones están funcionando.</description>
     </item>
     
     <item>
       <title>T2. Instalación de un servidor Web.</title>
-      <link>/hugo/post/servidorest2/</link>
+      <link>http://ernestovazquez.github.io/post/servidorest2/</link>
       <pubDate>Tue, 29 Oct 2019 10:49:14 +0100</pubDate>
       
-      <guid>/hugo/post/servidorest2/</guid>
+      <guid>http://ernestovazquez.github.io/post/servidorest2/</guid>
       <description>Ante de realizar la instalación del servidor web vamos a configurar el nombre de nuestras máquinas, para ello:
 Piensa en un nombre de dominio, que sera un subdominio de gonzalonazareno.org, y que contenga tu nombre, por ejemplo: josedom.gonzalonazareno.org. Siguiendo con el ejemplo, los nombres de mis máquinas serán:
  croqueta.josedom.gonzalonazareno.org tortilla.josedom.gonzalonazareno.org salmorejo.josedom.gonzalonazareno.org  Comprueba que los servidores tienen configurados el nuevo nombre de dominio de forma adecuada después de volver a reiniciar el servidor (o tomar una nueva configuración DHCP).</description>
@@ -130,10 +130,10 @@ Piensa en un nombre de dominio, que sera un subdominio de gonzalonazareno.org, y
     
     <item>
       <title>T1. Instalación de los servidores.</title>
-      <link>/hugo/post/servidorest1/</link>
+      <link>http://ernestovazquez.github.io/post/servidorest1/</link>
       <pubDate>Sun, 13 Oct 2019 10:36:33 +0100</pubDate>
       
-      <guid>/hugo/post/servidorest1/</guid>
+      <guid>http://ernestovazquez.github.io/post/servidorest1/</guid>
       <description>Tarea 1) Instalación de los servidores
 Crear tres máquinas en el cloud con los siguientes nombres y sistemas operativos:
 Croqueta (Debian 10) Tortilla (Ubunut 18.04) Salmorejo (CentOs 7)

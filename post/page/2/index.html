@@ -73,6 +73,44 @@
   <article class="post">
 	<header class="post-header">
     
+		<h2 class="post-title"><a href="/post/servidorest5/">T5. Actualización a CentOS 8.</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Actualiza salmorejo a CentOS 8 garantizando que todos los servicios previamente configurados sigan funcionando correctamente.
+Instalamos los repositorios de EPEL :
+[root@salmorejo centos]# yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm  Instalamos yum-utils :
+[root@salmorejo centos]# yum -y install rpmconf yum-utils [root@salmorejo centos]# rpmconf -a  Limpiamos paquetes innecesarios:
+[root@salmorejo centos]# package-cleanup --leaves [root@salmorejo centos]# package-cleanup --orphans  Instalamos el software DNF :
+[root@salmorejo centos]# yum -y install dnf  Eliminamos los paquetes manager: &hellip; <a class="read-more" href="/post/servidorest5/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">November 11, 2019</time>
+	</footer>
+</article>
+
+  
+  <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/post/oraclevspostgresql/">PL/SQL vs PL/PGSQL</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Vamos a ver las principales diferencias entre estos dos gestores. Diferencias en cursores: Recorreremos los cursores de formas diferentes en los dos gestores.
+ PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir. &hellip; <a class="read-more" href="/post/oraclevspostgresql/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">November 09, 2019</time>
+	</footer>
+</article>
+
+  
+  <article class="post">
+	<header class="post-header">
+    
 		<h2 class="post-title"><a href="/post/servidorest3/">T3. Instalación aplicaciones web.</a></h2>
 	</header>
 	<section class="post-excerpt">

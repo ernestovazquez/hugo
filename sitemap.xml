@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ernestovazquez.es/post/selinuxapparmor/</loc>
+    <lastmod>2020-01-28T15:04:52+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ernestovazquez.es/post/iscsi/</loc>
+    <lastmod>2020-01-28T15:04:52+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ernestovazquez.es/post/metricas/</loc>
     <lastmod>2020-01-28T08:04:52+01:00</lastmod>
   </url>
@@ -74,13 +84,13 @@
   
   <url>
     <loc>https://ernestovazquez.es/</loc>
-    <lastmod>2020-01-28T08:04:52+01:00</lastmod>
+    <lastmod>2020-01-28T15:04:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ernestovazquez.es/post/</loc>
-    <lastmod>2020-01-28T08:04:52+01:00</lastmod>
+    <lastmod>2020-01-28T15:04:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   

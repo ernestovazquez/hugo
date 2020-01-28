@@ -75,6 +75,40 @@
   <article class="post">
 	<header class="post-header">
     
+		<h2 class="post-title"><a href="/post/iscsi/">iSCSI</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Configura un sistema que exporte algunos targets por iSCSI y los conecte a diversos clientes, explicando con detalle la forma de trabajar.
+ Crea un target con una LUN y conéctala a un cliente GNU/Linux. Explica cómo escaneas desde el cliente buscando los targets disponibles y utiliza la unidad lógica proporcionada, formateándola si es necesario y montándola. Utiliza systemd mount para que el target se monte automáticamente al arrancar el cliente. &hellip; <a class="read-more" href="/post/iscsi/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">January 28, 2020</time>
+	</footer>
+</article>
+
+  
+  <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/post/selinuxapparmor/">Configuración/activación de SELinux/Apparmor</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Elige una de las siguientes opciones:
+  Habilita SELinux en salmorejo y asegúrate de que todas las aplicaciones web funcionan correctamente con una configuración estricta y segura de SELinux   Habilita apparmor en croqueta o tortilla, habilitando o creando los perfiles necesarios de manera estricta y segura.    &hellip; <a class="read-more" href="/post/selinuxapparmor/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">January 28, 2020</time>
+	</footer>
+</article>
+
+  
+  <article class="post">
+	<header class="post-header">
+    
 		<h2 class="post-title"><a href="/post/metricas/">Métricas, logs y monitorización</a></h2>
 	</header>
 	<section class="post-excerpt">
@@ -207,44 +241,6 @@ El servidor DNS se va a instalar en el servidor1 (croqueta). &hellip; <a class="
 	</section>
 	<footer class="post-meta">
     <time class="post-date">November 19, 2019</time>
-	</footer>
-</article>
-
-  
-  <article class="post">
-	<header class="post-header">
-    
-		<h2 class="post-title"><a href="/post/servidorest5/">T5. Actualización a CentOS 8.</a></h2>
-	</header>
-	<section class="post-excerpt">
-    <p>
-      Actualiza salmorejo a CentOS 8 garantizando que todos los servicios previamente configurados sigan funcionando correctamente.
-Instalamos los repositorios de EPEL :
-[root@salmorejo centos]# yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm  Instalamos yum-utils :
-[root@salmorejo centos]# yum -y install rpmconf yum-utils [root@salmorejo centos]# rpmconf -a  Limpiamos paquetes innecesarios:
-[root@salmorejo centos]# package-cleanup --leaves [root@salmorejo centos]# package-cleanup --orphans  Instalamos el software DNF :
-[root@salmorejo centos]# yum -y install dnf  Eliminamos los paquetes manager: &hellip; <a class="read-more" href="/post/servidorest5/">&raquo;</a>
-    </p>
-	</section>
-	<footer class="post-meta">
-    <time class="post-date">November 11, 2019</time>
-	</footer>
-</article>
-
-  
-  <article class="post">
-	<header class="post-header">
-    
-		<h2 class="post-title"><a href="/post/oraclevspostgresql/">PL/SQL vs PL/PGSQL</a></h2>
-	</header>
-	<section class="post-excerpt">
-    <p>
-      Vamos a ver las principales diferencias entre estos dos gestores. Diferencias en cursores: Recorreremos los cursores de formas diferentes en los dos gestores.
- PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir. &hellip; <a class="read-more" href="/post/oraclevspostgresql/">&raquo;</a>
-    </p>
-	</section>
-	<footer class="post-meta">
-    <time class="post-date">November 09, 2019</time>
 	</footer>
 </article>
 

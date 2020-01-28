@@ -17,7 +17,9 @@
       
       <guid>https://ernestovazquez.es/post/selinuxapparmor/</guid>
       <description>Elige una de las siguientes opciones:
-  Habilita SELinux en salmorejo y asegúrate de que todas las aplicaciones web funcionan correctamente con una configuración estricta y segura de SELinux   Habilita apparmor en croqueta o tortilla, habilitando o creando los perfiles necesarios de manera estricta y segura.   </description>
+ Habilita SELinux en salmorejo y asegúrate de que todas las aplicaciones web funcionan correctamente con una configuración estricta y segura de SELinux
+ Habilita apparmor en croqueta o tortilla, habilitando o creando los perfiles necesarios de manera estricta y segura.
+  </description>
     </item>
     
     <item>

@@ -59,7 +59,8 @@
       
       <guid>https://ernestovazquez.es/post/almacenamientobbdd/</guid>
       <description>Realizaremos un pequeño artículo o una entrada para un blog técnico explicando las limitaciones que presentan MySQL y Postgres para gestionar el almacenamiento de los datos respecto a ORACLE, si es que presentan alguna.
-1.</description>
+En esta entrada vamos a ver las limitaciones que presentan MySQL y PostgreSQL respecto a ORACLE en la gestión de almacenamiento.
+MySQL Mysql utiliza el sistema de almacenamiento mediante tablespaces. Motores de almacenamiento: InnoDB y NDB.</description>
     </item>
     
     <item>

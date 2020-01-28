@@ -5,10 +5,20 @@
     <link>https://ernestovazquez.es/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 23 Jan 2020 21:20:52 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jan 2020 08:04:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Métricas, logs y monitorización</title>
+      <link>https://ernestovazquez.es/post/metricas/</link>
+      <pubDate>Tue, 28 Jan 2020 08:04:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/metricas/</guid>
+      <description>Crea una nueva instancia de nombre serranito o reutiliza la que ya se estaba utilizando para copias de seguridad y realiza las partes que elijas entre las siguientes sobre de croqueta, salmorejo, tortilla y serranito (se puede hacer una, dos o las tres partes y el peso de la tarea se modificará consecuentemente):
+ Métricas: recolección, gestión centralizada, filtrado y representación gráfica de los parámetros que consideres necesarios Monitorización: Configuración de alertas por uso excesivo de recursos (memoria, disco raíz, etc.</description>
+    </item>
     
     <item>
       <title>Sistemas de ficheros avanzados Btrfs</title>

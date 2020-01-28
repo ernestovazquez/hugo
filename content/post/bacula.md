@@ -782,4 +782,6 @@ Puertos en salmorejo:
 [root@salmorejo ~]# firewall-cmd --reload
 ```
 
+Entraremos a la consola y creamos un label para cada tarea:
 
+Ya estaria configurado y podremos realizar las copias de seguridad de manera programada.

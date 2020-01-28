@@ -62,7 +62,9 @@
       </section>
     </header>
     <section class="post-content">
-      <p>Crea una nueva instancia de nombre serranito o reutiliza la que ya se estaba utilizando para copias de seguridad y realiza las partes que elijas entre las siguientes sobre de croqueta, salmorejo, tortilla y serranito (se puede hacer una, dos o las tres partes y el peso de la tarea se modificará consecuentemente):</p>
+      
+
+<p>Crea una nueva instancia de nombre serranito o reutiliza la que ya se estaba utilizando para copias de seguridad y realiza las partes que elijas entre las siguientes sobre de croqueta, salmorejo, tortilla y serranito (se puede hacer una, dos o las tres partes y el peso de la tarea se modificará consecuentemente):</p>
 
 <ul>
 <li>Métricas: recolección, gestión centralizada, filtrado y representación gráfica de los parámetros que consideres necesarios</li>
@@ -74,7 +76,276 @@
 
 <hr />
 
-<p>prueba</p>
+<p>En la nueva máquina llamada <strong>Serranito</strong> vamos a montar el sistema de monitorización. Con las siguientes combinaciones:</p>
+
+<ul>
+<li><p><strong>Telegraf</strong>: Se encarga de recolectar todos los datos que le pasamos mediante el fichero de configuración.</p></li>
+
+<li><p><strong>InfluxDB</strong>: Es donde Telegraf manda toda esta información.</p></li>
+
+<li><p><strong>Grafana</strong>: Es el Dashboard que se encarga de mostrar toda la información que InfluxDB tiene almacenado en las Bases de Datos.</p></li>
+</ul>
+
+<h2 id="instalación-de-influxdb">Instalación de InfluxDB</h2>
+
+<p>Vamos a empezar con la instalación de la base de datos donde se va a guardar todos los datos que va ofrecer telegraf.</p>
+
+<pre><code>debian@serranito:~$ wget https://dl.influxdata.com/influxdb/releases/influxdb_1.7.9_amd64.deb
+debian@serranito:~$ sudo dpkg -i influxdb_1.7.9_amd64.deb
+</code></pre>
+
+<p>Una vez ha terminado la instalación, arrancaremos el servicio.</p>
+
+<p><img src="https://i.imgur.com/bEW6Vnc.png" alt="" /></p>
+
+<h2 id="instalación-de-telegraf">Instalación de Telegraf</h2>
+
+<pre><code>debian@serranito:~$ wget https://dl.influxdata.com/telegraf/releases/telegraf_1.13.1-1_amd64.deb
+debian@serranito:~$ sudo dpkg -i telegraf_1.13.1-1_amd64.deb
+</code></pre>
+
+<p>Reiniciamos los servicios:</p>
+
+<pre><code>root@serranito:~# systemctl restart telegraf
+</code></pre>
+
+<p>Si miramos las bases de datos, se ha creado una base de datos para telegraf.</p>
+
+<pre><code>&gt; show databases
+name: databases
+name
+----
+_internal
+telegraf
+&gt; 
+</code></pre>
+
+<p>Vamos a ver la configuración que tenemos que hacer en el fichero de configuración telegraf.</p>
+
+<pre><code>debian@serranito:~$ sudo nano /etc/telegraf/telegraf.conf 
+</code></pre>
+
+<p>Lo dejaremos por defecto pero cambiaremos lo siguiente:</p>
+
+<pre><code>[agent]
+  interval = &quot;10s&quot;
+  flush_interval = &quot;10s&quot;
+  precision = &quot;s&quot;
+  hostname = &quot;serranito&quot;
+
+[[outputs.influxdb]]
+  urls = [&quot;http://127.0.0.1:8086&quot;]
+  database = &quot;telegraf&quot;
+  retention_policy = &quot;default&quot;
+  write_consistency = &quot;any&quot;
+  timeout = &quot;5s&quot;
+</code></pre>
+
+<p>Reiniciamos los servicios:</p>
+
+<pre><code>root@serranito:~# systemctl restart telegraf
+</code></pre>
+
+<p>Ya tendremos listo dicho servidor.</p>
+
+<h2 id="instalación-de-grafana">Instalación de grafana:</h2>
+
+<pre><code>debian@serranito:~$ sudo apt-get install -y adduser libfontconfig1
+debian@serranito:~$ wget https://dl.grafana.com/oss/release/grafana_6.5.3_amd64.deb
+debian@serranito:~$ sudo dpkg -i grafana_6.5.3_amd64.deb
+</code></pre>
+
+<p>Iniciamos los servicios:</p>
+
+<pre><code>debian@serranito:~$ sudo systemctl restart grafana-server.service 
+</code></pre>
+
+<p>Tenemos que habilitar el puerto 3000 en OpenStack:</p>
+
+<p>Ya podremos entrar desde el navegador a grafana</p>
+
+<p><img src="https://i.imgur.com/4KnpAul.png" alt="" /></p>
+
+<p>Accedemos con el usuario admin/admin y nos pedirá que cambiemos la contraseña.</p>
+
+<p><img src="https://i.imgur.com/INyHHfD.png" alt="" /></p>
+
+<p>A partir de ahora ya podremos configurar y enlazar la base de datos, InfluxDB y telegraf.</p>
+
+<p>Le damos a <em>Add data source</em> y seleccionamos InfluxDB.</p>
+
+<p><img src="https://i.imgur.com/PVs2qcQ.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/wyvY2Aq.png" alt="" /></p>
+
+<p>Guardamos y hacemos la prueba</p>
+
+<p>Si todo ha salido bien es hora de continuar con la creación del dashboard.</p>
+
+<p>Vamos a configurarlo:</p>
+
+<p><img src="https://i.imgur.com/HWTvwQt.png" alt="" /></p>
+
+<p>En la última parte podremos configurar las alertas al correo</p>
+
+<p><img src="https://i.imgur.com/hfcg9tD.png" alt="" /></p>
+
+<p>Le damos a guardar y ya tendremos el primero Dashboard guardado.</p>
+
+<p><img src="https://i.imgur.com/Y3oBrVb.png" alt="" /></p>
+
+<p>Ahora va configurar otro dashboard para el uso de CPU:</p>
+
+<h2 id="clientes">Clientes</h2>
+
+<p>Vamos a ver la configuración que tenemos que realizar en los demás servidores para tener en la misma base de datos todos los servidores y se pueda ver y comparar las gráficas de una manera mas eficiente.</p>
+
+<h3 id="croqueta">Croqueta:</h3>
+
+<p>Vamos a instalar telegraf y posteriormente vamos al fichero de configuración:</p>
+
+<pre><code>debian@croqueta:~$ sudo nano /etc/telegraf/telegraf.conf
+</code></pre>
+
+<p>Vamos a cambiar para que acceda al servidor de la base de datos:</p>
+
+<pre><code>[agent]
+  interval = &quot;15s&quot;
+  flush_interval = &quot;15s&quot;
+  precision = &quot;&quot;
+  hostname = &quot;croqueta&quot;
+
+[[outputs.influxdb]]
+  urls = [&quot;http://10.0.0.8:8086&quot;]
+  database = &quot;telegraf&quot;
+  skip_database_creation = true
+  username = &quot;admin&quot;
+  password = &quot;admin&quot;
+</code></pre>
+
+<p>Reiniciamos los servicios:</p>
+
+<pre><code>debian@croqueta:~$ sudo systemctl restart telegraf
+</code></pre>
+
+<h3 id="tortilla">Tortilla:</h3>
+
+<p>Igual que antes, tenemos que instalar telegraf y nos vamos al fichero de configuración:</p>
+
+<p>Vamos a cambiar para que acceda al servidor de la base de datos:</p>
+
+<pre><code>ubuntu@tortilla:~$ sudo nano /etc/telegraf/telegraf.conf
+
+[agent]
+  interval = &quot;15s&quot;
+  flush_interval = &quot;15s&quot;
+  precision = &quot;&quot;
+  hostname = &quot;tortilla&quot;
+
+[[outputs.influxdb]]
+  urls = [&quot;http://10.0.0.8:8086&quot;]
+  database = &quot;telegraf&quot;
+  skip_database_creation = true
+  username = &quot;admin&quot;
+  password = &quot;admin&quot;
+</code></pre>
+
+<p>Reiniciamos los servicios:</p>
+
+<pre><code>ubuntu@tortilla:~$ sudo systemctl restart telegraf
+
+ubuntu@tortilla:~$ sudo systemctl status telegraf
+● telegraf.service - The plugin-driven server agent for reporting metrics into InfluxDB
+   Loaded: loaded (/lib/systemd/system/telegraf.service; enabled; vendor preset: enabled)
+   Active: active (running) since Tue 2020-01-28 13:20:20 CET; 2s ago
+     Docs: https://github.com/influxdata/telegraf
+ Main PID: 5935 (telegraf)
+    Tasks: 7 (limit: 547)
+   CGroup: /system.slice/telegraf.service
+           └─5935 /usr/bin/telegraf -config /etc/telegraf/telegraf.conf -config-directory /etc/telegraf/telegraf.d
+
+Jan 28 13:20:20 tortilla systemd[1]: Started The plugin-driven server agent for reporting metrics into InfluxDB.
+Jan 28 13:20:21 tortilla telegraf[5935]: 2020-01-28T12:20:21Z I! Starting Telegraf 1.13.1
+Jan 28 13:20:21 tortilla telegraf[5935]: 2020-01-28T12:20:21Z I! Loaded inputs: system cpu disk diskio kernel mem processes swap
+Jan 28 13:20:21 tortilla telegraf[5935]: 2020-01-28T12:20:21Z I! Loaded aggregators:
+Jan 28 13:20:21 tortilla telegraf[5935]: 2020-01-28T12:20:21Z I! Loaded processors:
+Jan 28 13:20:21 tortilla telegraf[5935]: 2020-01-28T12:20:21Z I! Loaded outputs: influxdb
+Jan 28 13:20:21 tortilla telegraf[5935]: 2020-01-28T12:20:21Z I! Tags enabled: host=tortilla
+Jan 28 13:20:21 tortilla telegraf[5935]: 2020-01-28T12:20:21Z I! [agent] Config: Interval:15s, Quiet:false, Hostname:&quot;tortilla&quot;, Flush Interval:15s
+</code></pre>
+
+<h3 id="salmorejo">Salmorejo</h3>
+
+<p>Por último vamos a configurar el servidor con CentOS.</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo nano /etc/telegraf/telegraf.conf 
+
+[agent]
+  interval = &quot;15s&quot;
+  flush_interval = &quot;15s&quot;
+  precision = &quot;&quot;
+  hostname = &quot;salmorejo&quot;
+
+[[outputs.influxdb]]
+  urls = [&quot;http://10.0.0.8:8086&quot;]
+  database = &quot;telegraf&quot;
+  skip_database_creation = true
+  username = &quot;admin&quot;
+  password = &quot;admin&quot;
+</code></pre>
+
+<p>Reiniciamos y vemos el estado del servicio:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo systemctl restart telegraf
+
+[centos@salmorejo ~]$ sudo systemctl status telegraf
+● telegraf.service - The plugin-driven server agent for reporting metrics into InfluxDB
+   Loaded: loaded (/usr/lib/systemd/system/telegraf.service; enabled; vendor preset: disabled)
+   Active: active (running) since Tue 2020-01-28 13:28:25 CET; 1s ago
+     Docs: https://github.com/influxdata/telegraf
+ Main PID: 17779 (telegraf)
+    Tasks: 9 (limit: 4980)
+   Memory: 19.8M
+   CGroup: /system.slice/telegraf.service
+           └─17779 /usr/bin/telegraf -config /etc/telegraf/telegraf.conf -config-directory /etc/telegraf/telegraf.d
+
+ene 28 13:28:25 salmorejo systemd[1]: Stopped The plugin-driven server agent for reporting metrics into InfluxDB.
+ene 28 13:28:25 salmorejo systemd[1]: Started The plugin-driven server agent for reporting metrics into InfluxDB.
+ene 28 13:28:25 salmorejo telegraf[17779]: 2020-01-28T12:28:25Z I! Starting Telegraf 1.13.2
+ene 28 13:28:25 salmorejo telegraf[17779]: 2020-01-28T12:28:25Z I! Loaded inputs: cpu disk kernel mem system net diskio processes swap
+ene 28 13:28:25 salmorejo telegraf[17779]: 2020-01-28T12:28:25Z I! Loaded aggregators:
+ene 28 13:28:25 salmorejo telegraf[17779]: 2020-01-28T12:28:25Z I! Loaded processors:
+ene 28 13:28:25 salmorejo telegraf[17779]: 2020-01-28T12:28:25Z I! Loaded outputs: influxdb
+ene 28 13:28:25 salmorejo telegraf[17779]: 2020-01-28T12:28:25Z I! Tags enabled: host=salmorejo
+ene 28 13:28:25 salmorejo telegraf[17779]: 2020-01-28T12:28:25Z I! [agent] Config: Interval:15s, Quiet:false, Hostname:&quot;salmorejo&quot;, Flush Interval:15s
+[centos@salmorejo ~]$ 
+</code></pre>
+
+<p>Una vez, configurado dichos ficheros podemos ver que grafana ya reconoce el servidores.</p>
+
+<p><img src="https://i.imgur.com/9c1ifGN.png" alt="" /></p>
+
+<h2 id="creación-de-los-dashboard">Creación de los Dashboard</h2>
+
+<p>Vamos a crear un Dashboard nuevo y cambiamos el host para que salgan los diferentes servisores en la misma gráfica.</p>
+
+<p><img src="https://i.imgur.com/hsHtZMR.png" alt="" /></p>
+
+<p>En el último paso podemos definir las alertas:</p>
+
+<p><img src="https://i.imgur.com/IHgzIpA.png" alt="" /></p>
+
+<p>Le damos a guardar y nos saldrá en el panel principal de la siguiente forma:</p>
+
+<p><img src="https://i.imgur.com/krEgZi1.png" alt="" /></p>
+
+<p>Ahora vamos a ir configurando los diferentes <strong>dashboard</strong>.</p>
+
+<p><img src="https://i.imgur.com/5gqApFw.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/7eQu9Ib.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/V5hfAj7.png" alt="" /></p>
 
     </section>
     <footer class="post-footer">

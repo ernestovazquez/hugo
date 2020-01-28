@@ -784,4 +784,4 @@ Puertos en salmorejo:
 
 Entraremos a la consola y creamos un label para cada tarea:
 
-Ya estaria configurado y podremos realizar las copias de seguridad de manera programada.
+Ya estaria configurado y podemos realizar las copias de seguridad de manera programada.

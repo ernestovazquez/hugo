@@ -7,9 +7,9 @@ script:
   - hugo new site sitio
   - mkdir -p sitio/content/post
   - mkdir -p sitio/static/img
-  - mv hugo/content/post/* sitio/content/post
-  - mv hugo//static/img/* sitio/static/img
-  - mv hugo/config.toml sitio/
+  - mv content/post/* sitio/content/post
+  - mv static/img/* sitio/static/img
+  - mv config.toml sitio/
   - cd sitio/themes && git clone https://github.com/nirocfz/arabica && cd ..
   - hugo -t arabica
   - rm -rf themes/arabica

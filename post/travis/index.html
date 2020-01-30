@@ -91,14 +91,16 @@ También vamos a crear la rama gh-pages, donde estarán los ficheros generados p
 
 install:
   - wget https://github.com/gohugoio/hugo/releases/download/v0.53/hugo_0.53_Linux-64bit.deb &amp;&amp; sudo dpkg -i hugo*.deb
-  - git clone https://github.com/ernestovazquez/blog.git
+  - git clone https://github.com/ernestovazquez/hugo.git
 
 script:
   - rm hugo*.deb
   - hugo new site sitio
   - mkdir -p sitio/content/post
-  - mv blog/content/post/* sitio/content/post
-  - mv blog/config.toml sitio/
+  - mkdir -p sitio/static/img
+  - mv content/post/* sitio/content/post
+  - mv static/img/* sitio/static/img
+  - mv config.toml sitio/
   - cd sitio/themes &amp;&amp; git clone https://github.com/nirocfz/arabica &amp;&amp; cd ..
   - hugo -t arabica
   - rm -rf themes/arabica
@@ -111,20 +113,22 @@ deploy:
   keep-history: true
   on:
     branch: master
+  fqdn: ernestovazquez.es
 </code></pre>
 
 <p>Fichero <strong>config.toml</strong> :</p>
 
 <pre><code>ernesto@honda:~/blog$ sudo nano config.toml
 
-baseURL = &quot;/blog&quot;
-title = &quot;De Rookie a Leyenda&quot;
-author = &quot;Ernesto Vázquez&quot;
+baseURL = &quot;https://ernestovazquez.es&quot; 
+title = &quot;De Rookie a Leyenda&quot; 
+author = &quot;Ernesto Vázquez&quot; 
 paginate = 3
-theme = &quot;arabica&quot;
+theme = &quot;arabica&quot; 
 
 [params]
-description = &quot;Ernesto Vázquez García&quot;
+description = &quot;Ernesto Vázquez García&quot; 
+twitter = &quot;ernestovazgar&quot; 
 </code></pre>
 
 <p>Pasamos los ficheros Markdown que vamos a utilizar.</p>

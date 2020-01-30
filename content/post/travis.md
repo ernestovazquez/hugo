@@ -32,14 +32,16 @@ ernesto@honda:~/blog$ sudo nano .travis.yml
 
 install:
   - wget https://github.com/gohugoio/hugo/releases/download/v0.53/hugo_0.53_Linux-64bit.deb && sudo dpkg -i hugo*.deb
-  - git clone https://github.com/ernestovazquez/blog.git
+  - git clone https://github.com/ernestovazquez/hugo.git
 
 script:
   - rm hugo*.deb
   - hugo new site sitio
   - mkdir -p sitio/content/post
-  - mv blog/content/post/* sitio/content/post
-  - mv blog/config.toml sitio/
+  - mkdir -p sitio/static/img
+  - mv content/post/* sitio/content/post
+  - mv static/img/* sitio/static/img
+  - mv config.toml sitio/
   - cd sitio/themes && git clone https://github.com/nirocfz/arabica && cd ..
   - hugo -t arabica
   - rm -rf themes/arabica
@@ -52,6 +54,7 @@ deploy:
   keep-history: true
   on:
     branch: master
+  fqdn: ernestovazquez.es
 ```
 
 Fichero **config.toml** :
@@ -59,14 +62,15 @@ Fichero **config.toml** :
 ```
 ernesto@honda:~/blog$ sudo nano config.toml
 
-baseURL = "/blog"
-title = "De Rookie a Leyenda"
-author = "Ernesto Vázquez"
+baseURL = "https://ernestovazquez.es" 
+title = "De Rookie a Leyenda" 
+author = "Ernesto Vázquez" 
 paginate = 3
-theme = "arabica"
+theme = "arabica" 
 
 [params]
-description = "Ernesto Vázquez García"
+description = "Ernesto Vázquez García" 
+twitter = "ernestovazgar" 
 ```
 
 Pasamos los ficheros Markdown que vamos a utilizar.

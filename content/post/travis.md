@@ -86,7 +86,11 @@ Generamos el **TOKEN**
 
 Nos dirigimos a **Settings, Developer settings y  Personal access tokens**
 
+![](https://i.imgur.com/MWLteYr.png)
+
 Vamos a **Travis** y entramos en los ajustes del repositorio:
+
+![](https://i.imgur.com/WMu31Bj.png)
 
 Generamos un fichero de pruebas:
 
@@ -110,4 +114,12 @@ To github.com:ernestovazquez/blog.git
 ```
 
 Se inica travis automaticamente y una vez pasado la integración podremos ver la página.
+
+![](https://i.imgur.com/OnKD1od.png)
+
+![](https://i.imgur.com/9NiTbAx.png)
+
+Una vez pasado la integración podremos ver la página.
+
+![](https://i.imgur.com/VYCaj9g.png)
 

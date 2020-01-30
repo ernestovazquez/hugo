@@ -5,10 +5,20 @@
     <link>https://ernestovazquez.es/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 28 Jan 2020 15:04:52 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jan 2020 09:04:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Despliegue de CMS java</title>
+      <link>https://ernestovazquez.es/post/java/</link>
+      <pubDate>Thu, 30 Jan 2020 09:04:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/java/</guid>
+      <description>En esta práctica vamos a desplegar un CMS escrito en java. Puedes escoger la aplicación que vas a desplegar de CMS escritos en Java o de Aplicaciones Java en Bitnami.
+ Indica la aplicación escogida y su funcionalidad. Escribe una guía de los pasas fundamentales para realizar la instalación. ¿Has necesitado instalar alguna librería?¿Has necesitado instalar un conector de una base de datos? Entrega una captura de pantalla donde se vea la aplicación funcionando.</description>
+    </item>
     
     <item>
       <title>Configuración/activación de SELinux/Apparmor</title>

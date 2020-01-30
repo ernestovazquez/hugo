@@ -67,11 +67,30 @@
     
         <a class="newer-posts" href="/page/4/">&larr; Newer Posts</a>
     
-    <span class="page-number">Page 5 of 5</span>
+    <span class="page-number">Page 5 of 6</span>
+    
+        <a class="older-posts" href="/page/6/">Older Posts &rarr;</a>
     
 </nav>
 
     </div>
+		
+      <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/post/oraclevspostgresql/">PL/SQL vs PL/PGSQL</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Vamos a ver las principales diferencias entre estos dos gestores. Diferencias en cursores: Recorreremos los cursores de formas diferentes en los dos gestores.
+ PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir. &hellip; <a class="read-more" href="/post/oraclevspostgresql/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">November 09, 2019</time>
+	</footer>
+</article>
+
 		
       <article class="post">
 	<header class="post-header">
@@ -108,33 +127,15 @@ Piensa en un nombre de dominio, que sera un subdominio de gonzalonazareno.org, y
 </article>
 
 		
-      <article class="post">
-	<header class="post-header">
-    
-		<h2 class="post-title"><a href="/post/servidorest1/">T1. Instalación de los servidores.</a></h2>
-	</header>
-	<section class="post-excerpt">
-    <p>
-      Tarea 1) Instalación de los servidores
-Crear tres máquinas en el cloud con los siguientes nombres y sistemas operativos:
-Croqueta (Debian 10) Tortilla (Ubunut 18.04) Salmorejo (CentOs 7)
- Croqueta y Tortilla usan un volumen como unidad de disco principal. Se creará un usuario &ldquo;profesor&rdquo; con el que podrán acceder los profesores usando claves RSA.  Croqueta: 172.22.200.111 Vamos a cambiar el nombre de dominio.
-Editamos el fichero /etc/hostname &hellip; <a class="read-more" href="/post/servidorest1/">&raquo;</a>
-    </p>
-	</section>
-	<footer class="post-meta">
-    <time class="post-date">October 13, 2019</time>
-	</footer>
-</article>
-
-		
     
 
 <nav class="pagination" role="navigation">
     
         <a class="newer-posts" href="/page/4/">&larr; Newer Posts</a>
     
-    <span class="page-number">Page 5 of 5</span>
+    <span class="page-number">Page 5 of 6</span>
+    
+        <a class="older-posts" href="/page/6/">Older Posts &rarr;</a>
     
 </nav>
 

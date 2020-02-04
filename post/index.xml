@@ -5,21 +5,10 @@
     <link>https://ernestovazquez.es/post/</link>
     <description>Recent content in Posts on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 04 Feb 2020 17:08:52 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 04 Feb 2020 12:08:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/post/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Gestión de Almacenamiento</title>
-      <link>https://ernestovazquez.es/post/almacenamiento/</link>
-      <pubDate>Tue, 04 Feb 2020 17:08:52 +0100</pubDate>
-      
-      <guid>https://ernestovazquez.es/post/almacenamiento/</guid>
-      <description>Práctica: Gestión del Almacenamiento Alumno 1 (Luis Vázquez Alejo) ORACLE 1. Muestra los espacios de tablas existentes en tu base de datos y la ruta de los ficheros que los componen. ¿Están las extensiones gestionadas localmente o por diccionario?
-Para visualizar los tablespaces del sistema, tendremos que ejcutar el siguiente comando.
-SQL&amp;gt; col FILE_NAME form A40; SQL&amp;gt; select FILE_NAME, TABLESPACE_NAME from dba_data_files UNION select FILE_NAME, TABLESPACE_NAME from dba_temp_files; FILE_NAME	TABLESPACE_NAME ---------------------------------------- ------------------------------ /opt/oracle/oradata/orcl/sysaux01.</description>
-    </item>
     
     <item>
       <title>iSCSI</title>

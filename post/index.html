@@ -75,24 +75,6 @@
   <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/post/almacenamiento/">Gestión de Almacenamiento</a></h2>
-	</header>
-	<section class="post-excerpt">
-    <p>
-      Práctica: Gestión del Almacenamiento Alumno 1 (Luis Vázquez Alejo) ORACLE 1. Muestra los espacios de tablas existentes en tu base de datos y la ruta de los ficheros que los componen. ¿Están las extensiones gestionadas localmente o por diccionario?
-Para visualizar los tablespaces del sistema, tendremos que ejcutar el siguiente comando.
-SQL&gt; col FILE_NAME form A40; SQL&gt; select FILE_NAME, TABLESPACE_NAME from dba_data_files UNION select FILE_NAME, TABLESPACE_NAME from dba_temp_files; FILE_NAME	TABLESPACE_NAME ---------------------------------------- ------------------------------ /opt/oracle/oradata/orcl/sysaux01. &hellip; <a class="read-more" href="/post/almacenamiento/">&raquo;</a>
-    </p>
-	</section>
-	<footer class="post-meta">
-    <time class="post-date">February 04, 2020</time>
-	</footer>
-</article>
-
-  
-  <article class="post">
-	<header class="post-header">
-    
 		<h2 class="post-title"><a href="/post/iscsi/">iSCSI</a></h2>
 	</header>
 	<section class="post-excerpt">
@@ -239,6 +221,24 @@ En esta práctica investiga como generar una página web estática con la herram
     <p>
       En esta tarea vamos a desplegar un CMS python. Hemos elegido Mezzanine, pero puedes elegir otro CMS python basado en django.
  Instala el CMS en el entorno de desarrollo. Debes utilizar un entorno virtual. Personaliza la página (cambia el nombre al blog y pon tu nombre) y añade contenido (algún artículo con alguna imagen). Guarda los ficheros generados durante la instalación en un repositorio github. Guarda también en ese repositorio la copia de seguridad de la bese de datos. &hellip; <a class="read-more" href="/post/servidorest8/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">December 11, 2019</time>
+	</footer>
+</article>
+
+  
+  <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/post/servidorest7/">T7. Hosting.</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Queremos que diferentes usuarios, puedan gestionar una página web en vuestro servidor que esté gestionada por medio de un FTP. También se creará una base de datos para cada usuario.
+Por ejemplo, el usuario josedom quiere hacer una página cuyo nombre será servicios:
+ La página que vamos a crear será accesible en https://servicios.tunombre.gonzalonazareno.org. Se creará un usuario user_josedom, que tendrá una contraseña, para que accediendo a ftp.tunombre.gonzalonazareno.org, pueda gestionar los ficheros de su página web. &hellip; <a class="read-more" href="/post/servidorest7/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">

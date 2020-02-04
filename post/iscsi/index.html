@@ -7,7 +7,7 @@
     
     <title>
       
-      iSCSI - De Rookie a Leyenda
+       - De Rookie a Leyenda
       
 		</title>
 
@@ -56,13 +56,24 @@
   <article class="post">
     <header class="post-header">
       
-      <h2 class="post-title">iSCSI</h2>
+      <h2 class="post-title"></h2>
       <section class="post-meta">
-        <time class="post-date">January 28, 2020</time>
+        <time class="post-date">January 01, 0001</time>
       </section>
     </header>
     <section class="post-content">
-      <p>Configura un sistema que exporte algunos targets por iSCSI y los conecte a diversos clientes, explicando con detalle la forma de trabajar.</p>
+      
+
+<h1 id="iscsi">iSCSI</h1>
+
+<hr />
+
+<p>title: &ldquo;iSCSI&rdquo;
+date: 2020-01-28T15:04:52+01:00</p>
+
+<h2 id="draft-false">draft: false</h2>
+
+<p>Configura un sistema que exporte algunos targets por iSCSI y los conecte a diversos clientes, explicando con detalle la forma de trabajar.</p>
 
 <ul>
 <li>Crea un target con una LUN y conéctala a un cliente GNU/Linux. Explica cómo escaneas desde el cliente buscando los targets disponibles y utiliza la unidad lógica proporcionada, formateándola si es necesario y montándola.</li>
@@ -71,6 +82,498 @@
 </ul>
 
 <hr />
+
+<h2 id="qué-es-iscsi">¿Qué es iSCSI?</h2>
+
+<p><strong>iSCSI</strong> es un protocolo de almacenamiento de red basado en IP y ampliamente utilizado en soluciones empresariales.</p>
+
+<p>Permite <strong>enviar y recibir</strong> comandos <strong>SCSI</strong> a través de una <strong>red IP</strong>, dejándonos usar y administrar dispositivos de almacenamiento en LAN, WAN e Internet.</p>
+
+<p>El <strong>target</strong> es el servidor y puede ofrecer uno o más recursos iSCSI por la red.</p>
+
+<p>El <strong>iniciador</strong> es el cliente de iSCSI.</p>
+
+<p>La <strong>estructura</strong> sería así:</p>
+
+<p><img src="https://i.imgur.com/8fSacvC.png" alt="" /></p>
+
+<h2 id="configuración-de-targets">Configuración de targets</h2>
+
+<p>Vamos a instalar el siguiente paquete para definir los discos que hemos creado en un solo disco.</p>
+
+<pre><code>root@nodo1:~# apt install lvm2
+</code></pre>
+
+<p>Vamos a crear un grupo de volumenes.</p>
+
+<pre><code>root@nodo1:~# sudo pvcreate /dev/sdb
+  Physical volume &quot;/dev/sdb&quot; successfully created.
+  
+root@nodo1:~# sudo vgcreate vg1 /dev/sdb
+  Volume group &quot;vg1&quot; successfully created
+</code></pre>
+
+<p>Creación del volumen lógico:</p>
+
+<p>Este volumen lógico tendrá el sistema de ficheros.</p>
+
+<pre><code>root@nodo1:~# sudo lvcreate -L 500M -n vlog1 vg1
+  Logical volume &quot;vlog1&quot; created.
+</code></pre>
+
+<p>Vamos a empezar a configurar el target, ya que hemos creado el volumen lógico.</p>
+
+<pre><code>vagrant@nodo1:~$ sudo apt install tgt
+</code></pre>
+
+<p>Vamos a crear el primer target. Para crearlos de forma automatica tendremos que poner el disco asociado en el siguiete directorio:</p>
+
+<pre><code>vagrant@nodo1:~$ sudo nano /etc/tgt/targets.conf 
+
+&lt;target iqn.2020-02.com:target1&gt; 
+    backing-store /dev/vg1/vlog1
+&lt;/target&gt;
+</code></pre>
+
+<p>Reiniciamos los servicios, el disco iSCSI debería ser detectado automáticamente y conectado al equipo.</p>
+
+<pre><code>vagrant@nodo1:~$ sudo systemctl restart tgt
+</code></pre>
+
+<p>Podemos ver los targets que tenemos definidos de la siguiente forma:</p>
+
+<pre><code>vagrant@nodo1:~$ sudo tgtadm --lld iscsi --op show --mode target
+
+Target 1: iqn.2020-02.com:target1
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+        LUN: 1
+            Type: disk
+            SCSI ID: IET     00010001
+            SCSI SN: beaf11
+            Size: 524 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/vg1/vlog1
+            Backing store flags: 
+    Account information:
+    ACL information:
+        ALL
+</code></pre>
+
+<p>Ya tendriamos configurado el servidor, ahora toca configurar el iniciador.</p>
+
+<h2 id="configuración-del-iniciador">Configuración del iniciador</h2>
+
+<p>Vamos a instalar en la máquina cliente <strong>open-iscsi</strong>:</p>
+
+<pre><code>vagrant@nodo2:~$ sudo apt install open-iscsi
+</code></pre>
+
+<p>A continuación vamos a configurar para que pueda leer los target de forma automática.</p>
+
+<pre><code>vagrant@nodo2:~$ sudo nano /etc/iscsi/iscsid.conf
+
+iscsid.startup = automatic
+</code></pre>
+
+<p>Reiniciamos los servicios:</p>
+
+<pre><code>root@nodo2:~# systemctl restart open-iscsi 
+</code></pre>
+
+<p>Con el siguiente comando podemos ver el target desde el cliente.</p>
+
+<pre><code>vagrant@nodo2:~$ sudo iscsiadm -m discovery -t st -p 192.168.100.1
+192.168.100.1:3260,1 iqn.2020-02.com:target1
+</code></pre>
+
+<p>Una vez que tenemos accesible el target desde el cliente solamente queda conectarnos a él.</p>
+
+<p>Lo vamos a realizar de la siguiente forma:</p>
+
+<pre><code>vagrant@nodo2:~$ sudo iscsiadm -m node -T iqn.2020-02.com:target1 --portal &quot;192.168.100.1&quot; --login
+Logging in to [iface: default, target: iqn.2020-02.com:target1, portal: 192.168.100.1,3260] (multiple)
+Login to [iface: default, target: iqn.2020-02.com:target1, portal: 192.168.100.1,3260] successful.
+</code></pre>
+
+<p>Como podemos ver a continuación, al asociar el target desde el cliente se ha creado un nuevo disco, siendo este el mismo del servidor.</p>
+
+<p><img src="https://i.imgur.com/MwYa1Zn.png" alt="" /></p>
+
+<p>Vamos a formatearla, para ello vamos a usar <strong>fdisk.</strong></p>
+
+<pre><code>vagrant@nodo2:~$ sudo fdisk /dev/sdb
+
+Welcome to fdisk (util-linux 2.33.1).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table.
+Created a new DOS disklabel with disk identifier 0x6219836d.
+
+Command (m for help): n
+Partition type
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended (container for logical partitions)
+Select (default p): p
+Partition number (1-4, default 1): 
+First sector (2048-1023999, default 2048): 
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-1023999, default 1023999): 
+
+Created a new partition 1 of type 'Linux' and of size 499 MiB.
+
+Command (m for help): w
+The partition table has been altered.
+Calling ioctl() to re-read partition table.
+Syncing disks.
+</code></pre>
+
+<p>Formateamos la partición:</p>
+
+<pre><code>vagrant@nodo2:~$ sudo mkfs.ext4 /dev/sdb1
+
+mke2fs 1.44.5 (15-Dec-2018)
+Creating filesystem with 510976 1k blocks and 128016 inodes
+Filesystem UUID: 512532cd-1fad-47f4-b6e4-fba1c428c81c
+Superblock backups stored on blocks: 
+	8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done 
+</code></pre>
+
+<p>Por último la vamos a montar:</p>
+
+<pre><code>vagrant@nodo2:~$ sudo mount /dev/sdb1 /mnt
+</code></pre>
+
+<p>Como podemos ver, se ha creado correctamente la particion, formateado y montado.</p>
+
+<pre><code>vagrant@nodo2:~$ lsblk -l
+NAME MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda    8:0    0 19.8G  0 disk 
+sda1   8:1    0 18.8G  0 part /
+sda2   8:2    0    1K  0 part 
+sda5   8:5    0 1021M  0 part [SWAP]
+sdb    8:16   0  500M  0 disk 
+sdb1   8:17   0  499M  0 part /mnt
+
+vagrant@nodo2:~$ lsblk -f
+NAME   FSTYPE LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINT
+sda                                                                     
+├─sda1 ext4         b9ffc3d1-86b2-4a2c-a8be-f2b2f4aa4cb5   16.1G     7% /
+├─sda2                                                                  
+└─sda5 swap         f8f6d279-1b63-4310-a668-cb468c9091d8                [SWAP]
+sdb                                                                     
+└─sdb1 ext4         512532cd-1fad-47f4-b6e4-fba1c428c81c    444M     0% /mnt
+</code></pre>
+
+<h2 id="automontaje-del-target">Automontaje del target</h2>
+
+<p>En esta parte de la práctica vamos a ver como es la configuración para que se monte <strong>automáticamente</strong> el target al arrancar el cliente utilizando <strong>systemd mount</strong></p>
+
+<p>Tenemos que cambiar el fichero de configuración de <strong>iscsid.conf</strong></p>
+
+<pre><code>vagrant@nodo1:~$ sudo nano /etc/tgt/targets.conf 
+
+node.startup = automatic
+sudo iscsiadm -m node -T iqn.2020-04.com:target1 -o update -n node.startup -v automatic
+</code></pre>
+
+<p>Vamos a crear la <strong>unidad de systemd:</strong></p>
+
+<pre><code>vagrant@nodo2:/etc/systemd/system$ sudo nano discoprueba.mount
+
+[Unit]
+Description=montaje del disco de prueba iscsi
+
+[Mount]
+What=/dev/sdb1
+Where=/discoprueba
+Type=ext4
+Options=_netdev
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+
+<p>Reiniciamos los servicios y a continuación vamos a iniciar la unidad que acabamos de crear.</p>
+
+<pre><code>vagrant@nodo2:/etc/systemd/system$ sudo systemctl daemon-reload 
+
+vagrant@nodo2:/etc/systemd/system$ sudo systemctl start discoprueba.mount 
+
+vagrant@nodo2:/etc/systemd/system$ sudo systemctl enable discoprueba.mount 
+Created symlink /etc/systemd/system/multi-user.target.wants/discoprueba.mount → /etc/systemd/system/discoprueba.mount.
+</code></pre>
+
+<p>Vamos a comprobar si despues de un reinicio se automonta el disco.</p>
+
+<p>Vamos a ver la siguiente salida:</p>
+
+<pre><code>vagrant@nodo2:/etc/systemd/system$ lsblk -l
+NAME MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda    8:0    0 19.8G  0 disk 
+sda1   8:1    0 18.8G  0 part /
+sda2   8:2    0    1K  0 part 
+sda5   8:5    0 1021M  0 part [SWAP]
+sdb    8:16   0  500M  0 disk 
+sdb1   8:17   0  499M  0 part /discoprueba
+
+vagrant@nodo2:/etc/systemd/system$ sudo reboot
+Connection to 127.0.0.1 closed by remote host.
+Connection to 127.0.0.1 closed.
+
+ernesto@honda:~/Documentos/vagrant/iscsiprueba$ vagrant ssh nodo2
+Linux nodo2 4.19.0-6-amd64 #1 SMP Debian 4.19.67-2+deb10u2 (2019-11-11) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Feb  4 10:04:59 2020 from 10.0.2.2
+
+vagrant@nodo2:~$ lsblk -l
+NAME MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda    8:0    0 19.8G  0 disk 
+sda1   8:1    0 18.8G  0 part /
+sda2   8:2    0    1K  0 part 
+sda5   8:5    0 1021M  0 part [SWAP]
+sdb    8:16   0  500M  0 disk 
+sdb1   8:17   0  499M  0 part /discoprueba
+vagrant@nodo2:~$ 
+</code></pre>
+
+<p>Como podemos observar se ha montado correctamente y de forma <strong>automática</strong>.</p>
+
+<p><img src="https://i.imgur.com/klsLuvC.png" alt="" /></p>
+
+<h2 id="creación-de-un-target-con-2-lun-y-autenticación-por-chap">Creación de un target con 2 LUN y autenticación por CHAP</h2>
+
+<p>Vamos a empezar con esta configuración, primero necesitaremos crear los volumenes lógicos.</p>
+
+<pre><code>vagrant@nodo1:~$ sudo pvcreate /dev/sdc /dev/sdd
+  Physical volume &quot;/dev/sdc&quot; successfully created.
+  Physical volume &quot;/dev/sdd&quot; successfully created.
+</code></pre>
+
+<pre><code>vagrant@nodo1:~$ sudo vgcreate vg2 /dev/sdc /dev/sdd
+  Volume group &quot;vg2&quot; successfully created
+</code></pre>
+
+<pre><code>vagrant@nodo1:~$ sudo lvcreate -L 500M -n vlog2 vg2
+  Logical volume &quot;vlog2&quot; created.
+vagrant@nodo1:~$ sudo lvcreate -L 500M -n vlog3 vg2
+  Logical volume &quot;vlog3&quot; created.
+</code></pre>
+
+<p>Vamos a crear el nuevo target:</p>
+
+<pre><code>vagrant@nodo1:~$ sudo nano /etc/tgt/targets.conf 
+
+&lt;target iqn.2020-02.com:target2&gt;
+    backing-store /dev/vg2/vlog2
+    backing-store /dev/vg2/vlog3
+    incominguser usuario1 ernestoprueba123
+&lt;/target&gt;
+</code></pre>
+
+<p>Reiniciamos y vemos la salida</p>
+
+<pre><code>vagrant@nodo1:~$ sudo tgtadm --lld iscsi --op show --mode target
+Target 1: iqn.2020-02.com:target1
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+        LUN: 1
+            Type: disk
+            SCSI ID: IET     00010001
+            SCSI SN: beaf11
+            Size: 524 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/vg1/vlog1
+            Backing store flags: 
+    Account information:
+    ACL information:
+        ALL
+Target 2: iqn.2020-02.com:target2
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00020000
+            SCSI SN: beaf20
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags: 
+        LUN: 1
+            Type: disk
+            SCSI ID: IET     00020001
+            SCSI SN: beaf21
+            Size: 524 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/vg2/vlog2
+            Backing store flags: 
+        LUN: 2
+            Type: disk
+            SCSI ID: IET     00020002
+            SCSI SN: beaf22
+            Size: 524 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/vg2/vlog3
+            Backing store flags: 
+    Account information:
+        usuario1
+    ACL information:
+        ALL
+</code></pre>
+
+<p>Ahora vamos al cliente Windows:
+Lo primero que tenemos que hacer es entrar en la configuración de iSCSI.</p>
+
+<p>A continuación le damos a <strong>Detectar portal</strong> y se abrirá una nueva ventana donde vamos a colocar la Dirección IP que aloja los iSCSI Target y, a continuación, hacemos clic en <strong>Aceptar</strong>.</p>
+
+<p><img src="https://i.imgur.com/lgLqGpa.png" alt="" /></p>
+
+<p>Una vez hemos aceptado la previa configuración ya tendremos añadido el portal de donde cogerá los targets.</p>
+
+<p><img src="https://i.imgur.com/ti8qskj.png" alt="" /></p>
+
+<p>Si nos vamos a la pestaña de <strong>Destinos</strong> podemos ver los targets que tenemos disponibles.</p>
+
+<p><img src="https://i.imgur.com/fz0VaAL.png" alt="" /></p>
+
+<p>Pero como vemos, los targets estan inactivos, vamos a activarlo:
+Le damos a <strong>Conectar</strong>, en la nueva ventana abierta le tenemos que dar a <strong>Opciones Avanzadas</strong> para configurar el inicio de sesión <strong>CHAP</strong>.</p>
+
+<p><img src="https://i.imgur.com/L1QLsmw.png" alt="" /></p>
+
+<p>Aquí vamos a marcar la opción de <strong>&ldquo;Habilitar inicio de sesión CHAP&rdquo;</strong>, vamos a colocar el usuario y la contraseña que hemos configurado en el target previamente.</p>
+
+<p><img src="https://i.imgur.com/7UHFaq6.png" alt="" /></p>
+
+<p>A continuación le damos a <strong>Aceptar</strong> y ya saldrá el target como <strong>Conectado.</strong></p>
+
+<p><img src="https://i.imgur.com/mD6KfIL.png" alt="" /></p>
+
+<p>Como vemos ha reconocido los discos del target.</p>
+
+<p><img src="https://i.imgur.com/76vkvXx.png" alt="" /></p>
+
+<p>Ahora le damos a <strong>Inicializar disco</strong></p>
+
+<p><img src="https://i.imgur.com/F7DkmZN.png" alt="" /></p>
+
+<p>Un mensaje emergente nos indicará que inicie la unidad virtual añadida recientemente. Seleccionamos el estilo de partición <strong>MBR</strong> para el disco y luego hacemos clic en <strong>OK</strong>.</p>
+
+<p><img src="https://i.imgur.com/HUsObP6.png" alt="" /></p>
+
+<p>Ahora vamos a <strong>formatear</strong> y configurar el nuevo volumen:</p>
+
+<p>Después de conectar un <strong>iSCSI Target</strong> en un equipo Windows, tiene que formatearse para poder usarlo.</p>
+
+<ul>
+<li>Disco 1:</li>
+</ul>
+
+<p><img src="https://i.imgur.com/ZX3FmBw.png" alt="" /></p>
+
+<ul>
+<li>Disco 2:</li>
+</ul>
+
+<p><img src="https://i.imgur.com/zEGF1HD.png" alt="" /></p>
+
+<p>Ya hemos terminado ahora vamos a comprobar</p>
+
+<p><img src="https://i.imgur.com/5YE0baE.png" alt="" /></p>
+
+<p>Como se puede observar, se ha creado y montados correctamente.</p>
+
+<p>Para comprobar que estos discos se pueden usar perfectamente con un uso habitual, voy a crear un fichero dentro.</p>
+
+<p><img src="https://i.imgur.com/JW9W60h.png" alt="" /></p>
+
+<p><strong>Referencia</strong>: <a href="https://docs.aws.amazon.com/es_es/storagegateway/latest/userguide/initiator-connection-common.html">Documentación de Amazon Web Services</a></p>
+
+<h2 id="conclusión">Conclusión</h2>
+
+<p>En esta práctica he aprendido muchas cosas que antes no tenia muchos conocimientos, el uso de <strong>iSCSI</strong> me parece muy interesante y útil.</p>
+
+<p>Permite <strong>enlazar</strong> instalaciones de almacenamientos de datos en red, esto facilita las transferencias de datos. Todos los datos transferidos al disco se transfieren a través de la red al servidor de almacenamiento.</p>
+
+<p>Por lo que he leido y documentado, se puede hacer muchas más cosas, sería interesante profundizar en esta tecnología.</p>
 
     </section>
     <footer class="post-footer">

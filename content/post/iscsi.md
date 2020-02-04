@@ -239,7 +239,6 @@ Tenemos que cambiar el fichero de configuración de **iscsid.conf**
 vagrant@nodo1:~$ sudo nano /etc/tgt/targets.conf 
 
 node.startup = automatic
-sudo iscsiadm -m node -T iqn.2020-04.com:target1 -o update -n node.startup -v automatic
 ```
 
 Vamos a crear la **unidad de systemd:**

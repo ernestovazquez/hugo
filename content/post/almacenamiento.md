@@ -158,7 +158,11 @@ is
 				  from DBA_DATA_FILES
 				  where substr(file_name,1,12) = '/home/oracle')
 	group by username
-	having count(tablespace_name) > 1;
+	having count(tablespace_name) > 1
+	UNION
+	select grantee nombre
+	from DBA_SYS_PRIVS
+	where privilege = 'UNLIMITED TABLESPACE';
 
 begin
 	dbms_output.put_line('Usuarios con cuota ilimitada');

@@ -5,10 +5,20 @@
     <link>https://ernestovazquez.es/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 30 Jan 2020 09:04:52 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 04 Feb 2020 12:04:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>iSCSI</title>
+      <link>https://ernestovazquez.es/post/iscsi/</link>
+      <pubDate>Tue, 04 Feb 2020 12:04:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/iscsi/</guid>
+      <description>Configura un sistema que exporte algunos targets por iSCSI y los conecte a diversos clientes, explicando con detalle la forma de trabajar.
+ Crea un target con una LUN y conéctala a un cliente GNU/Linux. Explica cómo escaneas desde el cliente buscando los targets disponibles y utiliza la unidad lógica proporcionada, formateándola si es necesario y montándola. Utiliza systemd mount para que el target se monte automáticamente al arrancar el cliente.</description>
+    </item>
     
     <item>
       <title>Despliegue de CMS java</title>
@@ -30,16 +40,6 @@
  Habilita SELinux en salmorejo y asegúrate de que todas las aplicaciones web funcionan correctamente con una configuración estricta y segura de SELinux
  Habilita apparmor en croqueta o tortilla, habilitando o creando los perfiles necesarios de manera estricta y segura.
   </description>
-    </item>
-    
-    <item>
-      <title>iSCSI</title>
-      <link>https://ernestovazquez.es/post/iscsi/</link>
-      <pubDate>Tue, 28 Jan 2020 15:04:52 +0100</pubDate>
-      
-      <guid>https://ernestovazquez.es/post/iscsi/</guid>
-      <description>Configura un sistema que exporte algunos targets por iSCSI y los conecte a diversos clientes, explicando con detalle la forma de trabajar.
- Crea un target con una LUN y conéctala a un cliente GNU/Linux. Explica cómo escaneas desde el cliente buscando los targets disponibles y utiliza la unidad lógica proporcionada, formateándola si es necesario y montándola. Utiliza systemd mount para que el target se monte automáticamente al arrancar el cliente.</description>
     </item>
     
     <item>

@@ -353,7 +353,7 @@ db.eventlog.createIndex( { "lastModifiedDate": 1 }, { expireAfterSeconds: 3600 }
 
 * Referencia: [Documentación oficial MongoDB](https://docs.mongodb.com/manual/indexes/)
 
-# Alumno 2 (Juan Diego Abadía Noguera):
+# Alumno 2 (Juan Diego Abadía Noguera)
 
 ## ORACLE
 
@@ -708,11 +708,11 @@ Tampoco contamos con todas las cláusulas de almacenamiento, que si tenemos en O
 
 > No he encontrado ninguna documentación.
 
-# Alumno 3 (Adrián Jaramillo Rodríguez):
+# Alumno 3 (Adrián Jaramillo Rodríguez)
 
 
 
-# Alumno 4 (Ernesto Vázquez García):
+# Alumno 4 (Ernesto Vázquez García)
 
 ## ORACLE:
 

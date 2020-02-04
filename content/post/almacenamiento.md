@@ -405,8 +405,7 @@ Tablespace creado.
 ```
 
 ![](https://i.imgur.com/XY3c9kg.png)
-
-       
+  
 **2. Crea dos tablas en el tablespace recién creado e inserta un registro en cada una de ellas. Comprueba el espacio libre existente en el tablespace. Borra una de las tablas y comprueba si ha aumentado el espacio disponible en el tablespace. Explica la razón.**
 
 - Tablas que insertaré
@@ -439,10 +438,12 @@ values ('AD6','ADCETRIS','TAKEDA PHARMA A/S','SI','SI');
 
 insert into Categorias(Codigo,Nombre)
 values ('1','CÓDIGO ATC A');
+
 ```
 ![](https://i.imgur.com/kOVynIc.png)
 
 - Comprobar el espacio libre
+
 ```
 SQL> select bytes
   2  from dba_free_space
@@ -452,17 +453,18 @@ SQL> select bytes
 ----------
     786432
 ```
+
 ![](https://i.imgur.com/KwxS8sz.png)
 
-
 - Borrar tabla
+
 ```
 SQL> DROP TABLE Categorias;
 
 Tabla borrada.
 ```
-![](https://i.imgur.com/jPPonPm.png)
 
+![](https://i.imgur.com/jPPonPm.png)
 
 - Comprobar el espacio libre despues de eliminar la tabla
 ```
@@ -483,14 +485,17 @@ SQL> select bytes
 **3. Convierte a TS1 en un tablespace de sólo lectura. Intenta insertar registros en la tabla existente. ¿Qué ocurre?. Intenta ahora borrar la tabla. ¿Qué ocurre? ¿Porqué crees que pasa eso?**
 
 - Convertir el tablespace en modo lectura
+
 ```
 SQL> ALTER TABLESPACE TS1 READ ONLY;
 
 Tablespace modificado.
 ```
+
 ![](https://i.imgur.com/SOaCKBb.png)
 
 - Insertar registros a la tabla del tablespace
+
 ```
 SQL> insert into Medicamentos(Codigo,NombreComercial,Laboratorio,FinanciadoSS,Ne
 cesitaReceta)
@@ -503,16 +508,19 @@ ORA-00372: el archivo 8 no se puede modificar en este momento
 ORA-01110: archivo de datos 8:
 'C:\APP\ORACLE\PRODUCT\11.2.0\DBHOME_1\DATABASE\TS1.DBF'
 ```
+
 ![](https://i.imgur.com/FTxeZpl.png)
 
 > Al estar en modo lectura el tablespace evita todas la operaciones de escritura en el tablespace
 
 - Borrar la tabla
+
 ```
 SQL> DROP TABLE Medicamentos;
 
 Tabla borrada.
 ```
+
 ![](https://i.imgur.com/oQ9ZNEh.png)
 
 > Porque las tablas estan en el diccionario de datos y ese tablespace es gestionado por un usuario, en este caso SYS que tiene permisos

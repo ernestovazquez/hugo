@@ -410,6 +410,7 @@ Tablespace creado.
 **2. Crea dos tablas en el tablespace recién creado e inserta un registro en cada una de ellas. Comprueba el espacio libre existente en el tablespace. Borra una de las tablas y comprueba si ha aumentado el espacio disponible en el tablespace. Explica la razón.**
 
 - Tablas que insertaré
+
 ```
 create table Medicamentos
 (
@@ -438,12 +439,8 @@ values ('AD6','ADCETRIS','TAKEDA PHARMA A/S','SI','SI');
 
 insert into Categorias(Codigo,Nombre)
 values ('1','CÓDIGO ATC A');
-
 ```
 ![](https://i.imgur.com/kOVynIc.png)
-
-
-
 
 - Comprobar el espacio libre
 ```

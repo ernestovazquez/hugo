@@ -94,4 +94,26 @@ Feb  5 09:13:25 croqueta postfix/qmgr[30358]: 127BC20ECA: removed
 
 ## Tarea 3: Documenta en redmine una prueba de funcionamiento, donde envíes desde tu cliente de correos al exterior. ¿Cómo se llama el servidor para enviar el correo? (Muestra la configuración).
 
+Debemos habilitar el envío de correo desde cliente de nuestra red. Para ello vamos a añadir nuestra red local en la **directiva mynetworks**:
+
+```
+debian@croqueta:~$ sudo nano /etc/postfix/main.cf
+
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 172.22.0.0/16
+```
+
+Una vex configurado la red local, es hora de usar un cliente de correos en mi caso voy a utilizar **evolution.**
+
+Tendremos que indicarle el nombre de nuestro servidor de correos.
+
+Vamos a ver la **configuración**:
+
+![](https://i.imgur.com/QlAcYbO.png)
+
+![](https://i.imgur.com/ediRIk7.png)
+
+![](https://i.imgur.com/f08j6Ym.png)
+
+![](https://i.imgur.com/3JhNebR.png)
+
 

@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ernestovazquez.es/post/correo/</loc>
+    <lastmod>2020-02-05T08:50:52+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ernestovazquez.es/post/iscsi/</loc>
     <lastmod>2020-02-04T12:08:52+01:00</lastmod>
   </url>
@@ -83,23 +88,19 @@
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/correo/</loc>
-  </url>
-  
-  <url>
     <loc>https://ernestovazquez.es/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ernestovazquez.es/</loc>
-    <lastmod>2020-02-04T12:08:52+01:00</lastmod>
+    <lastmod>2020-02-05T08:50:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ernestovazquez.es/post/</loc>
-    <lastmod>2020-02-04T12:08:52+01:00</lastmod>
+    <lastmod>2020-02-05T08:50:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   

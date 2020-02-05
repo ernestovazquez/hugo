@@ -5,10 +5,20 @@
     <link>https://ernestovazquez.es/post/</link>
     <description>Recent content in Posts on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 04 Feb 2020 12:08:52 +0100</lastBuildDate>
+    <lastBuildDate>Wed, 05 Feb 2020 08:50:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Servidor de correos en los servidores cloud</title>
+      <link>https://ernestovazquez.es/post/correo/</link>
+      <pubDate>Wed, 05 Feb 2020 08:50:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/correo/</guid>
+      <description>Esta tarea consiste en instalar y configurar un servidor de correo similar al de cualquier organización, capaz de enviar y recibir directamente correo, almacenar los usuarios en LDAP, filtrar el correo en busca de virus o spam y servirlo a sus usuarios a través de los protocolos POP, IMAP y configurar un Webmail.
+ El servidor de correos se va a instalar en croqueta (debian) Los servidores que necesites para realizar la práctica serán los del cloud: salmorejo (servidor web) y croqueta (servidor dns y ldap).</description>
+    </item>
     
     <item>
       <title>iSCSI</title>
@@ -182,16 +192,6 @@ Crear tres máquinas en el cloud con los siguientes nombres y sistemas operativo
 Croqueta (Debian 10) Tortilla (Ubunut 18.04) Salmorejo (CentOs 7)
  Croqueta y Tortilla usan un volumen como unidad de disco principal. Se creará un usuario &amp;ldquo;profesor&amp;rdquo; con el que podrán acceder los profesores usando claves RSA.  Croqueta: 172.22.200.111 Vamos a cambiar el nombre de dominio.
 Editamos el fichero /etc/hostname</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://ernestovazquez.es/post/correo/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ernestovazquez.es/post/correo/</guid>
-      <description>Servidor de correos en los servidores cloud title: &amp;ldquo;Servidor de correos en los servidores cloud&amp;rdquo; date: 2020-02-05T08:50:52+01:00
-draft: false Esta tarea consiste en instalar y configurar un servidor de correo similar al de cualquier organización, capaz de enviar y recibir directamente correo, almacenar los usuarios en LDAP, filtrar el correo en busca de virus o spam y servirlo a sus usuarios a través de los protocolos POP, IMAP y configurar un Webmail.</description>
     </item>
     
   </channel>

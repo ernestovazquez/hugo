@@ -184,5 +184,15 @@ Croqueta (Debian 10) Tortilla (Ubunut 18.04) Salmorejo (CentOs 7)
 Editamos el fichero /etc/hostname</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>https://ernestovazquez.es/post/correo/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/correo/</guid>
+      <description>Servidor de correos en los servidores cloud title: &amp;ldquo;Servidor de correos en los servidores cloud&amp;rdquo; date: 2020-02-05T08:50:52+01:00
+draft: false Esta tarea consiste en instalar y configurar un servidor de correo similar al de cualquier organización, capaz de enviar y recibir directamente correo, almacenar los usuarios en LDAP, filtrar el correo en busca de virus o spam y servirlo a sus usuarios a través de los protocolos POP, IMAP y configurar un Webmail.</description>
+    </item>
+    
   </channel>
 </rss>

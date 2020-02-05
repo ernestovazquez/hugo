@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+       - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title"></h2>
+      <section class="post-meta">
+        <time class="post-date">January 01, 0001</time>
+      </section>
+    </header>
+    <section class="post-content">
+      
+
+<h1 id="servidor-de-correos-en-los-servidores-cloud">Servidor de correos en los servidores cloud</h1>
+
+<hr />
+
+<p>title: &ldquo;Servidor de correos en los servidores cloud&rdquo;
+date: 2020-02-05T08:50:52+01:00</p>
+
+<h2 id="draft-false">draft: false</h2>
+
+<p>Esta tarea consiste en instalar y configurar un servidor de correo similar al de cualquier organización, capaz de enviar y recibir directamente correo, almacenar los usuarios en LDAP, filtrar el correo en busca de virus o spam y servirlo a sus usuarios a través de los protocolos POP, IMAP y configurar un Webmail.</p>
+
+<ul>
+<li>El servidor de correos se va a instalar en croqueta (debian)</li>
+<li>Los servidores que necesites para realizar la práctica serán los del cloud: salmorejo (servidor web) y croqueta (servidor dns y ldap).</li>
+</ul>
+
+<hr />
+
+<h2 id="tarea-1-documenta-en-redmine-una-prueba-de-funcionamiento-donde-envíes-desde-tu-servidor-local-al-exterior-muestra-el-log-donde-se-vea-el-envío-muestra-el-correo-que-has-recibido">Tarea 1: Documenta en redmine una prueba de funcionamiento, donde envíes desde tu servidor local al exterior. Muestra el log donde se vea el envío. Muestra el correo que has recibido.</h2>
+
+<p>Primero vamos a necesitar instalar los paquetes necesarios para el uso del servidor de correo.</p>
+
+<pre><code>debian@croqueta:~$ sudo apt install postfix
+debian@croqueta:~$ sudo apt install mailutils
+</code></pre>
+
+<p>A partir de aquí ya podemos configurar postfix para su funcionamiento.</p>
+
+<p>Tendremos que abrir el <strong>puerto 25</strong> en el cloud.</p>
+
+<p><img src="https://i.imgur.com/jXvII3O.png" alt="" /></p>
+
+<p>Colocamos el <strong>relayhost</strong> en el siguiente fichero de configuración:</p>
+
+<pre><code>debian@croqueta:~$ sudo nano /etc/postfix/main.cf
+
+relayhost = babuino-smtp.gonzalonazareno.org
+</code></pre>
+
+<p>Vamos a enviar un correo:</p>
+
+<pre><code>debian@croqueta:~$ mail vazquezgarciaernesto@gmail.com
+Cc: 
+Subject: Prueba Practica Correo
+Esto es una prueba para la practica de servicios
+
+</code></pre>
+
+<p>Para ver el log del envio pondremos lo siguiente:</p>
+
+<pre><code>debian@croqueta:~$ sudo tail -f /var/log/mail.log 
+
+Feb  5 09:06:32 croqueta postfix/pickup[31377]: B3D2A20ECC: uid=1000 from=&lt;debian@croqueta.ernesto.gonzalonazareno.org&gt;
+Feb  5 09:06:32 croqueta postfix/cleanup[31440]: B3D2A20ECC: message-id=&lt;20200205080632.B3D2A20ECC@croqueta.ernesto.gonzalonazareno.org&gt;
+Feb  5 09:06:32 croqueta postfix/qmgr[30358]: B3D2A20ECC: from=&lt;debian@croqueta.ernesto.gonzalonazareno.org&gt;, size=476, nrcpt=1 (queue active)
+Feb  5 09:06:32 croqueta postfix/smtp[31442]: B3D2A20ECC: to=&lt;vazquezgarciaernesto@gmail.com&gt;, relay=babuino-smtp.gonzalonazareno.org[192.168.203.3]:25, delay=0.22, delays=0.15/0.01/0.04/0.02, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as D4094C9D82)
+Feb  5 09:06:32 croqueta postfix/qmgr[30358]: B3D2A20ECC: removed
+</code></pre>
+
+<p><img src="https://i.imgur.com/UnoBeli.png" alt="" /></p>
+
+<p>Ahora nos comprobamos si hemos recibido el correo.</p>
+
+<p><img src="https://i.imgur.com/QUOpJzj.png" alt="" /></p>
+
+<h2 id="tarea-2-documenta-en-redmine-una-prueba-de-funcionamiento-donde-envíes-un-correo-desde-el-exterior-gmail-hotmail-a-tu-servidor-local-muestra-el-log-donde-se-vea-el-envío-muestra-cómo-has-leído-el-correo">Tarea 2: Documenta en redmine una prueba de funcionamiento, donde envíes un correo desde el exterior (gmail, hotmail,…) a tu servidor local. Muestra el log donde se vea el envío. Muestra cómo has leído el correo.</h2>
+
+<p>Vamos a responder al correo que hemos recibido para que se envie desde el exterior a nuestro servidor para posteriormente poder leer el correo.</p>
+
+<p><img src="https://i.imgur.com/aq6uZTP.png" alt="" /></p>
+
+<p>Para leer la respuesta solamente tendremos que poner lo siguiente:</p>
+
+<pre><code>debian@croqueta:~$ mail
+&quot;/var/mail/debian&quot;: 1 message 1 new
+&gt;N   1 Ernesto Vázquez G Wed Feb  5 09:15  87/4902  Re: Prueba Practica
+? 1
+</code></pre>
+
+<p>Vamos a ver el log una vez se ha enviado la respuesta.</p>
+
+<pre><code>debian@croqueta:~$ sudo tail -f /var/log/mail.log
+
+Feb  5 09:13:25 croqueta postfix/smtpd[31455]: connect from babuino-smtp.gonzalonazareno.org[192.168.203.3]
+Feb  5 09:13:25 croqueta postfix/smtpd[31455]: 127BC20ECA: client=babuino-smtp.gonzalonazareno.org[192.168.203.3]
+Feb  5 09:13:25 croqueta postfix/cleanup[31463]: 127BC20ECA: message-id=&lt;CAEXXkz_Uw+jM2svcCkSmZhp1a+uujhJ46Mf7Ou=QL1qryOpX_A@mail.gmail.com&gt;
+Feb  5 09:13:25 croqueta postfix/smtpd[31455]: disconnect from babuino-smtp.gonzalonazareno.org[192.168.203.3] ehlo=1 mail=1 rcpt=1 data=1 quit=1 commands=5
+Feb  5 09:13:25 croqueta postfix/qmgr[30358]: 127BC20ECA: from=&lt;vazquezgarciaernesto@gmail.com&gt;, size=4005, nrcpt=1 (queue active)
+Feb  5 09:13:25 croqueta postfix/local[31464]: 127BC20ECA: to=&lt;debian@croqueta.ernesto.gonzalonazareno.org&gt;, relay=local, delay=0.22, delays=0.18/0.01/0/0.03, dsn=2.0.0, status=sent (delivered to mailbox)
+Feb  5 09:13:25 croqueta postfix/qmgr[30358]: 127BC20ECA: removed
+</code></pre>
+
+<h2 id="tarea-3-documenta-en-redmine-una-prueba-de-funcionamiento-donde-envíes-desde-tu-cliente-de-correos-al-exterior-cómo-se-llama-el-servidor-para-enviar-el-correo-muestra-la-configuración">Tarea 3: Documenta en redmine una prueba de funcionamiento, donde envíes desde tu cliente de correos al exterior. ¿Cómo se llama el servidor para enviar el correo? (Muestra la configuración).</h2>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

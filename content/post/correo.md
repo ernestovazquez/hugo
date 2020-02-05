@@ -107,13 +107,3 @@ Una vex configurado la red local, es hora de usar un cliente de correos en mi ca
 Tendremos que indicarle el nombre de nuestro servidor de correos.
 
 Vamos a ver la **configuración**:
-
-![](https://i.imgur.com/QlAcYbO.png)
-
-![](https://i.imgur.com/ediRIk7.png)
-
-![](https://i.imgur.com/f08j6Ym.png)
-
-![](https://i.imgur.com/3JhNebR.png)
-
-

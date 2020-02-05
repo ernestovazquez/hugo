@@ -26,7 +26,6 @@ Tendremos que abrir el **puerto 25** en el cloud.
 
 ![](https://i.imgur.com/jXvII3O.png)
 
-
 Colocamos el **relayhost** en el siguiente fichero de configuración:
 
 ```

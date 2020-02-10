@@ -5,10 +5,23 @@
     <link>https://ernestovazquez.es/post/</link>
     <description>Recent content in Posts on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 05 Feb 2020 08:50:52 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 10 Feb 2020 15:04:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Creación de un sistema de cuentas de usuarios en GNU/Linux con LDAP, Kerberos 5 y NFS4</title>
+      <link>https://ernestovazquez.es/post/kerberos/</link>
+      <pubDate>Mon, 10 Feb 2020 15:04:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/kerberos/</guid>
+      <description>Complementa el directorio instalado en croqueta creando un sistema centralizado de cuentas de usuarios en GNU/Linux con LDAP, Kerberos 5 y NFS4.
+Utiliza el manual de http://albertomolina.files.wordpress.com/2014/01/krb_ldap.pdf
+Ten en cuenta que en este caso es necesario que el directorio home del usuario esté centralizado y para eso es para lo que se utiliza NFSv4 con kerberos, que no aparece en la documentación.
+Forma de corregir:
+ Se hace login en tortilla con un usuario que esté en kerberos para lo que hay que facilitar la contraseña del principal.</description>
+    </item>
     
     <item>
       <title>Servidor de correos en los servidores cloud</title>

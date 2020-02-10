@@ -348,7 +348,15 @@ Aquí pondremos a quien se lo queremos enviar y el mensaje que va  recibir. En m
 
 ![](https://i.imgur.com/qZEm0Tm.png)
 
+
+Vamos a ver un ejemplo de como envia la alerta:
+
+![](https://i.imgur.com/yYLPRtb.png)
+
+Como podemos apreciar, nos envia correctamente la **alerta**, sale el **nombre** y la **descripción** que hemos configurado previamente junto a una **imagen** donde podemos ver gráficamente el problema.
+
 **Credenciales**:
 ***user*:** admin
 ***password*:** evazgar123
+
 

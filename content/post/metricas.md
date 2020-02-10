@@ -296,3 +296,59 @@ Ahora vamos a ir configurando los diferentes **dashboard**.
 
 ![](https://i.imgur.com/V5hfAj7.png)
 
+## Alertas por correo, telegram, etc.
+
+Vamos a ver una utilidad que nos ofrece grafana, las alertas son muy interesantes y útiles para poder ver errores o una alerta de exceso de recursos de nuestros servidores.
+
+Vamos a ver como se configuran:
+
+Primero vamos a dirigirnos a la siguiente pestaña de grafana:
+
+![](https://i.imgur.com/QjltVa9.png)
+
+Le daremos a **"Add channel"**:
+
+![](https://i.imgur.com/UhzsSHD.png)
+
+En este panel podremos configurar los tipos de canales para transmitir las alertas, en mi caso voy a configurarlo para **"Discord"**, una aplicación muy útil (parecida a *Slack*), donde tendremos un servidor con usuarios y a ese canal de texto se le puede dar privilegios para ciertos usuarios. 
+
+Aqui tendremos que poner el nombre de la alerta, el tipo de canal para leer los mensajes de alerta y un ***Webhook URL***, que es una URL que añades al sistema para recibir eventos de email. 
+
+![](https://i.imgur.com/c0jrdZA.png)
+
+A continuación, vamos a crear y configurar un servidor de ***Discord***, 
+
+Una vez creado entramos en los **ajustes** del **canal de texto** que deseemos para tener ordenado las alertas.
+
+
+Aquí le pondremos encontrar los ***Webhook*** que tenemos y poder crear más. Le pondremos un nombre para reconocerlo y copiamos la URL que nos proporciona para ponerlo en **Grafana**.
+
+![](https://i.imgur.com/wRYYf0J.png)
+
+Como podemos apreciar se ha creado correctamente el ***Webhook***, en nuetro canal de texto de **Discord**.
+
+![](https://i.imgur.com/4HoMXWR.png)
+
+Ahora solamente tendremos que poner la **URL**, en **Grafana**. y realizamos un **test**.
+
+![](https://i.imgur.com/X9s52GP.png)
+
+![](https://i.imgur.com/iOzk1xd.png)
+
+Se ha **realizado correctamente el test** y nos lo muestra en nuestro **servidor de Discord** en el **canal de texto** que le hemos seleccionado.
+
+Por último tendremos que indicarle el **nivel de alertas** en el **Dashboard de Grafana**.
+Esta última opción nos permite configurar graficamente los niveles de alertas que vamos a recibir.
+
+En mi caso, voy a poner que me avise si sobrepasa los **500MiB de RAM**:
+
+![](https://i.imgur.com/2hkQDDS.png)
+
+Aquí pondremos a quien se lo queremos enviar y el mensaje que va  recibir. En mi caso pondremos **"Discord"**, pero si queremos poner un **correo** solamente tendremos que activar **smtp** en **grafana.ini** y colocar la dirección de correo.
+
+![](https://i.imgur.com/qZEm0Tm.png)
+
+**Credenciales**:
+***user*:** admin
+***password*:** evazgar123
+

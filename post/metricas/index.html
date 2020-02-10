@@ -345,6 +345,61 @@ ene 28 13:28:25 salmorejo telegraf[17779]: 2020-01-28T12:28:25Z I! [agent] Confi
 
 <p><img src="https://i.imgur.com/V5hfAj7.png" alt="" /></p>
 
+<h2 id="alertas-por-correo-telegram-etc">Alertas por correo, telegram, etc.</h2>
+
+<p>Vamos a ver una utilidad que nos ofrece grafana, las alertas son muy interesantes y útiles para poder ver errores o una alerta de exceso de recursos de nuestros servidores.</p>
+
+<p>Vamos a ver como se configuran:</p>
+
+<p>Primero vamos a dirigirnos a la siguiente pestaña de grafana:</p>
+
+<p><img src="https://i.imgur.com/QjltVa9.png" alt="" /></p>
+
+<p>Le daremos a <strong>&ldquo;Add channel&rdquo;</strong>:</p>
+
+<p><img src="https://i.imgur.com/UhzsSHD.png" alt="" /></p>
+
+<p>En este panel podremos configurar los tipos de canales para transmitir las alertas, en mi caso voy a configurarlo para <strong>&ldquo;Discord&rdquo;</strong>, una aplicación muy útil (parecida a <em>Slack</em>), donde tendremos un servidor con usuarios y a ese canal de texto se le puede dar privilegios para ciertos usuarios.</p>
+
+<p>Aqui tendremos que poner el nombre de la alerta, el tipo de canal para leer los mensajes de alerta y un <strong><em>Webhook URL</em></strong>, que es una URL que añades al sistema para recibir eventos de email.</p>
+
+<p><img src="https://i.imgur.com/c0jrdZA.png" alt="" /></p>
+
+<p>A continuación, vamos a crear y configurar un servidor de <strong><em>Discord</em></strong>,</p>
+
+<p>Una vez creado entramos en los <strong>ajustes</strong> del <strong>canal de texto</strong> que deseemos para tener ordenado las alertas.</p>
+
+<p>Aquí le pondremos encontrar los <strong><em>Webhook</em></strong> que tenemos y poder crear más. Le pondremos un nombre para reconocerlo y copiamos la URL que nos proporciona para ponerlo en <strong>Grafana</strong>.</p>
+
+<p><img src="https://i.imgur.com/wRYYf0J.png" alt="" /></p>
+
+<p>Como podemos apreciar se ha creado correctamente el <strong><em>Webhook</em></strong>, en nuetro canal de texto de <strong>Discord</strong>.</p>
+
+<p><img src="https://i.imgur.com/4HoMXWR.png" alt="" /></p>
+
+<p>Ahora solamente tendremos que poner la <strong>URL</strong>, en <strong>Grafana</strong>. y realizamos un <strong>test</strong>.</p>
+
+<p><img src="https://i.imgur.com/X9s52GP.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/iOzk1xd.png" alt="" /></p>
+
+<p>Se ha <strong>realizado correctamente el test</strong> y nos lo muestra en nuestro <strong>servidor de Discord</strong> en el <strong>canal de texto</strong> que le hemos seleccionado.</p>
+
+<p>Por último tendremos que indicarle el <strong>nivel de alertas</strong> en el <strong>Dashboard de Grafana</strong>.
+Esta última opción nos permite configurar graficamente los niveles de alertas que vamos a recibir.</p>
+
+<p>En mi caso, voy a poner que me avise si sobrepasa los <strong>500MiB de RAM</strong>:</p>
+
+<p><img src="https://i.imgur.com/2hkQDDS.png" alt="" /></p>
+
+<p>Aquí pondremos a quien se lo queremos enviar y el mensaje que va  recibir. En mi caso pondremos <strong>&ldquo;Discord&rdquo;</strong>, pero si queremos poner un <strong>correo</strong> solamente tendremos que activar <strong>smtp</strong> en <strong>grafana.ini</strong> y colocar la dirección de correo.</p>
+
+<p><img src="https://i.imgur.com/qZEm0Tm.png" alt="" /></p>
+
+<p><strong>Credenciales</strong>:
+*<strong>user*:</strong> admin
+*<strong>password*:</strong> evazgar123</p>
+
     </section>
     <footer class="post-footer">
       

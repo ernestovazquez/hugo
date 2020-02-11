@@ -369,8 +369,16 @@ Aviso del correcto funcionamiento de los servidores:
 
 ![](https://i.imgur.com/eHv9Msg.png)
 
-**Credenciales**:
-***user*:** admin
-***password*:** evazgar123
+## Conclusión
 
+En esta práctica hemos dado los primero pasos para monitorizar sistemas usando Grafana, Telegraf e InfluxDB. Es una herramienta bastante potente.
 
+Podemos tener un **sistema de monitorización** de nuestros servidores de una manera bastante ordenada y gráfica. En mi caso he realizado los **Dashboard manualmente**, pero también podemos encontrar muchos realizados por la comunidad. Estos **Dashboard** nos permiten recoger datos de múltiples fuentes, almacenarlos en una base de datos y mostrar gráficos y estadísticas de manera eficiente, y nos ayuda a conocer mejor nuestro entorno.
+
+En cuando a la gestión de logs, he probado con **"Graylog",** esta se tiene que instalar con MongoDB y no lo he conseguido con InfluxDB.
+
+El **uso de alertas** en Grafana es muy útil a la hora de gestionar y monitorizar nuestra flota de servidores, las opciones de configuración van más alla que una simple configuración de limites, incluso a la hora de seleccionar las grandes cantidades de aplicaciones para que el cliente pueda recibir los avisos.
+
+Como hemos podido apreciar los resultados en cuanto a nuestro *Dashboard*, son muy interesantes y útiles para nuestros pequeños servidores. Con tiempo y dedicación se puede conseguir un *Dashboard* perfecto.
+
+Se puede realizar más configuraciones, otra sumamente interesante seria realizar la misma configuración pero en **Nodos remotos Windows** o monitorizar el **estado de una Raspberry Pi**, teniendo un Dashboard con toda la información de este pequeño equipo.

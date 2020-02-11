@@ -354,7 +354,7 @@ En mi caso, voy a poner que me avise si sobrepasa el valor en los diferentes ser
 
 ![](https://i.imgur.com/KThJsEr.png)
 
-Aquí pondremos a quien se lo queremos enviar y el mensaje que va  recibir. En mi caso pondremos **"Discord"**, pero si queremos poner un **correo** solamente tendremos que activar **smtp** en **grafana.ini** y colocar la dirección de correo.
+Aquí pondremos a quien se lo queremos enviar y el mensaje que va  recibir. En mi caso pondremos **"Discord"**, pero si queremos poner un **correo** solamente tendremos que activar **smtp** en **grafana.ini** y colocar la dirección de correo o también se podria enviar mediante Slack, para un uso más en equipo.
 
 ![](https://i.imgur.com/qZEm0Tm.png)
 

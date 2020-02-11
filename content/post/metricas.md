@@ -116,6 +116,7 @@ grafana         IN      CNAME   serranito
 Ya pondremos entrar a través del siguiente enlace
 
 [grafana.ernesto.gonzalonazareno.org:3000](grafana.ernesto.gonzalonazareno.org:3000)
+
 Ya podremos entrar desde el navegador a grafana
 
 ![](https://i.imgur.com/4KnpAul.png)

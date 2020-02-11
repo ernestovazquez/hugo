@@ -350,9 +350,9 @@ Se ha **realizado correctamente el test** y nos lo muestra en nuestro **servidor
 Por último tendremos que indicarle el **nivel de alertas** en el **Dashboard de Grafana**.
 Esta última opción nos permite configurar graficamente los niveles de alertas que vamos a recibir.
 
-En mi caso, voy a poner que me avise si sobrepasa los **500MiB de RAM**:
+En mi caso, voy a poner que me avise si sobrepasa el valor en los diferentes servidores y si ese valor se mantiene durante un minuto me envie la alerta.
 
-![](https://i.imgur.com/2hkQDDS.png)
+![](https://i.imgur.com/KThJsEr.png)
 
 Aquí pondremos a quien se lo queremos enviar y el mensaje que va  recibir. En mi caso pondremos **"Discord"**, pero si queremos poner un **correo** solamente tendremos que activar **smtp** en **grafana.ini** y colocar la dirección de correo.
 

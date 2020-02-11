@@ -107,6 +107,16 @@ debian@serranito:~$ sudo systemctl restart grafana-server.service
 
 Tenemos que habilitar el puerto 3000 en OpenStack:
 
+Si queremos usar el dominio solamente tendremos que añadirlo en el DNS:
+
+```
+grafana         IN      CNAME   serranito
+```
+
+Ya pondremos entrar a través del siguiente enlace
+
+grafana.ernesto.gonzalonazareno.org:3000
+
 Ya podremos entrar desde el navegador a grafana
 
 ![](https://i.imgur.com/4KnpAul.png)

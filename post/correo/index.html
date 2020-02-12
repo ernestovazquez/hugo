@@ -228,6 +228,40 @@ pop3            IN      CNAME   croqueta
 
 <p><img src="https://i.imgur.com/dcsoX5u.png" alt="" /></p>
 
+<h2 id="tarea-5-2-puntos-obligatorio-documenta-en-redmine-una-prueba-de-funcionamiento-donde-recibas-un-correo-desde-el-exterior-gmail-hotmail-y-lo-leas-en-tu-cliente-de-correo-utiliza-el-protocolo-imap-cómo-se-llama-el-servidor-para-enviar-el-correo-muestra-la-configuración-muestra-una-prueba-de-funcionamiento-de-cómo-funciona-el-protocolo-imap">Tarea 5 (2 puntos)(Obligatorio): Documenta en redmine una prueba de funcionamiento, donde recibas un correo desde el exterior (gmail, hotmail,…) y lo leas en tu cliente de correo. Utiliza el protocolo IMAP. ¿Cómo se llama el servidor para enviar el correo? (Muestra la configuración). Muestra una prueba de funcionamiento de cómo funciona el protocolo IMAP.</h2>
+
+<p>Vamos a configurar en <strong>Evolution</strong> el tipo de servidor <strong>IMAP</strong></p>
+
+<p><img src="https://i.imgur.com/OmpIk9p.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/PSsf2jO.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/ishWHT6.png" alt="" /></p>
+
+<p>Abrimos los <strong>puertos de IMAP</strong> en el cloud como hemos realizado anteriormente para POP.</p>
+
+<p><img src="https://i.imgur.com/UxPqS9R.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/MUgIxcZ.png" alt="" /></p>
+
+<p>Y como podemos apreciar ya tendremos el nuevo correo desde IMAP.</p>
+
+<p>Comprobamos el log:</p>
+
+<pre><code>debian@croqueta:~$ sudo tail /var/log/mail.log
+
+Feb 12 10:05:19 croqueta postfix/cleanup[14472]: F3EA220E4B: message-id=&lt;CAEXXkz9TOGDbyr9vqS22DWHYg1fDOtbuErPeiaHYUFeH8Dfx_A@mail.gmail.com&gt;
+Feb 12 10:05:19 croqueta postfix/smtpd[14462]: disconnect from babuino-smtp.gonzalonazareno.org[192.168.203.3] ehlo=1 mail=1 rcpt=1 data=1 quit=1 commands=5
+Feb 12 10:05:19 croqueta postfix/qmgr[14374]: F3EA220E4B: from=&lt;vazquezgarciaernesto@gmail.com&gt;, size=2984, nrcpt=1 (queue active)
+Feb 12 10:05:19 croqueta postfix/local[14473]: F3EA220E4B: to=&lt;debian@croqueta.ernesto.gonzalonazareno.org&gt;, relay=local, delay=0.13, delays=0.1/0.01/0/0.01, dsn=2.0.0, status=sent (delivered to maildir)
+Feb 12 10:05:19 croqueta postfix/qmgr[14374]: F3EA220E4B: removed
+Feb 12 10:08:39 croqueta postfix/anvil[14468]: statistics: max connection rate 1/60s for (smtp:192.168.203.3) at Feb 12 10:05:18
+Feb 12 10:08:39 croqueta postfix/anvil[14468]: statistics: max connection count 1 for (smtp:192.168.203.3) at Feb 12 10:05:18
+Feb 12 10:08:39 croqueta postfix/anvil[14468]: statistics: max cache size 1 at Feb 12 10:05:18
+Feb 12 10:09:39 croqueta dovecot: imap-login: Login: user=&lt;debian&gt;, method=PLAIN, rip=172.22.0.50, lip=10.0.0.10, mpid=14489, session=&lt;27kQVV2elsisFgAy&gt;
+Feb 12 10:09:43 croqueta dovecot: imap-login: Login: user=&lt;debian&gt;, method=PLAIN, rip=172.22.0.50, lip=10.0.0.10, mpid=14491, session=&lt;Vz9GVV2emMisFgAy&gt;
+</code></pre>
+
     </section>
     <footer class="post-footer">
       

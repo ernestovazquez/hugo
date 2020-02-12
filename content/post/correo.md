@@ -176,3 +176,37 @@ Una vez configurado, ya podremos enviar el correo para que lo pueda recibir el c
 
 ![](https://i.imgur.com/dcsoX5u.png)
 
+## Tarea 5 (2 puntos)(Obligatorio): Documenta en redmine una prueba de funcionamiento, donde recibas un correo desde el exterior (gmail, hotmail,…) y lo leas en tu cliente de correo. Utiliza el protocolo IMAP. ¿Cómo se llama el servidor para enviar el correo? (Muestra la configuración). Muestra una prueba de funcionamiento de cómo funciona el protocolo IMAP.
+
+Vamos a configurar en **Evolution** el tipo de servidor **IMAP**
+
+![](https://i.imgur.com/OmpIk9p.png)
+
+![](https://i.imgur.com/PSsf2jO.png)
+
+![](https://i.imgur.com/ishWHT6.png)
+
+Abrimos los **puertos de IMAP** en el cloud como hemos realizado anteriormente para POP.
+
+![](https://i.imgur.com/UxPqS9R.png)
+
+![](https://i.imgur.com/MUgIxcZ.png)
+
+Y como podemos apreciar ya tendremos el nuevo correo desde IMAP.
+
+Comprobamos el log:
+
+```
+debian@croqueta:~$ sudo tail /var/log/mail.log
+
+Feb 12 10:05:19 croqueta postfix/cleanup[14472]: F3EA220E4B: message-id=<CAEXXkz9TOGDbyr9vqS22DWHYg1fDOtbuErPeiaHYUFeH8Dfx_A@mail.gmail.com>
+Feb 12 10:05:19 croqueta postfix/smtpd[14462]: disconnect from babuino-smtp.gonzalonazareno.org[192.168.203.3] ehlo=1 mail=1 rcpt=1 data=1 quit=1 commands=5
+Feb 12 10:05:19 croqueta postfix/qmgr[14374]: F3EA220E4B: from=<vazquezgarciaernesto@gmail.com>, size=2984, nrcpt=1 (queue active)
+Feb 12 10:05:19 croqueta postfix/local[14473]: F3EA220E4B: to=<debian@croqueta.ernesto.gonzalonazareno.org>, relay=local, delay=0.13, delays=0.1/0.01/0/0.01, dsn=2.0.0, status=sent (delivered to maildir)
+Feb 12 10:05:19 croqueta postfix/qmgr[14374]: F3EA220E4B: removed
+Feb 12 10:08:39 croqueta postfix/anvil[14468]: statistics: max connection rate 1/60s for (smtp:192.168.203.3) at Feb 12 10:05:18
+Feb 12 10:08:39 croqueta postfix/anvil[14468]: statistics: max connection count 1 for (smtp:192.168.203.3) at Feb 12 10:05:18
+Feb 12 10:08:39 croqueta postfix/anvil[14468]: statistics: max cache size 1 at Feb 12 10:05:18
+Feb 12 10:09:39 croqueta dovecot: imap-login: Login: user=<debian>, method=PLAIN, rip=172.22.0.50, lip=10.0.0.10, mpid=14489, session=<27kQVV2elsisFgAy>
+Feb 12 10:09:43 croqueta dovecot: imap-login: Login: user=<debian>, method=PLAIN, rip=172.22.0.50, lip=10.0.0.10, mpid=14491, session=<Vz9GVV2emMisFgAy>
+```

@@ -117,3 +117,62 @@ Vamos a ver la **configuración**:
 
 ![](https://i.imgur.com/2HTaSyY.png)
 
+## Tarea 4: Documenta en redmine una prueba de funcionamiento, donde recibas un correo desde el exterior (gmail, hotmail,…) y lo leas en tu cliente de correo. Utiliza el protocolo POP. ¿Cómo se llama el servidor para enviar el correo? (Muestra la configuración). Muestra una prueba de funcionamiento de cómo funciona el protocolo POP.
+
+Primero tenemos que abrir el puerto en el servidor:
+
+![](https://i.imgur.com/xSgboYH.png)
+
+A continuación vamos a instalar los paquetes necesarios:
+
+    debian@croqueta:~$ sudo apt-get install dovecot-pop3d
+
+Editamos los siguientes ficheros de configuración:
+
+```
+debian@croqueta:~$ sudo nano /etc/postfix/main.cf
+
+home_mailbox = Maildir/
+mailbox_command =
+```
+
+```
+debian@croqueta:~$ sudo nano /etc/dovecot/conf.d/10-auth.conf
+
+disable_plaintext_auth = no
+```
+
+```
+debian@croqueta:~$ sudo nano /etc/dovecot/conf.d/10-mail.conf
+
+#mail_location = mbox:~/mail:INBOX=/var/mail/%u
+mail_location = maildir:~/Maildir
+```
+
+Agregamos las entrada en el DNS:
+
+```
+debian@croqueta:~$ sudo nano /var/cache/bind/db.ernesto.gonzalonazareno.org 
+
+imap            IN      CNAME   croqueta
+pop3            IN      CNAME   croqueta
+```
+
+Por último solo queda configurar Evolution:
+
+![](https://i.imgur.com/jZydd1m.png)
+
+![](https://i.imgur.com/630zMr5.png)
+
+![](https://i.imgur.com/707fGlk.png)
+
+Una vez configurado, ya podremos enviar el correo para que lo pueda recibir el cliente.
+
+![](https://i.imgur.com/SX8VNjA.png)
+
+![](https://i.imgur.com/iMDgoer.png)
+
+![](https://i.imgur.com/AMplVO4.png)
+
+![](https://i.imgur.com/dcsoX5u.png)
+

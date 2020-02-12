@@ -172,6 +172,62 @@ mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 172.22.0.0/16
 
 <p><img src="https://i.imgur.com/2HTaSyY.png" alt="" /></p>
 
+<h2 id="tarea-4-documenta-en-redmine-una-prueba-de-funcionamiento-donde-recibas-un-correo-desde-el-exterior-gmail-hotmail-y-lo-leas-en-tu-cliente-de-correo-utiliza-el-protocolo-pop-cómo-se-llama-el-servidor-para-enviar-el-correo-muestra-la-configuración-muestra-una-prueba-de-funcionamiento-de-cómo-funciona-el-protocolo-pop">Tarea 4: Documenta en redmine una prueba de funcionamiento, donde recibas un correo desde el exterior (gmail, hotmail,…) y lo leas en tu cliente de correo. Utiliza el protocolo POP. ¿Cómo se llama el servidor para enviar el correo? (Muestra la configuración). Muestra una prueba de funcionamiento de cómo funciona el protocolo POP.</h2>
+
+<p>Primero tenemos que abrir el puerto en el servidor:</p>
+
+<p><img src="https://i.imgur.com/xSgboYH.png" alt="" /></p>
+
+<p>A continuación vamos a instalar los paquetes necesarios:</p>
+
+<pre><code>debian@croqueta:~$ sudo apt-get install dovecot-pop3d
+</code></pre>
+
+<p>Editamos los siguientes ficheros de configuración:</p>
+
+<pre><code>debian@croqueta:~$ sudo nano /etc/postfix/main.cf
+
+home_mailbox = Maildir/
+mailbox_command =
+</code></pre>
+
+<pre><code>debian@croqueta:~$ sudo nano /etc/dovecot/conf.d/10-auth.conf
+
+disable_plaintext_auth = no
+</code></pre>
+
+<pre><code>debian@croqueta:~$ sudo nano /etc/dovecot/conf.d/10-mail.conf
+
+#mail_location = mbox:~/mail:INBOX=/var/mail/%u
+mail_location = maildir:~/Maildir
+</code></pre>
+
+<p>Agregamos las entrada en el DNS:</p>
+
+<pre><code>debian@croqueta:~$ sudo nano /var/cache/bind/db.ernesto.gonzalonazareno.org 
+
+imap            IN      CNAME   croqueta
+pop3            IN      CNAME   croqueta
+</code></pre>
+
+<p>Por último solo queda configurar Evolution:</p>
+
+<p><img src="https://i.imgur.com/jZydd1m.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/630zMr5.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/707fGlk.png" alt="" /></p>
+
+<p>Una vez configurado, ya podremos enviar el correo para que lo pueda recibir el cliente.</p>
+
+<p><img src="https://i.imgur.com/SX8VNjA.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/iMDgoer.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/AMplVO4.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/dcsoX5u.png" alt="" /></p>
+
     </section>
     <footer class="post-footer">
       

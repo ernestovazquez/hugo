@@ -5,10 +5,19 @@
     <link>https://ernestovazquez.es/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 10 Feb 2020 15:04:52 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 13 Feb 2020 19:04:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Configuración/activación de Apparmor</title>
+      <link>https://ernestovazquez.es/post/apparmor/</link>
+      <pubDate>Thu, 13 Feb 2020 19:04:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/apparmor/</guid>
+      <description>Habilita apparmor en croqueta o tortilla, habilitando o creando los perfiles necesarios de manera estricta y segura.</description>
+    </item>
     
     <item>
       <title>Creación de un sistema de cuentas de usuarios en GNU/Linux con LDAP, Kerberos 5 y NFS4</title>

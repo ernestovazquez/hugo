@@ -62,7 +62,9 @@
       </section>
     </header>
     <section class="post-content">
-      <p>En esta práctica vamos a desplegar un CMS escrito en java. Puedes escoger la aplicación que vas a desplegar de CMS escritos en Java o de Aplicaciones Java en Bitnami.</p>
+      
+
+<p>En esta práctica vamos a desplegar un CMS escrito en java. Puedes escoger la aplicación que vas a desplegar de CMS escritos en Java o de Aplicaciones Java en Bitnami.</p>
 
 <ul>
 <li>Indica la aplicación escogida y su funcionalidad.</li>
@@ -75,7 +77,143 @@
 
 <hr />
 
-<p>prueba</p>
+<p>Voy a instalar el CMS <strong>OpenCMS</strong>.
+Estará en una máquina Debian con una base de datos MySQL.</p>
+
+<p>Como su propio nombre indica, <strong>OpenCMS</strong> es un software de código abierto. Las caracteristicas que lo diferencian del resto son, su <strong>sencillez de uso</strong> y la <strong>facilidad</strong> con que se pueden elaborar y administrar los contenidos.</p>
+
+<h2 id="instalación-y-configuración">Instalación y configuración:</h2>
+
+<p>Primero vamos a instalar los paquetes necesarios:</p>
+
+<pre><code>vagrant@java:~$ sudo apt install openjdk-11-jre mariadb-server tomcat9 apache2
+</code></pre>
+
+<p>Los siguiente que tenemos que haces es descargar el CMS:</p>
+
+<pre><code>root@java:~# wget http://www.opencms.org/downloads/opencms/opencms-10.5.3.zip
+
+
+root@java:~# unzip opencms-10.5.3.zip
+Archive:  opencms-10.5.3.zip
+  inflating: opencms.war             
+  inflating: install.html            
+  inflating: history.txt             
+  inflating: license.txt     
+  
+root@java:~# ls
+history.txt  install.html  license.txt	opencms-10.5.3.zip  opencms.war
+</code></pre>
+
+<p>Copiamos el <strong><em>.war</em></strong> al su correcto directorio</p>
+
+<pre><code>vagrant@java:~/opencms$ sudo cp opencms.war /var/lib/tomcat9/webapps/
+</code></pre>
+
+<p>Eliminamos ROOT por defecto y añadimos el nuevo.</p>
+
+<pre><code>root@java:~# cd /var/lib/tomcat9/webapps/
+root@java:/var/lib/tomcat9/webapps# rm -r ROOT/
+root@java:~# cp opencms.war /var/lib/tomcat9/webapps/ROOT.war
+</code></pre>
+
+<p>Por último tendremos que <strong>reiniciar tomcat:</strong></p>
+
+<pre><code>vagrant@java:~$ sudo systemctl restart tomcat9
+</code></pre>
+
+<p>Ya podremos entrar desde el navegador.</p>
+
+<p><img src="https://i.imgur.com/loDViLc.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/tKZnfwC.png" alt="" /></p>
+
+<p>Creamos la base de datos:</p>
+
+<pre><code>MariaDB [(none)]&gt; create database opencms;
+Query OK, 1 row affected (0.027 sec)
+
+MariaDB [(none)]&gt; CREATE USER 'open'@'localhost' IDENTIFIED BY 'open';
+Query OK, 0 rows affected (0.009 sec)
+
+MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON opencms.* to 'open'@'localhost';
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [(none)]&gt; flush privileges;
+Query OK, 0 rows affected (0.004 sec)
+</code></pre>
+
+<p><img src="https://i.imgur.com/JihUey1.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/uBsaXM6.png" alt="" /></p>
+
+<p>Tendremos que editar el siguiente fichero de configuración de MySQL:</p>
+
+<pre><code>vagrant@java:~$ sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf 
+
+max_allowed_packet     = 32M
+</code></pre>
+
+<p>Tendremos que reiniciar:</p>
+
+<pre><code>vagrant@java:~$ sudo systemctl restart mariadb.service 
+</code></pre>
+
+<p><img src="https://i.imgur.com/sRDw5uo.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/yQOzU7Y.png" alt="" /></p>
+
+<p>Le damos a continuar y es importarán los modulos necesarios, para su correcto funcionamiento.</p>
+
+<p><img src="https://i.imgur.com/Veczp7J.png" alt="" /></p>
+
+<p>Ya tendremos intalado OpenCMS correctamente:</p>
+
+<p><img src="https://i.imgur.com/A2MfqHG.png" alt="" /></p>
+
+<p>Por último marcamos <strong>&ldquo;Finish&rdquo;</strong>, para terminar.</p>
+
+<p><img src="https://i.imgur.com/HQkLGgC.png" alt="" /></p>
+
+<p>Ya tendremos el CMS instalado:</p>
+
+<p><img src="https://i.imgur.com/nrXbRMe.png" alt="" /></p>
+
+<h2 id="conexión-de-tomcat-9-y-apache2">Conexión de Tomcat 9 y Apache2</h2>
+
+<p>Para que uestra página web pueda ser consultada a través del puerto por defecto para HTTP, haremos lo siguiente:</p>
+
+<p>Entramos en el siguiente fichero de configuración:</p>
+
+<pre><code>root@java:~# nano /etc/tomcat9/server.xml 
+
+
+    &lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;
+               connectionTimeout=&quot;20000&quot;
+               URIEncoding=&quot;utf8&quot;
+               redirectPort=&quot;8443&quot; /&gt;
+</code></pre>
+
+<p>Esta conexión se realiza a través del módulo proxy_http</p>
+
+<pre><code>root@java:~# nano /etc/apache2/sites-enabled/000-default.conf 
+
+        ProxyRequests Off
+        ProxyPreserveHost On
+
+        ProxyPass / http://localhost:8080/
+        ProxyPassReverse / http://localhost:8080/
+</code></pre>
+
+<p>Reiniciamos los servicios:</p>
+
+<pre><code>root@java:~# systemctl restart apache2
+root@java:~# systemctl restart tomcat9
+</code></pre>
+
+<p><img src="https://i.imgur.com/FdGsJvn.png" alt="" /></p>
+
+<p>Ya tendremos OpenCMS instalado sobre Debian con MySQL y Tomcat 9 mediante Apache2.</p>
 
     </section>
     <footer class="post-footer">

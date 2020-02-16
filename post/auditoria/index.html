@@ -465,6 +465,8 @@ MariaDB [auditorias]&gt; select * from accesos;
 <pre><code>mongod --dbpath data/db --auth --auditDestination file --auditFilter '{ atype: &quot;authenticate&quot;, &quot;param.db&quot;: &quot;test&quot; }' --auditFormat BSON --auditPath data/db/auditLog.bson
 </code></pre>
 
+<p>Referencia: <a href="https://docs.mongodb.com/manual/tutorial/configure-audit-filters/#filter-on-authentication-operations-on-a-single-database">Operaciones de autenticación</a></p>
+
     </section>
     <footer class="post-footer">
       

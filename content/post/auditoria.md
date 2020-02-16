@@ -6,6 +6,8 @@ draft: false
 
 ## Realiza y documenta adecuadamente las siguientes operaciones:
 
+<div id='id1' />
+
 ### 1. Activa desde SQL*Plus la auditoría de los intentos de acceso fallidos al sistema. Comprueba su funcionamiento.
 
 Para activar la **auditoría de los intentos de acceso fallidos** primero tenemos que ver los parámetros de auditoría:

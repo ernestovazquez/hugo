@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      Auditorías en bases de datos - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title">Auditorías en bases de datos</h2>
+      <section class="post-meta">
+        <time class="post-date">February 16, 2020</time>
+      </section>
+    </header>
+    <section class="post-content">
+      
+
+<h1 id="práctica-auditorías-en-bases-de-datos">Práctica: Auditorías en bases de datos</h1>
+
+<h1 id="índice">Índice</h1>
+
+<p><a href="#id1">Ejercicio 1</a>
+<a href="#id2">Ejercicio 2</a>
+<a href="#id3">Ejercicio 3</a>
+<a href="#id4">Ejercicio 4</a>
+<a href="#id5">Ejercicio 5</a>
+<a href="#id6">Ejercicio 6</a>
+<a href="#id7">Ejercicio 7</a>
+<a href="#id8">Ejercicio 8</a>
+<a href="#id9">Ejercicio 9</a>
+<a href="#id10">Ejercicio 10</a>
+<a href="#id11">Ejercicio 11</a></p>
+
+<h2 id="realiza-y-documenta-adecuadamente-las-siguientes-operaciones">Realiza y documenta adecuadamente las siguientes operaciones:</h2>
+
+<p><div id='id1' /></p>
+
+<h3 id="1-activa-desde-sql-plus-la-auditoría-de-los-intentos-de-acceso-fallidos-al-sistema-comprueba-su-funcionamiento">1. Activa desde SQL*Plus la auditoría de los intentos de acceso fallidos al sistema. Comprueba su funcionamiento.</h3>
+
+<p>Para activar la <strong>auditoría de los intentos de acceso fallidos</strong> primero tenemos que ver los parámetros de auditoría:</p>
+
+<pre><code>05-02-2020 17:42:51 SYS@XE SQL&gt; SHOW PARAMETER AUDIT
+
+NAME				     TYPE	 VALUE
+------------------------------------ ----------- ------------------------------
+audit_file_dest 		     string	 /u01/app/oracle/admin/XE/adump
+audit_syslog_level		     string
+audit_sys_operations		     boolean	 FALSE
+audit_trail			     string	 NONE
+05-02-2020 17:46:55 SYS@XE SQL&gt; 
+</code></pre>
+
+<p><img src="https://i.imgur.com/glAcmhq.png" alt="" /></p>
+
+<p>Vamos a activar <strong>audit_tail:</strong></p>
+
+<pre><code>05-02-2020 17:46:55 SYS@XE SQL&gt; ALTER SYSTEM SET audit_trail=db scope=spfile;
+</code></pre>
+
+<p><img src="https://i.imgur.com/8NSgC5Y.png" alt="" /></p>
+
+<p>Vamos a ejecutar los <strong>cambios</strong>:
+Tedremos que <strong>reiniciar</strong> para que se ejecuten estos cambios.</p>
+
+<p><img src="https://i.imgur.com/lAQOaYl.png" alt="" /></p>
+
+<p>A continuación vamos a <strong>activar la auditoría</strong>:</p>
+
+<pre><code>2020/02/05 17:58:33 SYS@XE SQL&gt; AUDIT CREATE SESSION WHENEVER NOT SUCCESSFUL;
+
+Audit succeeded.
+</code></pre>
+
+<p><img src="https://i.imgur.com/Qi3SdqA.png" alt="" /></p>
+
+<p>Tengo que añadir, que no se puede crear para el usuario <strong>SYS.</strong></p>
+
+<p><img src="https://i.imgur.com/Ur0Ux7w.png" alt="" /></p>
+
+<p>Podemos ver las auditorías que están activas con el siguiente comando:</p>
+
+<pre><code>2020/02/05 18:00:16 SYS@XE SQL&gt; SELECT * FROM dba_priv_audit_opts;
+
+USER_NAME		       PROXY_NAME
+------------------------------ ------------------------------
+PRIVILEGE				 SUCCESS    FAILURE
+---------------------------------------- ---------- ----------
+
+CREATE SESSION				 BY ACCESS  BY ACCESS
+</code></pre>
+
+<p>Como podemos ver está la que hemos creado previamente.</p>
+
+<p><strong><em>Ejemplo de accesos fallidos:</em></strong></p>
+
+<p><img src="https://i.imgur.com/L6xMqLf.png" alt="" /></p>
+
+<pre><code>05-02-2020 18:14:16 SYS@XE SQL&gt; SELECT os_username, username, extended_timestamp, action_name, returncode
+  2  FROM dba_audit_session;
+</code></pre>
+
+<p><img src="https://i.imgur.com/lbdtaOL.png" alt="" /></p>
+
+<p>Una vez terminados se puede <strong>desactivar</strong> con el siguiente comando:</p>
+
+<pre><code>05-02-2020 18:16:15 SYS@XE SQL&gt; NOAUDIT CREATE SESSION WHENEVER NOT SUCCESSFUL;
+
+Noaudit succeeded.
+</code></pre>
+
+<p><img src="https://i.imgur.com/okmzMyI.png" alt="" /></p>
+
+<p><div id='id2' /></p>
+
+<h3 id="2-realiza-un-procedimiento-en-pl-sql-que-te-muestre-los-accesos-fallidos-junto-con-el-motivo-de-los-mismos-transformando-el-código-de-error-almacenado-en-un-mensaje-de-texto-comprensible">2. Realiza un procedimiento en PL/SQL que te muestre los accesos fallidos junto con el motivo de los mismos, transformando el código de error almacenado en un mensaje de texto comprensible.</h3>
+
+<pre><code>CREATE OR REPLACE FUNCTION Mostrarfallos(p_fallo NUMBER)
+RETURN VARCHAR2
+IS
+fallos VARCHAR2(25);
+BEGIN
+    CASE p_fallo
+        WHEN 1017 THEN 
+            fallos:='Contraseña incorrecta';
+        WHEN 28000 THEN
+            fallos:='Cuenta bloqueada';
+        ELSE
+            fallos:='Error desconocido';
+    END CASE;
+RETURN fallos;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE MostrarAccesos
+IS
+    CURSOR c_pruebaacceso
+    IS 
+    SELECT username, returncode, timestamp
+    FROM dba_audit_session 
+    WHERE action_name='LOGON' 
+    AND returncode != 0 
+    ORDER BY timestamp;
+    v_motivo VARCHAR2(25);
+BEGIN
+    FOR prueba IN c_pruebaacceso LOOP
+        v_motivo:=Mostrarfallos(prueba.returncode);
+        DBMS_OUTPUT.PUT_LINE('Usuario: '||prueba.username||CHR(9)||CHR(9)|| 'Fecha: '||
+            prueba.timestamp||CHR(9)|| 'Motivo: '||v_motivo);
+    END LOOP; 
+END;
+/
+</code></pre>
+
+<p><img src="https://i.imgur.com/BPTonki.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/coG3NJE.png" alt="" /></p>
+
+<pre><code>EXEC MostrarAccesos;
+</code></pre>
+
+<p><img src="https://i.imgur.com/98csXBu.png" alt="" /></p>
+
+<p><div id='id3' /></p>
+
+<h3 id="3-activa-la-auditoría-de-las-operaciones-dml-realizadas-por-scott-comprueba-su-funcionamiento">3. Activa la auditoría de las operaciones DML realizadas por SCOTT. Comprueba su funcionamiento.</h3>
+
+<pre><code>05-02-2020 18:18:46 SYS@XE SQL&gt; AUDIT INSERT TABLE, UPDATE TABLE, DELETE TABLE BY SCOTT BY ACCESS;
+
+Audit succeeded.
+</code></pre>
+
+<p><img src="https://i.imgur.com/sEgVI93.png" alt="" /></p>
+
+<p>Consulta las modificaciones y acciones que hemos realizado:</p>
+
+<pre><code>05-02-2020 18:34:35 SYS@XE SQL&gt; select OS_USERNAME, username, action_name, timestamp
+  2  from dba_audit_object
+  3  where username='SCOTT';
+</code></pre>
+
+<p><img src="https://i.imgur.com/RS4BYAg.png" alt="" /></p>
+
+<p><div id='id4' /></p>
+
+<h3 id="4-realiza-una-auditoría-de-grano-fino-para-almacenar-información-sobre-la-inserción-de-empleados-del-departamento-10-en-la-tabla-emp-de-scott">4. Realiza una auditoría de grano fino para almacenar información sobre la inserción de empleados del departamento 10 en la tabla emp de scott.</h3>
+
+<p>Lo primero que tenemos que hacer es crear el <strong>procedimiento</strong> para controlar la inserción de los empleados del departamento:</p>
+
+<pre><code>BEGIN
+    DBMS_FGA.ADD_POLICY (
+        object_schema      =&gt;  'SCOTT',
+        object_name        =&gt;  'EMP',
+        policy_name        =&gt;  'policy1',
+        audit_condition    =&gt;  'DEPTNO = 10',
+        statement_types    =&gt;  'INSERT'
+    );
+END;
+/
+</code></pre>
+
+<p><img src="https://i.imgur.com/iHS7SkG.png" alt="" /></p>
+
+<pre><code>SELECT object_schema, object_name, policy_name, policy_text
+FROM dba_audit_policies;
+</code></pre>
+
+<p><img src="https://i.imgur.com/527LSG8.png" alt="" /></p>
+
+<p>Referencia: <a href="https://docs.oracle.com/database/121/ARPLS/d_fga.htm#ARPLS225">Documentación oficial de Oracle</a></p>
+
+<blockquote>
+<p>Esta opción la he tenido que hacer en una máquina con Oracle 12, a partir de esta versión se implementó.</p>
+</blockquote>
+
+<p><div id='id5' /></p>
+
+<h3 id="5-explica-la-diferencia-entre-auditar-una-operación-by-access-o-by-session">5. Explica la diferencia entre auditar una operación by access o by session.</h3>
+
+<p><strong>By access</strong>, nos almacena todas las acciones y nos crea un registro por cada sentencia auditada. Oracle recomienda usar esta opción.</p>
+
+<p><strong>By session</strong>, nos almacena las sentencias en un registro por cada sesión iniciada.</p>
+
+<p>Vamos a ver un ejemplo de los dos:</p>
+
+<p><strong><em>By access</em></strong>:</p>
+
+<pre><code>SQL&gt; SELECT owner, obj_name, action_name, timestamp, priv_used
+  2  FROM dba_audit_object
+  3  WHERE username='SYSTEM';
+</code></pre>
+
+<p><img src="https://i.imgur.com/qQ5BHrV.png" alt="" /></p>
+
+<p><strong><em>By session:</em></strong></p>
+
+<pre><code>SQL&gt; select obj_name, action_name, timestamp
+  2  from dba_audit_object
+  3  where username='SCOTT';
+</code></pre>
+
+<p><img src="https://i.imgur.com/coFLQ2x.png" alt="" /></p>
+
+<p><div id='id6' /></p>
+
+<h3 id="6-documenta-las-diferencias-entre-los-valores-db-y-db-extended-del-parámetro-audit-trail-de-oracle-demuéstralas-poniendo-un-ejemplo-de-la-información-sobre-una-operación-concreta-recopilada-con-cada-uno-de-ellos">6. Documenta las diferencias entre los valores db y db, extended del parámetro audit_trail de ORACLE. Demuéstralas poniendo un ejemplo de la información sobre una operación concreta recopilada con cada uno de ellos.</h3>
+
+<p>Vamos a ver las principales diferencias entre <strong>db y db, extended</strong> con el parámetro <strong>audit_trail.</strong></p>
+
+<ul>
+<li><p>db: Activa la auditoría y los datos se almacenan en la tabla <code>SYS.AUD$</code>.</p></li>
+
+<li><p>db, extended: Aparte de almacenar los datos en la tabla <code>SYS.AUD$</code>, este escribirá los valores en las columnas <code>SQLBIND</code> y <code>SQLTEXT</code> de la misma tabla; <code>SYS.AUD$</code>.</p></li>
+</ul>
+
+<p>Referencia: <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14237/initparams016.htm">Documentación oficial de Oracle</a></p>
+
+<p>Vamos a ver un <strong><em>ejemplo</em></strong>:</p>
+
+<p>Primero vamos a ver el estado de <strong>audit_trail:</strong></p>
+
+<pre><code>SQL&gt; show parameter audit;
+</code></pre>
+
+<p><img src="https://i.imgur.com/McnqzDH.png" alt="" /></p>
+
+<p>Activaremos <strong>db, extended</strong> con el siguiente comando.</p>
+
+<pre><code>SQL&gt; ALTER SYSTEM SET audit_trail = DB,EXTENDED SCOPE=SPFILE;
+</code></pre>
+
+<p><img src="https://i.imgur.com/Pk008NH.png" alt="" /></p>
+
+<p>Reiniciamos para que se ejecute los cambios:</p>
+
+<p><img src="https://i.imgur.com/H8Hl03M.png" alt="" /></p>
+
+<p>Como podemos apreciar ya hemos activado el valor al parámetro <strong>audit_trail.</strong></p>
+
+<p><div id='id7' /></p>
+
+<h3 id="7-localiza-en-enterprise-manager-las-posibilidades-para-realizar-una-auditoría-e-intenta-repetir-con-dicha-herramienta-los-apartados-1-3-y-4">7. Localiza en Enterprise Manager las posibilidades para realizar una auditoría e intenta repetir con dicha herramienta los apartados 1, 3 y 4.</h3>
+
+<p>Vamos a iniciar <strong>Enterprise Manager 12c</strong>:</p>
+
+<p><img src="https://i.imgur.com/RLdYjyu.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/JbDL3O7.png" alt="" /></p>
+
+<p>Solo he podido encontrar lo siguiente, acerca de las auditorías en esta versión.</p>
+
+<p><img src="https://i.imgur.com/za5qzvK.png" alt="" /></p>
+
+<p>Esto es lo unico que se puede ver en <strong>Oracle Enterprise Manager 12c</strong>, como se puede apreciar está muy limitado a la hora de gestionar auditorías o parámetros de configuración</p>
+
+<p>Voy a intentar realizar las mismas pruebas con <strong>Oracle Enterprise Manager 11g</strong>:</p>
+
+<p>Con está versión se puede realizar una auditoría si navegamos a través de las siguientes pestañas:</p>
+
+<pre><code>- Sevidor
+    - Seguridad
+        - Valores de Auditoría
+</code></pre>
+
+<p><img src="https://i.imgur.com/v6H2GLo.png" alt="" /></p>
+
+<ul>
+<li><strong>Valores de Auditoría</strong>:</li>
+</ul>
+
+<p>En la ventana de <strong>Valores de Auditoría</strong> podremos ver <strong>Pistas de Auditoría de Base de Datos</strong>, aquí tendremos las <strong><em>Conexiones Fallidas Auditadas,</em></strong> (donde veremos las conexiones fallidas que tiene la base de datos, al igual que hemos visto en el <a href="#id1">Ejercicio 1</a>), <strong><em>Privilegios Auditados y Objetos auditados.</em></strong></p>
+
+<p><img src="https://i.imgur.com/4e1Q2pv.png" alt="" /></p>
+
+<ul>
+<li><strong>Conexiones Fallidas Auditadas</strong>:</li>
+</ul>
+
+<p>Aqui podremos encontrar las conexiones fallidas que tenemos en nuestra base de datos:</p>
+
+<p><img src="https://i.imgur.com/WbRdI73.png" alt="" /></p>
+
+<p>Vamos a realizar unas pruebas de inicio de sesión:
+<img src="https://i.imgur.com/kRkHcdx.png" alt="" /></p>
+
+<p>Como podemos apreciar aparecen las nuevas pruebas que acabamos de realizar correctamente.</p>
+
+<ul>
+<li><strong>Objetos Auditados</strong>:</li>
+</ul>
+
+<p>Al igual que antes, aquí podremos encontrar los objetos auditados</p>
+
+<p><img src="https://i.imgur.com/mJeP0Nr.png" alt="" /></p>
+
+<p><div id='id8' /></p>
+
+<h3 id="8-averigua-si-en-postgres-se-pueden-realizar-los-apartados-1-3-y-4-si-es-así-documenta-el-proceso-adecuadamente">8. Averigua si en Postgres se pueden realizar los apartados 1, 3 y 4. Si es así, documenta el proceso adecuadamente.</h3>
+
+<p>Leyendo la <strong>documentación</strong> de <strong>PostgreSQL</strong>, he podido leer que no se pueden realizar igual que en Oracle, la forma de hacerlo es mediante  funciones y procedimientos</p>
+
+<p><strong>Referencia:</strong> <a href="https://usuarioperu.com/2018/07/23/auditoria-de-tablas-en-postgresql-i/">Auditoria de tablas en PostgreSQL</a></p>
+
+<p><div id='id9' /></p>
+
+<h3 id="9-averigua-si-en-mysql-se-pueden-realizar-los-apartados-1-3-y-4-si-es-así-documenta-el-proceso-adecuadamente">9. Averigua si en MySQL se pueden realizar los apartados 1, 3 y 4. Si es así, documenta el proceso adecuadamente.</h3>
+
+<p>Creamos la base de datos y añadimos una tabla.</p>
+
+<pre><code>MariaDB [(none)]&gt; create database prueba;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]&gt; use prueba;
+Database changed
+
+MariaDB [prueba]&gt; create table clientes(
+    -&gt; dni varchar(9),
+    -&gt; nombre varchar(15),
+    -&gt; apellido varchar(50),
+    -&gt; telefono varchar(9),
+    -&gt; constraint pk_dni primary key (dni));
+Query OK, 0 rows affected, 1 warning (0.012 sec)
+</code></pre>
+
+<p>Creamos la <strong>base de datos auditorias</strong>:</p>
+
+<pre><code>MariaDB [prueba]&gt; create database auditorias;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [prueba]&gt; use auditorias
+Database changed
+
+MariaDB [auditorias]&gt; 
+</code></pre>
+
+<p>Tabla para almacenar la salida del trigger:</p>
+
+<pre><code>CREATE TABLE accesos
+ (
+   codigo int(11) NOT NULL AUTO_INCREMENT,
+   usuario varchar(100),
+   fecha datetime,
+   PRIMARY KEY (`codigo`)
+ )
+ ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+</code></pre>
+
+<p><img src="https://i.imgur.com/FZZcdI5.png" alt="" /></p>
+
+<pre><code>delimiter $$
+CREATE TRIGGER prueba.ernesto
+BEFORE INSERT ON prueba.clientes
+FOR EACH ROW
+BEGIN
+INSERT INTO auditorias.accesos (usuario, fecha)
+values (CURRENT_USER(), NOW());
+END$$
+</code></pre>
+
+<p><img src="https://i.imgur.com/svES6oj.png" alt="" /></p>
+
+<p>Entramos a la base de datos <strong>prueba</strong> y añadimos un nuevo registro a la tabla <strong>clientes.</strong></p>
+
+<pre><code>MariaDB [(none)]&gt; use prueba
+MariaDB [prueba]&gt; insert into clientes
+    -&gt; values ('47426968X','Ernesto','Vazquez Garcia','640514267');
+</code></pre>
+
+<p>Ahora vamos a ver si ha realizado bien el triger mirando la tabla <strong>accesos.</strong></p>
+
+<pre><code>MariaDB [(none)]&gt; use auditorias
+MariaDB [auditorias]&gt; select * from accesos;
+</code></pre>
+
+<p><img src="https://i.imgur.com/bkkWSZq.png" alt="" /></p>
+
+<p>Como podemos apreciar en la imagen, se ha creado correctamente el nuevo registro en la tabla accesos. Esta es la forma de <strong>auditar en MySQL.</strong> Es algo distinto a <strong>Oracle</strong> pero se puede tener algo parecido con este <strong>trigger</strong>.</p>
+
+<p><div id='id10' /></p>
+
+<h3 id="10-averigua-las-posibilidades-que-ofrece-mongodb-para-auditar-los-cambios-que-va-sufriendo-un-documento">10. Averigua las posibilidades que ofrece MongoDB para auditar los cambios que va sufriendo un documento.</h3>
+
+<p>MongoDB si nos permite realizar ciertas auditorías para ver los permitidos pondremos el siguiente comando:</p>
+
+<pre><code>--auditFilter
+</code></pre>
+
+<p>Vamos a ver un <strong><em>ejemplo</em></strong>:</p>
+
+<p>Con la siguiente sentencia solamente audita las acciones <strong>createCollection</strong> y <strong>dropCollection</strong>:</p>
+
+<pre><code>{ atype: { $in: [ &quot;createCollection&quot;, &quot;dropCollection&quot; ] } }
+</code></pre>
+
+<p>Podremos el filtro entre comillas simples para pasar el documento como una cadena.</p>
+
+<pre><code>mongod --dbpath data/db --auditDestination file --auditFilter '{ atype: { $in: [ &quot;createCollection&quot;, &quot;dropCollection&quot; ] } }' --auditFormat BSON --auditPath data/db/auditLog.bson
+</code></pre>
+
+<p>Referencia: <a href="https://docs.mongodb.com/manual/tutorial/configure-audit-filters/">Documentación oficial de MongoDB.</a></p>
+
+<p><div id='id11' /></p>
+
+<h3 id="11-averigua-si-en-mongodb-se-pueden-auditar-los-accesos-al-sistema">11. Averigua si en MongoDB se pueden auditar los accesos al sistema.</h3>
+
+<p>Si, leyendo la documentacion de MongoDB, he llegado a la conclusión que es algo parecido a lo realizado anteriormente, solamente tendremos que cambiar los parametros:</p>
+
+<pre><code>{ atype: &quot;authenticate&quot;, &quot;param.db&quot;: &quot;test&quot; }
+</code></pre>
+
+<p>Al igual que antes podemos usarlo como una cadena, si lo ponemos entre comillas simples.</p>
+
+<pre><code>mongod --dbpath data/db --auth --auditDestination file --auditFilter '{ atype: &quot;authenticate&quot;, &quot;param.db&quot;: &quot;test&quot; }' --auditFormat BSON --auditPath data/db/auditLog.bson
+</code></pre>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

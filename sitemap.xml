@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ernestovazquez.es/post/auditoria/</loc>
+    <lastmod>2020-02-16T12:04:52+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ernestovazquez.es/post/apparmor/</loc>
     <lastmod>2020-02-13T19:04:52+01:00</lastmod>
   </url>
@@ -104,13 +109,13 @@
   
   <url>
     <loc>https://ernestovazquez.es/</loc>
-    <lastmod>2020-02-13T19:04:52+01:00</lastmod>
+    <lastmod>2020-02-16T12:04:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://ernestovazquez.es/post/</loc>
-    <lastmod>2020-02-13T19:04:52+01:00</lastmod>
+    <lastmod>2020-02-16T12:04:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -17,7 +17,7 @@
       
       <guid>https://ernestovazquez.es/post/auditoria/</guid>
       <description>Realiza y documenta adecuadamente las siguientes operaciones: 1. Activa desde SQL*Plus la auditoría de los intentos de acceso fallidos al sistema. Comprueba su funcionamiento. Para activar la auditoría de los intentos de acceso fallidos primero tenemos que ver los parámetros de auditoría:
-05-02-2020 17:42:51 SYS@XE SQL&amp;gt; SHOW PARAMETER AUDIT NAME	TYPE	VALUE ------------------------------------ ----------- ------------------------------ audit_file_dest string	/u01/app/oracle/admin/XE/adump audit_syslog_level	string audit_sys_operations	boolean	FALSE audit_trail	string	NONE 05-02-2020 17:46:55 SYS@XE SQL&amp;gt;  Vamos a activar audit_tail:</description>
+  05-02-2020 17:42:51 SYS@XE SQL SHOW PARAMETER AUDIT NAME TYPE VALUE ------------------------------------ ----------- ------------------------------ audit_file_dest string /u01/app/oracle/admin/XE/adump audit_syslog_level string audit_sys_operations boolean FALSE audit_trail string NONE 05-02-2020 17:46:55 SYS@XE SQL   Vamos a activar audit_tail:</description>
     </item>
     
     <item>

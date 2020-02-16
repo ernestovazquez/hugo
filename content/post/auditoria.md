@@ -4,25 +4,7 @@ date: 2020-02-16T12:04:52+01:00
 draft: false
 ---
 
-# Práctica: Auditorías en bases de datos
-
-# Índice
-
-[Ejercicio 1](#id1)
-[Ejercicio 2](#id2)
-[Ejercicio 3](#id3)
-[Ejercicio 4](#id4)
-[Ejercicio 5](#id5)
-[Ejercicio 6](#id6)
-[Ejercicio 7](#id7)
-[Ejercicio 8](#id8)
-[Ejercicio 9](#id9)
-[Ejercicio 10](#id10)
-[Ejercicio 11](#id11)
-
 ## Realiza y documenta adecuadamente las siguientes operaciones:
-
-<div id='id1' />
 
 ### 1. Activa desde SQL*Plus la auditoría de los intentos de acceso fallidos al sistema. Comprueba su funcionamiento.
 
@@ -106,8 +88,6 @@ Noaudit succeeded.
 
 ![](https://i.imgur.com/okmzMyI.png)
 
-<div id='id2' />
-
 ### 2. Realiza un procedimiento en PL/SQL que te muestre los accesos fallidos junto con el motivo de los mismos, transformando el código de error almacenado en un mensaje de texto comprensible.
 
 ```
@@ -156,8 +136,6 @@ END;
 
 ![](https://i.imgur.com/98csXBu.png)
 
-<div id='id3' />
-
 ### 3. Activa la auditoría de las operaciones DML realizadas por SCOTT. Comprueba su funcionamiento.
 
 ```
@@ -176,8 +154,6 @@ Consulta las modificaciones y acciones que hemos realizado:
 ```
 
 ![](https://i.imgur.com/RS4BYAg.png)
-
-<div id='id4' />
 
 ### 4. Realiza una auditoría de grano fino para almacenar información sobre la inserción de empleados del departamento 10 en la tabla emp de scott.
 
@@ -208,8 +184,6 @@ Referencia: [Documentación oficial de Oracle](https://docs.oracle.com/database/
 
 > Esta opción la he tenido que hacer en una máquina con Oracle 12, a partir de esta versión se implementó.
 
-<div id='id5' />
-
 ### 5. Explica la diferencia entre auditar una operación by access o by session.
 
 **By access**, nos almacena todas las acciones y nos crea un registro por cada sentencia auditada. Oracle recomienda usar esta opción.
@@ -237,8 +211,6 @@ SQL> select obj_name, action_name, timestamp
 ```
 
 ![](https://i.imgur.com/coFLQ2x.png)
-
-<div id='id6' />
 
 ### 6. Documenta las diferencias entre los valores db y db, extended del parámetro audit_trail de ORACLE. Demuéstralas poniendo un ejemplo de la información sobre una operación concreta recopilada con cada uno de ellos.
 
@@ -269,10 +241,6 @@ Reiniciamos para que se ejecute los cambios:
 ![](https://i.imgur.com/H8Hl03M.png)
 
 Como podemos apreciar ya hemos activado el valor al parámetro **audit_trail.**
-
-
-
-<div id='id7' />
 
 ### 7. Localiza en Enterprise Manager las posibilidades para realizar una auditoría e intenta repetir con dicha herramienta los apartados 1, 3 y 4.
 
@@ -323,15 +291,11 @@ Al igual que antes, aquí podremos encontrar los objetos auditados
 
 ![](https://i.imgur.com/mJeP0Nr.png)
 
-<div id='id8' />
-
 ### 8. Averigua si en Postgres se pueden realizar los apartados 1, 3 y 4. Si es así, documenta el proceso adecuadamente.
 
 Leyendo la **documentación** de **PostgreSQL**, he podido leer que no se pueden realizar igual que en Oracle, la forma de hacerlo es mediante  funciones y procedimientos
 
 **Referencia:** [Auditoria de tablas en PostgreSQL](https://usuarioperu.com/2018/07/23/auditoria-de-tablas-en-postgresql-i/)
-
-<div id='id9' />
 
 ### 9. Averigua si en MySQL se pueden realizar los apartados 1, 3 y 4. Si es así, documenta el proceso adecuadamente.
 
@@ -412,8 +376,6 @@ MariaDB [auditorias]> select * from accesos;
 
 Como podemos apreciar en la imagen, se ha creado correctamente el nuevo registro en la tabla accesos. Esta es la forma de **auditar en MySQL.** Es algo distinto a **Oracle** pero se puede tener algo parecido con este **trigger**.
 
-<div id='id10' />
-
 ### 10. Averigua las posibilidades que ofrece MongoDB para auditar los cambios que va sufriendo un documento.
 
 MongoDB si nos permite realizar ciertas auditorías para ver los permitidos pondremos el siguiente comando:
@@ -431,8 +393,6 @@ Podremos el filtro entre comillas simples para pasar el documento como una caden
     mongod --dbpath data/db --auditDestination file --auditFilter '{ atype: { $in: [ "createCollection", "dropCollection" ] } }' --auditFormat BSON --auditPath data/db/auditLog.bson
 
 Referencia: [Documentación oficial de MongoDB.](https://docs.mongodb.com/manual/tutorial/configure-audit-filters/)
-
-<div id='id11' />
 
 ### 11. Averigua si en MongoDB se pueden auditar los accesos al sistema.
 

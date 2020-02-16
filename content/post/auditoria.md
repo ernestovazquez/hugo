@@ -12,7 +12,8 @@ draft: false
 
 Para activar la **auditoría de los intentos de acceso fallidos** primero tenemos que ver los parámetros de auditoría:
 
-```
+<pre>
+  <code>
 05-02-2020 17:42:51 SYS@XE SQL> SHOW PARAMETER AUDIT
 
 NAME				     TYPE	 VALUE
@@ -22,7 +23,9 @@ audit_syslog_level		     string
 audit_sys_operations		     boolean	 FALSE
 audit_trail			     string	 NONE
 05-02-2020 17:46:55 SYS@XE SQL> 
-```
+  </code>
+</pre>
+
 ![](https://i.imgur.com/glAcmhq.png)
 
 Vamos a activar **audit_tail:**

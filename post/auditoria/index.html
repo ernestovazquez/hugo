@@ -64,25 +64,7 @@
     <section class="post-content">
       
 
-<h1 id="práctica-auditorías-en-bases-de-datos">Práctica: Auditorías en bases de datos</h1>
-
-<h1 id="índice">Índice</h1>
-
-<p><a href="#id1">Ejercicio 1</a>
-<a href="#id2">Ejercicio 2</a>
-<a href="#id3">Ejercicio 3</a>
-<a href="#id4">Ejercicio 4</a>
-<a href="#id5">Ejercicio 5</a>
-<a href="#id6">Ejercicio 6</a>
-<a href="#id7">Ejercicio 7</a>
-<a href="#id8">Ejercicio 8</a>
-<a href="#id9">Ejercicio 9</a>
-<a href="#id10">Ejercicio 10</a>
-<a href="#id11">Ejercicio 11</a></p>
-
 <h2 id="realiza-y-documenta-adecuadamente-las-siguientes-operaciones">Realiza y documenta adecuadamente las siguientes operaciones:</h2>
-
-<p><div id='id1' /></p>
 
 <h3 id="1-activa-desde-sql-plus-la-auditoría-de-los-intentos-de-acceso-fallidos-al-sistema-comprueba-su-funcionamiento">1. Activa desde SQL*Plus la auditoría de los intentos de acceso fallidos al sistema. Comprueba su funcionamiento.</h3>
 
@@ -159,8 +141,6 @@ Noaudit succeeded.
 
 <p><img src="https://i.imgur.com/okmzMyI.png" alt="" /></p>
 
-<p><div id='id2' /></p>
-
 <h3 id="2-realiza-un-procedimiento-en-pl-sql-que-te-muestre-los-accesos-fallidos-junto-con-el-motivo-de-los-mismos-transformando-el-código-de-error-almacenado-en-un-mensaje-de-texto-comprensible">2. Realiza un procedimiento en PL/SQL que te muestre los accesos fallidos junto con el motivo de los mismos, transformando el código de error almacenado en un mensaje de texto comprensible.</h3>
 
 <pre><code>CREATE OR REPLACE FUNCTION Mostrarfallos(p_fallo NUMBER)
@@ -209,8 +189,6 @@ END;
 
 <p><img src="https://i.imgur.com/98csXBu.png" alt="" /></p>
 
-<p><div id='id3' /></p>
-
 <h3 id="3-activa-la-auditoría-de-las-operaciones-dml-realizadas-por-scott-comprueba-su-funcionamiento">3. Activa la auditoría de las operaciones DML realizadas por SCOTT. Comprueba su funcionamiento.</h3>
 
 <pre><code>05-02-2020 18:18:46 SYS@XE SQL&gt; AUDIT INSERT TABLE, UPDATE TABLE, DELETE TABLE BY SCOTT BY ACCESS;
@@ -228,8 +206,6 @@ Audit succeeded.
 </code></pre>
 
 <p><img src="https://i.imgur.com/RS4BYAg.png" alt="" /></p>
-
-<p><div id='id4' /></p>
 
 <h3 id="4-realiza-una-auditoría-de-grano-fino-para-almacenar-información-sobre-la-inserción-de-empleados-del-departamento-10-en-la-tabla-emp-de-scott">4. Realiza una auditoría de grano fino para almacenar información sobre la inserción de empleados del departamento 10 en la tabla emp de scott.</h3>
 
@@ -261,8 +237,6 @@ FROM dba_audit_policies;
 <p>Esta opción la he tenido que hacer en una máquina con Oracle 12, a partir de esta versión se implementó.</p>
 </blockquote>
 
-<p><div id='id5' /></p>
-
 <h3 id="5-explica-la-diferencia-entre-auditar-una-operación-by-access-o-by-session">5. Explica la diferencia entre auditar una operación by access o by session.</h3>
 
 <p><strong>By access</strong>, nos almacena todas las acciones y nos crea un registro por cada sentencia auditada. Oracle recomienda usar esta opción.</p>
@@ -288,8 +262,6 @@ FROM dba_audit_policies;
 </code></pre>
 
 <p><img src="https://i.imgur.com/coFLQ2x.png" alt="" /></p>
-
-<p><div id='id6' /></p>
 
 <h3 id="6-documenta-las-diferencias-entre-los-valores-db-y-db-extended-del-parámetro-audit-trail-de-oracle-demuéstralas-poniendo-un-ejemplo-de-la-información-sobre-una-operación-concreta-recopilada-con-cada-uno-de-ellos">6. Documenta las diferencias entre los valores db y db, extended del parámetro audit_trail de ORACLE. Demuéstralas poniendo un ejemplo de la información sobre una operación concreta recopilada con cada uno de ellos.</h3>
 
@@ -324,8 +296,6 @@ FROM dba_audit_policies;
 <p><img src="https://i.imgur.com/H8Hl03M.png" alt="" /></p>
 
 <p>Como podemos apreciar ya hemos activado el valor al parámetro <strong>audit_trail.</strong></p>
-
-<p><div id='id7' /></p>
 
 <h3 id="7-localiza-en-enterprise-manager-las-posibilidades-para-realizar-una-auditoría-e-intenta-repetir-con-dicha-herramienta-los-apartados-1-3-y-4">7. Localiza en Enterprise Manager las posibilidades para realizar una auditoría e intenta repetir con dicha herramienta los apartados 1, 3 y 4.</h3>
 
@@ -381,15 +351,11 @@ FROM dba_audit_policies;
 
 <p><img src="https://i.imgur.com/mJeP0Nr.png" alt="" /></p>
 
-<p><div id='id8' /></p>
-
 <h3 id="8-averigua-si-en-postgres-se-pueden-realizar-los-apartados-1-3-y-4-si-es-así-documenta-el-proceso-adecuadamente">8. Averigua si en Postgres se pueden realizar los apartados 1, 3 y 4. Si es así, documenta el proceso adecuadamente.</h3>
 
 <p>Leyendo la <strong>documentación</strong> de <strong>PostgreSQL</strong>, he podido leer que no se pueden realizar igual que en Oracle, la forma de hacerlo es mediante  funciones y procedimientos</p>
 
 <p><strong>Referencia:</strong> <a href="https://usuarioperu.com/2018/07/23/auditoria-de-tablas-en-postgresql-i/">Auditoria de tablas en PostgreSQL</a></p>
-
-<p><div id='id9' /></p>
 
 <h3 id="9-averigua-si-en-mysql-se-pueden-realizar-los-apartados-1-3-y-4-si-es-así-documenta-el-proceso-adecuadamente">9. Averigua si en MySQL se pueden realizar los apartados 1, 3 y 4. Si es así, documenta el proceso adecuadamente.</h3>
 
@@ -464,8 +430,6 @@ MariaDB [auditorias]&gt; select * from accesos;
 
 <p>Como podemos apreciar en la imagen, se ha creado correctamente el nuevo registro en la tabla accesos. Esta es la forma de <strong>auditar en MySQL.</strong> Es algo distinto a <strong>Oracle</strong> pero se puede tener algo parecido con este <strong>trigger</strong>.</p>
 
-<p><div id='id10' /></p>
-
 <h3 id="10-averigua-las-posibilidades-que-ofrece-mongodb-para-auditar-los-cambios-que-va-sufriendo-un-documento">10. Averigua las posibilidades que ofrece MongoDB para auditar los cambios que va sufriendo un documento.</h3>
 
 <p>MongoDB si nos permite realizar ciertas auditorías para ver los permitidos pondremos el siguiente comando:</p>
@@ -486,8 +450,6 @@ MariaDB [auditorias]&gt; select * from accesos;
 </code></pre>
 
 <p>Referencia: <a href="https://docs.mongodb.com/manual/tutorial/configure-audit-filters/">Documentación oficial de MongoDB.</a></p>
-
-<p><div id='id11' /></p>
 
 <h3 id="11-averigua-si-en-mongodb-se-pueden-auditar-los-accesos-al-sistema">11. Averigua si en MongoDB se pueden auditar los accesos al sistema.</h3>
 

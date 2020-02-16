@@ -405,3 +405,5 @@ Si, leyendo la documentacion de MongoDB, he llegado a la conclusión que es algo
 Al igual que antes podemos usarlo como una cadena, si lo ponemos entre comillas simples.
 
     mongod --dbpath data/db --auth --auditDestination file --auditFilter '{ atype: "authenticate", "param.db": "test" }' --auditFormat BSON --auditPath data/db/auditLog.bson
+
+Referencia: [Operaciones de autenticación](https://docs.mongodb.com/manual/tutorial/configure-audit-filters/#filter-on-authentication-operations-on-a-single-database)

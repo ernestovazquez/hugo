@@ -21,13 +21,14 @@
     </item>
     
     <item>
-      <title>Configuración/activación de Apparmor</title>
-      <link>https://ernestovazquez.es/post/apparmor/</link>
+      <title>Configuración/activación de SELinux</title>
+      <link>https://ernestovazquez.es/post/selinux/</link>
       <pubDate>Thu, 13 Feb 2020 19:04:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/apparmor/</guid>
-      <description>Habilita apparmor en croqueta o tortilla, habilitando o creando los perfiles necesarios de manera estricta y segura.
-prueba</description>
+      <guid>https://ernestovazquez.es/post/selinux/</guid>
+      <description>Habilita SELinux en salmorejo y asegúrate de que todas las aplicaciones web funcionan correctamente con una configuración estricta y segura de SELinux
+Intoducción SELinux es una característica de seguridad de Linux que provee una variedad de políticas de seguridad que otorga a los administradores mayor control sobre las personas que pueden acceder al sistema y con el objetivo de proteger sus recursos.
+SELinux ha sido integrado a la rama principal del núcleo Linux desde la versión 2.</description>
     </item>
     
     <item>
@@ -71,18 +72,6 @@ Forma de corregir:
       <guid>https://ernestovazquez.es/post/java/</guid>
       <description>En esta práctica vamos a desplegar un CMS escrito en java. Puedes escoger la aplicación que vas a desplegar de CMS escritos en Java o de Aplicaciones Java en Bitnami.
  Indica la aplicación escogida y su funcionalidad. Escribe una guía de los pasas fundamentales para realizar la instalación. ¿Has necesitado instalar alguna librería?¿Has necesitado instalar un conector de una base de datos? Entrega una captura de pantalla donde se vea la aplicación funcionando.</description>
-    </item>
-    
-    <item>
-      <title>Configuración/activación de SELinux/Apparmor</title>
-      <link>https://ernestovazquez.es/post/selinuxapparmor/</link>
-      <pubDate>Tue, 28 Jan 2020 15:04:52 +0100</pubDate>
-      
-      <guid>https://ernestovazquez.es/post/selinuxapparmor/</guid>
-      <description>Elige una de las siguientes opciones:
- Habilita SELinux en salmorejo y asegúrate de que todas las aplicaciones web funcionan correctamente con una configuración estricta y segura de SELinux
- Habilita apparmor en croqueta o tortilla, habilitando o creando los perfiles necesarios de manera estricta y segura.
-  </description>
     </item>
     
     <item>

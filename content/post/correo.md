@@ -176,7 +176,7 @@ Una vez configurado, ya podremos enviar el correo para que lo pueda recibir el c
 
 ![](https://i.imgur.com/dcsoX5u.png)
 
-## Tarea 5 (2 puntos)(Obligatorio): Documenta en redmine una prueba de funcionamiento, donde recibas un correo desde el exterior (gmail, hotmail,…) y lo leas en tu cliente de correo. Utiliza el protocolo IMAP. ¿Cómo se llama el servidor para enviar el correo? (Muestra la configuración). Muestra una prueba de funcionamiento de cómo funciona el protocolo IMAP.
+## Tarea 5: Documenta en redmine una prueba de funcionamiento, donde recibas un correo desde el exterior (gmail, hotmail,…) y lo leas en tu cliente de correo. Utiliza el protocolo IMAP. ¿Cómo se llama el servidor para enviar el correo? (Muestra la configuración). Muestra una prueba de funcionamiento de cómo funciona el protocolo IMAP.
 
 Vamos a configurar en **Evolution** el tipo de servidor **IMAP**
 

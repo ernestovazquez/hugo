@@ -269,7 +269,7 @@ Al igual que antes tenemos que tener activado `httpd_can_network_connect`, como 
 
 Lo que hemos realizado es permitir al usuario, leer y escribir sobre los directorios.
 
-Lo he realizado con **chcon**, Es un cambio temporal, este comando cambia el contexto SELinux de los archivos.
+Lo he realizado con **chcon**, este es un cambio temporal, este comando cambia el contexto SELinux de los archivos.
 
 Para el **uso con semanage** solamente tendremos que poner el siguiente comando:
 

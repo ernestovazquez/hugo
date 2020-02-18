@@ -317,4 +317,13 @@ Directorios de Nextcloud:
 
 ## Conclusión
 
+**SELinux** es un gran sistema de control obligatorio de acceso con una gestión de permisos completamente distinta a la de los sistemas Unix tradicionales que estamos acostumbrados.
 
+Tambíen he relizado parte de la práctica con **AppArmor** y tengo que destacar que me ha parecido más útil el uso de **SELinux**, aunque las dos son herramientas de seguridad con similitudes. Una **diferencia práctica notable** entre los dos sistemas está en cómo se aplican las reglas.
+
+- **AppArmor** tienes que **crear perfiles** mientras escuchas el proceso. Funcionan directamente con rutas. 
+- **SELinux** aplica etiquetas de seguridad a cada objeto y las reglas de control de acceso se escriben para esas etiquetas.
+
+Estos métodos son pesados de implantar y de mantener. Ya que tienes que ir uno a uno para un correcto y completo método de seguridad. 
+
+Seria interesante entretenerse un poco con ellos y aprender mucho más sobre esta potente herramienta de seguridad.

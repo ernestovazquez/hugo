@@ -1,7 +1,7 @@
 
 ---
 title: "Proxy, proxy inverso y balanceadores de carga"
-date: 2020-01-28T15:04:52+01:00
+date: 2020-02-18T09:04:52+01:00
 draft: false
 ---
 

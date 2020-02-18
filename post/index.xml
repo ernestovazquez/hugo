@@ -75,6 +75,17 @@ Forma de corregir:
     </item>
     
     <item>
+      <title>Proxy, proxy inverso y balanceadores de carga</title>
+      <link>https://ernestovazquez.es/post/proxy/</link>
+      <pubDate>Tue, 28 Jan 2020 15:04:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/proxy/</guid>
+      <description> Proxy En esta práctica vamos a instalar un proxy squid para configurar nuestro cliente para que acceda a internet por medio de este proxy.
+Vamos a usar el fichero Vagrantfile para crear el escenario: un ordenador llamado proxy donde instalaremos squid y un cliente interno (cliente_int).
+Tarea 1: Instala squid en la máquina squid y configúralo para que permita conexiones desde la red donde este tu ordenador. </description>
+    </item>
+    
+    <item>
       <title>Métricas, logs y monitorización</title>
       <link>https://ernestovazquez.es/post/metricas/</link>
       <pubDate>Tue, 28 Jan 2020 08:04:52 +0100</pubDate>

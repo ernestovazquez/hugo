@@ -74,6 +74,299 @@
 
 <p><strong>SELinux</strong> ha sido integrado a la rama principal del núcleo Linux desde la versión 2.6, agosto de 2003. Mientras que en CentOS y RHEL está habilitado por defecto.</p>
 
+<p>Lo primero que vamos a ver es si tenemos habilitado SELinux.</p>
+
+<pre><code>[centos@salmorejo ~]$ /usr/sbin/getenforce
+Enforcing
+</code></pre>
+
+<p>Este comando va a chequear el estado y nos va a devolver la salida de <strong>Enforcing</strong>, <strong>Disabled</strong> o <strong>Permissive</strong>. En nuestro caso está en <strong>&ldquo;Enforcing&rdquo;</strong>.</p>
+
+<ul>
+<li><strong>Enforcing:</strong> Cuando SELinux está habilitado y las reglas de la política de SELinux son aplicadas.</li>
+<li><strong>Disabled:</strong> En el caso de que SELinux está desactivado.</li>
+<li><strong>Permissive:</strong> SELinux aplica las políticas pero no toma acciones, únicamente registra y alerta al administrador de que se ha violado alguna regla.</li>
+</ul>
+
+<p>El comando <strong>sestatus</strong> devuelve el <strong>estado</strong> de SELinux y la <strong>política</strong> de SELinux que se está usando:</p>
+
+<pre><code>[centos@salmorejo ~]$ getenforce
+Enforcing
+
+[centos@salmorejo ~]$ sestatus
+SELinux status:                 enabled
+SELinuxfs mount:                /sys/fs/selinux
+SELinux root directory:         /etc/selinux
+Loaded policy name:             targeted
+Current mode:                   enforcing
+Mode from config file:          enforcing
+Policy MLS status:              enabled
+Policy deny_unknown status:     allowed
+Memory protection checking:     actual (secure)
+Max kernel policy version:      31
+
+</code></pre>
+
+<p>Para ver la lista de usuario pondremos lo siguiente:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo semanage user -l
+
+                Etiquetado MLS/       MLS/                          
+Usuario SELinux  Prefijo    Nivel MCS  Rango MCS                      Roles SELinux
+
+guest_u         user       s0         s0                             guest_r
+root            user       s0         s0-s0:c0.c1023                 staff_r sysadm_r system_r unconfined_r
+staff_u         user       s0         s0-s0:c0.c1023                 staff_r sysadm_r system_r unconfined_r
+sysadm_u        user       s0         s0-s0:c0.c1023                 sysadm_r
+system_u        user       s0         s0-s0:c0.c1023                 system_r unconfined_r
+unconfined_u    user       s0         s0-s0:c0.c1023                 system_r unconfined_r
+user_u          user       s0         s0                             user_r
+xguest_u        user       s0         s0                             xguest_r
+</code></pre>
+
+<p>Un <strong>usuario SELinux</strong> está asociado a un conjunto de usuarios UNIX, en está lista podremos encontrar dichos usuarios.</p>
+
+<h2 id="habilitar-selinux">Habilitar SELinux</h2>
+
+<p>Vamos a ver como activar o desactivar SELinux.</p>
+
+<p>Para ello nos dirigimos al siguiente fichero de configuración:</p>
+
+<pre><code>[centos@salmorejo ~]$ nano /etc/selinux/config 
+
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=enforcing
+# SELINUXTYPE= can take one of three two values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected. 
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+</code></pre>
+
+<p>En el caso de querer <strong>desactivar SELinux</strong>, solamente tendremos que ponerlo en <strong>disabled</strong>.</p>
+
+<pre><code>...
+SELINUX=disabled
+...
+</code></pre>
+
+<p><div id='id1' /></p>
+
+<h2 id="selinux-booleans">SELinux Booleans</h2>
+
+<p>Nos permiten cambiar partes de la política de SELinux en tiempo de ejecución, sin ningún conocimiento sobre la escritura de políticas de SELinux.</p>
+
+<p>Esto permite cambios, como permitir el acceso, sin recargar o recompilar la política de SELinux.</p>
+
+<p>Podemos ver la lista con el siguiente comando:</p>
+
+<pre><code>[centos@salmorejo ~]$ getsebool -a | grep httpd
+httpd_anon_write --&gt; off
+httpd_builtin_scripting --&gt; on
+httpd_can_check_spam --&gt; off
+httpd_can_connect_ftp --&gt; off
+httpd_can_connect_ldap --&gt; off
+httpd_can_connect_mythtv --&gt; off
+httpd_can_connect_zabbix --&gt; off
+httpd_can_network_connect --&gt; on
+httpd_can_network_connect_cobbler --&gt; off
+httpd_can_network_connect_db --&gt; on
+httpd_can_network_memcache --&gt; off
+httpd_can_network_relay --&gt; off
+httpd_can_sendmail --&gt; off
+httpd_dbus_avahi --&gt; off
+httpd_dbus_sssd --&gt; off
+httpd_dontaudit_search_dirs --&gt; off
+httpd_enable_cgi --&gt; on
+httpd_enable_ftp_server --&gt; off
+httpd_enable_homedirs --&gt; off
+httpd_execmem --&gt; on
+httpd_graceful_shutdown --&gt; off
+httpd_manage_ipa --&gt; off
+httpd_mod_auth_ntlm_winbind --&gt; off
+httpd_mod_auth_pam --&gt; off
+httpd_read_user_content --&gt; off
+httpd_run_ipa --&gt; off
+httpd_run_preupgrade --&gt; off
+httpd_run_stickshift --&gt; off
+httpd_serve_cobbler_files --&gt; off
+httpd_setrlimit --&gt; off
+httpd_ssi_exec --&gt; off
+httpd_sys_script_anon_write --&gt; off
+httpd_tmp_exec --&gt; off
+httpd_tty_comm --&gt; off
+httpd_unified --&gt; off
+httpd_use_cifs --&gt; off
+httpd_use_fusefs --&gt; off
+httpd_use_gpg --&gt; off
+httpd_use_nfs --&gt; off
+httpd_use_openstack --&gt; off
+httpd_use_sasl --&gt; off
+httpd_verify_dns --&gt; off
+</code></pre>
+
+<p>Si queremos ver solamente los que están activos pondremos lo siguiente:</p>
+
+<pre><code>[centos@salmorejo ~]$ getsebool -a | egrep ' on' | egrep 'httpd'
+httpd_builtin_scripting --&gt; on
+httpd_can_network_connect --&gt; on
+httpd_can_network_connect_db --&gt; on
+httpd_enable_cgi --&gt; on
+httpd_execmem --&gt; on
+</code></pre>
+
+<p>Para habilitar la conexión solamente tendremos que poner la siguiente regla.</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo setsebool -P httpd_can_network_connect on
+</code></pre>
+
+<p>Para desactivarlo tendremos que ponerlo en <strong><em>off</em></strong>. También podremos hacerlo ejecutando <strong>(0/1).</strong></p>
+
+<p>Si queremos ver el estado de uno en concreto solamente tendremos que ponerlo con <strong>getsebool</strong>.</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo getsebool httpd_can_network_connect
+httpd_can_network_connect --&gt; on
+</code></pre>
+
+<p>Referencia: <a href="https://wiki.centos.org/TipsAndTricks/SelinuxBooleans">Documentación de CentOS sobre SelinuxBooleans</a></p>
+
+<h2 id="contextos-de-selinux-etiquetado-de-archivos">Contextos de SELinux - Etiquetado de Archivos</h2>
+
+<p>En este apartado vamos a ver <strong>como gestiona SELinux los contextos</strong>, ya que los <strong>procesos y archivos</strong> son etiquetados con información de seguridad relevante.</p>
+
+<p>Nos seria útil para cambiar la localización de los servicios que viene por defecto en el sistema.</p>
+
+<p>Para listar todos los contextos podemos utilizar el siguiente comando:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo semanage fcontext -l
+</code></pre>
+
+<p>Vamos a ver el mismo <strong>ejemplo</strong> de antes pero con sus <strong>respectivos contextos</strong>, lo podriamos hacer filtrando el comando con <strong>grep</strong> y ponemos la <strong>regla deseada</strong>.</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo semanage fcontext -l | grep httpd_sys_content_t
+
+/etc/htdig(/.*)?                                   all files          system_u:object_r:httpd_sys_content_t:s0 
+/srv/([^/]*/)?www(/.*)?                            all files          system_u:object_r:httpd_sys_content_t:s0 
+/srv/gallery2(/.*)?                                all files          system_u:object_r:httpd_sys_content_t:s0 
+/usr/share/doc/ghc/html(/.*)?                      all files          system_u:object_r:httpd_sys_content_t:s0 
+/usr/share/drupal.*                                all files          system_u:object_r:httpd_sys_content_t:s0 
+/usr/share/glpi(/.*)?                              all files          system_u:object_r:httpd_sys_content_t:s0 
+/usr/share/htdig(/.*)?                             all files          system_u:object_r:httpd_sys_content_t:s0 
+/usr/share/icecast(/.*)?                           all files          system_u:object_r:httpd_sys_content_t:s0 
+/usr/share/nginx/html(/.*)?                        all files          system_u:object_r:httpd_sys_content_t:s0 
+/usr/share/ntop/html(/.*)?                         all files          system_u:object_r:httpd_sys_content_t:s0 
+/usr/share/openca/htdocs(/.*)?                     all files          system_u:object_r:httpd_sys_content_t:s0 
+/usr/share/phpmyadmin(/.*)?                        all files          system_u:object_r:httpd_sys_content_t:s0 
+/usr/share/selinux-policy[^/]*/html(/.*)?          all files          system_u:object_r:httpd_sys_content_t:s0 
+/usr/share/z-push(/.*)?                            all files          system_u:object_r:httpd_sys_content_t:s0 
+/var/lib/cacti/rra(/.*)?                           all files          system_u:object_r:httpd_sys_content_t:s0 
+/var/lib/htdig(/.*)?                               all files          system_u:object_r:httpd_sys_content_t:s0 
+/var/lib/trac(/.*)?                                all files          system_u:object_r:httpd_sys_content_t:s0 
+/var/www(/.*)?                                     all files          system_u:object_r:httpd_sys_content_t:s0 
+/var/www/icons(/.*)?                               all files          system_u:object_r:httpd_sys_content_t:s0 
+/var/www/svn/conf(/.*)?                            all files          system_u:object_r:httpd_sys_content_t:s0 
+</code></pre>
+
+<p>En <strong>la salida del comando</strong> podemos apreciar el <strong>directorio</strong> que va a poder escribir la aplicación, los <strong>ficheros</strong> y por último la <strong>gestión de usuarios</strong>, donde tendremos, en primer lugar el <strong>usuario</strong>, a continuación el <strong>objeto</strong> y por último el <strong>tipo de acceso</strong>.</p>
+
+<p>Ahora que hemos <strong>listado los diferentes contextos</strong> de una regla, vamos a ver como se puede <strong>añadir más reglas</strong>.</p>
+
+<p>Para ello pondremos el siguiente comando:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo semanage fcontext -a -t  httpd_sys_content_t &quot;/var/www(/.*)?&quot;
+</code></pre>
+
+<p>Como podemos apreciar, tendriamos poner el nombre de la regla, en este caso <code>httpd_sys_content_t</code>, seguido del directorio que queremos que escriba la aplicacion web. Con ese simple comando podemos agregar un nuevo contexto.</p>
+
+<h2 id="configuración-para-las-aplicaciones-webs">Configuración para las aplicaciones webs</h2>
+
+<h3 id="phpmyadmin">phpMyAdmin</h3>
+
+<p>La <strong>primera regla de SELinux</strong> que vamos a configurar va a ser la de <strong>phpMyAdmin</strong>, para su correcto funcionamiento con http.</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo semanage fcontext -a -t httpd_sys_content_t &quot;/usr/share/phpMyAdmin(/.*)?&quot; 
+[centos@salmorejo ~]$ sudo restorecon -Rv /usr/share/phpMyAdmin
+</code></pre>
+
+<p>Tengo que añadir que tenemos que tener activado httpd, como hemos hecho anteriormente en <a href="#id1">SELinux Booleans</a>)</p>
+
+<h2 id="proftpd">Proftpd</h2>
+
+<p>Para el correcto funcionamiento vamos a activar las reglas para <strong>Proftpd</strong>.</p>
+
+<p>Para ellos vamos a documentarnos sobre las políticas de SELinux para demonios ftp. Para permitir el acceso de usuarios ftp a los directorios.</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo setsebool -P allow_ftpd_anon_write=1
+[centos@salmorejo ~]$ sudo setsebool -P allow_ftpd_full_access=1
+[centos@salmorejo ~]$ sudo setsebool -P allow_ftpd_use_cifs=1
+[centos@salmorejo ~]$ sudo setsebool -P allow_ftpd_use_nfs=1
+[centos@salmorejo ~]$ sudo setsebool -P ftpd_connect_all_unreserved=1
+[centos@salmorejo ~]$ sudo setsebool -P ftpd_connect_db=1
+[centos@salmorejo ~]$ sudo systemctl restart proftpd
+</code></pre>
+
+<p>Referencia: <a href="http://www.polarhome.com/service/man/?qf=ftpd_selinux&amp;tf=2&amp;of=CentOS&amp;sf=8">Documentación de CentOS sobre ftpd_selinux</a></p>
+
+<h2 id="mezzanine">Mezzanine</h2>
+
+<p>A continuación vamos a ver las reglas que he configurado para el uso de mezzanine.</p>
+
+<pre><code>[centos@salmorejo iaw_mezzanine1]$ sudo setsebool -P httpd_can_network_connect on
+[centos@salmorejo iaw_mezzanine1]$ sudo chcon -t httpd_sys_rw_content_t /var/www/iaw_mezzanine1 -R
+</code></pre>
+
+<p>Al igual que antes tenemos que tener activado <code>httpd_can_network_connect</code>, como hemos relizado anteriormente.</p>
+
+<p>Lo que hemos realizado es permitir al usuario, leer y escribir sobre los directorios.</p>
+
+<p>Lo he realizado con <strong>chcon</strong>, Es un cambio temporal, este comando cambia el contexto SELinux de los archivos.</p>
+
+<p>Para el <strong>uso con semanage</strong> solamente tendremos que poner el siguiente comando:</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo semanage fcontext -a -t httpd_sys_rw_content_t &quot;/var/www/iaw_mezzanine1(/.*)?&quot;
+</code></pre>
+
+<h3 id="wordpress">Wordpress</h3>
+
+<p>Para wordpress vamos a permitir el acceso de aplicaciones web a objetos y a la base de datos.</p>
+
+<pre><code>[root@salmorejo ~]# setsebool -P httpd_can_network_connect 1
+[root@salmorejo ~]$ setsebool -P httpd_can_network_connect_db=1
+[root@salmorejo ~]$ getsebool -a | grep httpd
+    httpd_can_network_connect_db --&gt; on
+</code></pre>
+
+<h2 id="nextcloud">Nextcloud</h2>
+
+<p>Para nextcloud vamos a activar <code>httpd_execmem</code>.</p>
+
+<pre><code>[root@salmorejo ~]# setsebool -P httpd_execmem 1
+</code></pre>
+
+<p>Este permite que httpd ejecute programas que requieren direcciones de memoria que sean tanto ejecutables como grabables.</p>
+
+<pre><code>[centos@salmorejo ~]$ sudo setsebool -P httpd_can_network_connect 1
+</code></pre>
+
+<p>Directorios de Nextcloud:</p>
+
+<pre><code>[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/data(/.*)?'
+[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/config(/.*)?'
+[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/apps(/.*)?'
+[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/assets(/.*)?'
+[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/.htaccess'
+[root@salmorejo nextcloud]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/nextcloud/.user.ini'
+[root@salmorejo nextcloud]# restorecon -Rv '/var/www/nextcloud/'
+[root@salmorejo ~]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/lib/php/'
+[root@salmorejo ~]# restorecon -Rv '/var/lib/php/'
+</code></pre>
+
+<h2 id="conclusión">Conclusión</h2>
+
     </section>
     <footer class="post-footer">
       

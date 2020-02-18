@@ -338,6 +338,8 @@ httpd_can_network_connect --&gt; on
 [root@salmorejo ~]$ setsebool -P httpd_can_network_connect_db=1
 [root@salmorejo ~]$ getsebool -a | grep httpd
     httpd_can_network_connect_db --&gt; on
+
+[centos@salmorejo ~]$ sudo semanage fcontext -a -t httpd_sys_content_t &quot;/var/www/wordpress(/.*)?&quot;
 </code></pre>
 
 <h2 id="nextcloud">Nextcloud</h2>

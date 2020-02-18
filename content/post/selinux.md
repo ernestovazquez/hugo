@@ -237,7 +237,7 @@ La **primera regla de SELinux** que vamos a configurar va a ser la de **phpMyAdm
 [centos@salmorejo ~]$ sudo restorecon -Rv /usr/share/phpMyAdmin
 ```
 
-Tengo que añadir que tenemos que tener activado httpd, como hemos hecho anteriormente en [SELinux Booleans](#id1)) 
+Tengo que añadir que tenemos que tener activado httpd, como hemos hecho anteriormente en [SELinux Booleans](#id1).
 
 ## Proftpd
 

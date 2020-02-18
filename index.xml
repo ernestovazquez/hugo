@@ -5,10 +5,21 @@
     <link>https://ernestovazquez.es/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 16 Feb 2020 12:04:52 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 18 Feb 2020 09:04:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Proxy, proxy inverso y balanceadores de carga</title>
+      <link>https://ernestovazquez.es/post/proxy/</link>
+      <pubDate>Tue, 18 Feb 2020 09:04:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/proxy/</guid>
+      <description> Proxy En esta práctica vamos a instalar un proxy squid para configurar nuestro cliente para que acceda a internet por medio de este proxy.
+Vamos a usar el fichero Vagrantfile para crear el escenario: un ordenador llamado proxy donde instalaremos squid y un cliente interno (cliente_int).
+Tarea 1: Instala squid en la máquina squid y configúralo para que permita conexiones desde la red donde este tu ordenador. </description>
+    </item>
     
     <item>
       <title>Auditorías en bases de datos</title>
@@ -72,17 +83,6 @@ Forma de corregir:
       <guid>https://ernestovazquez.es/post/java/</guid>
       <description>En esta práctica vamos a desplegar un CMS escrito en java. Puedes escoger la aplicación que vas a desplegar de CMS escritos en Java o de Aplicaciones Java en Bitnami.
  Indica la aplicación escogida y su funcionalidad. Escribe una guía de los pasas fundamentales para realizar la instalación. ¿Has necesitado instalar alguna librería?¿Has necesitado instalar un conector de una base de datos? Entrega una captura de pantalla donde se vea la aplicación funcionando.</description>
-    </item>
-    
-    <item>
-      <title>Proxy, proxy inverso y balanceadores de carga</title>
-      <link>https://ernestovazquez.es/post/proxy/</link>
-      <pubDate>Tue, 28 Jan 2020 15:04:52 +0100</pubDate>
-      
-      <guid>https://ernestovazquez.es/post/proxy/</guid>
-      <description> Proxy En esta práctica vamos a instalar un proxy squid para configurar nuestro cliente para que acceda a internet por medio de este proxy.
-Vamos a usar el fichero Vagrantfile para crear el escenario: un ordenador llamado proxy donde instalaremos squid y un cliente interno (cliente_int).
-Tarea 1: Instala squid en la máquina squid y configúralo para que permita conexiones desde la red donde este tu ordenador. </description>
     </item>
     
     <item>

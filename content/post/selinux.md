@@ -285,6 +285,8 @@ Para wordpress vamos a permitir el acceso de aplicaciones web a objetos y a la b
 [root@salmorejo ~]$ setsebool -P httpd_can_network_connect_db=1
 [root@salmorejo ~]$ getsebool -a | grep httpd
     httpd_can_network_connect_db --> on
+
+[centos@salmorejo ~]$ sudo semanage fcontext -a -t httpd_sys_content_t "/var/www/wordpress(/.*)?"
 ```
 
 ## Nextcloud

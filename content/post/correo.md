@@ -210,3 +210,33 @@ Feb 12 10:08:39 croqueta postfix/anvil[14468]: statistics: max cache size 1 at F
 Feb 12 10:09:39 croqueta dovecot: imap-login: Login: user=<debian>, method=PLAIN, rip=172.22.0.50, lip=10.0.0.10, mpid=14489, session=<27kQVV2elsisFgAy>
 Feb 12 10:09:43 croqueta dovecot: imap-login: Login: user=<debian>, method=PLAIN, rip=172.22.0.50, lip=10.0.0.10, mpid=14491, session=<Vz9GVV2emMisFgAy>
 ```
+
+## Tarea 6: Configura el cron para enviar correo al usuario root. Comprueba que están llegando esos correos al root. Crea un nuevo alias para que se manden a un usuario sin privilegios. Comprueban que llegan a ese usuario. Por último crea una redirección para enviar esos correo a tu correo de gmail.
+
+Vamos a usar nano con el siguiente comando:
+
+```
+debian@croqueta:~$ crontab -e
+no crontab for debian - using an empty one
+
+Select an editor.  To change later, run 'select-editor'.
+  1. /usr/bin/joe
+  2. /usr/bin/jstar
+  3. /usr/bin/jpico
+  4. /usr/bin/jmacs
+  5. /bin/nano        <---- easiest
+  6. /usr/bin/vim.basic
+  7. /usr/bin/rjoe
+  8. /usr/bin/vim.tiny
+```
+
+```
+debian@croqueta:~$ crontab -e
+    MAILTO = root
+no crontab for debian - using an empty one
+crontab: installing new crontab
+```
+
+Como podemos apreciar ya se está instalando la nueva tarea de cron.
+
+

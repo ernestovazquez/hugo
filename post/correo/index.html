@@ -262,6 +262,32 @@ Feb 12 10:09:39 croqueta dovecot: imap-login: Login: user=&lt;debian&gt;, method
 Feb 12 10:09:43 croqueta dovecot: imap-login: Login: user=&lt;debian&gt;, method=PLAIN, rip=172.22.0.50, lip=10.0.0.10, mpid=14491, session=&lt;Vz9GVV2emMisFgAy&gt;
 </code></pre>
 
+<h2 id="tarea-6-configura-el-cron-para-enviar-correo-al-usuario-root-comprueba-que-están-llegando-esos-correos-al-root-crea-un-nuevo-alias-para-que-se-manden-a-un-usuario-sin-privilegios-comprueban-que-llegan-a-ese-usuario-por-último-crea-una-redirección-para-enviar-esos-correo-a-tu-correo-de-gmail">Tarea 6: Configura el cron para enviar correo al usuario root. Comprueba que están llegando esos correos al root. Crea un nuevo alias para que se manden a un usuario sin privilegios. Comprueban que llegan a ese usuario. Por último crea una redirección para enviar esos correo a tu correo de gmail.</h2>
+
+<p>Vamos a usar nano con el siguiente comando:</p>
+
+<pre><code>debian@croqueta:~$ crontab -e
+no crontab for debian - using an empty one
+
+Select an editor.  To change later, run 'select-editor'.
+  1. /usr/bin/joe
+  2. /usr/bin/jstar
+  3. /usr/bin/jpico
+  4. /usr/bin/jmacs
+  5. /bin/nano        &lt;---- easiest
+  6. /usr/bin/vim.basic
+  7. /usr/bin/rjoe
+  8. /usr/bin/vim.tiny
+</code></pre>
+
+<pre><code>debian@croqueta:~$ crontab -e
+    MAILTO = root
+no crontab for debian - using an empty one
+crontab: installing new crontab
+</code></pre>
+
+<p>Como podemos apreciar ya se está instalando la nueva tarea de cron.</p>
+
     </section>
     <footer class="post-footer">
       

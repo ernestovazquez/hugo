@@ -5,10 +5,19 @@
     <link>https://ernestovazquez.es/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 18 Feb 2020 09:04:52 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 18 Feb 2020 11:50:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Implantación de aplicaciones web PHP en docker</title>
+      <link>https://ernestovazquez.es/post/dockeriaw/</link>
+      <pubDate>Tue, 18 Feb 2020 11:50:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/dockeriaw/</guid>
+      <description>Tarea 1: Primero vamos a realizar la creación del contenedor mariadb y carga de los datos.</description>
+    </item>
     
     <item>
       <title>Proxy, proxy inverso y balanceadores de carga</title>
@@ -225,16 +234,6 @@ Crear tres máquinas en el cloud con los siguientes nombres y sistemas operativo
 Croqueta (Debian 10) Tortilla (Ubunut 18.04) Salmorejo (CentOs 7)
  Croqueta y Tortilla usan un volumen como unidad de disco principal. Se creará un usuario &amp;ldquo;profesor&amp;rdquo; con el que podrán acceder los profesores usando claves RSA.  Croqueta: 172.22.200.111 Vamos a cambiar el nombre de dominio.
 Editamos el fichero /etc/hostname</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://ernestovazquez.es/post/dockeriaw/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://ernestovazquez.es/post/dockeriaw/</guid>
-      <description> Implantación de aplicaciones web PHP en docker title: &amp;ldquo;Implantación de aplicaciones web PHP en docker&amp;rdquo; date: 2020-02-18T11:50:52+01:00
-draft: false </description>
     </item>
     
   </channel>

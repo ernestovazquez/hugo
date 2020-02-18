@@ -227,5 +227,15 @@ Croqueta (Debian 10) Tortilla (Ubunut 18.04) Salmorejo (CentOs 7)
 Editamos el fichero /etc/hostname</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>https://ernestovazquez.es/post/dockeriaw/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/dockeriaw/</guid>
+      <description> Implantación de aplicaciones web PHP en docker title: &amp;ldquo;Implantación de aplicaciones web PHP en docker&amp;rdquo; date: 2020-02-18T11:50:52+01:00
+draft: false </description>
+    </item>
+    
   </channel>
 </rss>

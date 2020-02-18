@@ -224,7 +224,7 @@ Para ello pondremos el siguiente comando:
 
     [centos@salmorejo ~]$ sudo semanage fcontext -a -t  httpd_sys_content_t "/var/www(/.*)?"
     
-Como podemos apreciar, tendriamos poner el nombre de la regla, en este caso `httpd_sys_content_t`, seguido del directorio que queremos que escriba la aplicacion web. Con ese simple comando podemos agregar un nuevo contexto.
+Como podemos apreciar, tendriamos que poner el nombre de la regla, en este caso `httpd_sys_content_t`, seguido del directorio que queremos que escriba la aplicacion web. Con ese simple comando podemos agregar un nuevo contexto.
 
 ## Configuración para las aplicaciones webs
 

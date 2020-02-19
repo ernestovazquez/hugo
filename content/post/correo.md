@@ -259,8 +259,8 @@ Prueba
 Esto es una prueba tarea 6 correo
 ```
 
-![](https://i.imgur.com/S6cJR6v.png)
-
 ![](https://i.imgur.com/usRSF1j.png)
+
+![](https://i.imgur.com/S6cJR6v.png)
 
 Como podemos apreciar ya nos ha llegado el correo de root en nuestro usuario.

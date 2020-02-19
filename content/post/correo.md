@@ -246,7 +246,7 @@ root@croqueta:~# nano /etc/aliases
 
 root: debian
 ```
-Ejecutamos la instrucción **newaliases** para que los cambios tengan efecto.
+Ejecutamos la instrucción **newaliases** para que los cambios tengan efecto en el sistema.
 
     root@croqueta:~# newaliases
 

@@ -239,7 +239,7 @@ La **primera regla de SELinux** que vamos a configurar va a ser la de **phpMyAdm
 
 Tengo que añadir que tenemos que tener activado httpd, como hemos hecho anteriormente en [SELinux Booleans](#id1).
 
-## Proftpd
+### Proftpd
 
 Para el correcto funcionamiento vamos a activar las reglas para **Proftpd**.
 
@@ -257,7 +257,7 @@ Para ellos vamos a documentarnos sobre las políticas de SELinux para demonios f
 Referencia: [Documentación de CentOS sobre ftpd_selinux](http://www.polarhome.com/service/man/?qf=ftpd_selinux&tf=2&of=CentOS&sf=8)
 
 
-## Mezzanine
+### Mezzanine
 
 A continuación vamos a ver las reglas que he configurado para el uso de mezzanine.
 
@@ -289,7 +289,7 @@ Para wordpress vamos a permitir el acceso de aplicaciones web a objetos y a la b
 [centos@salmorejo ~]$ sudo semanage fcontext -a -t httpd_sys_content_t "/var/www/wordpress(/.*)?"
 ```
 
-## Nextcloud
+### Nextcloud
 
 Para nextcloud vamos a activar `httpd_execmem`.
 ```

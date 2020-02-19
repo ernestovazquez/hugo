@@ -239,4 +239,27 @@ crontab: installing new crontab
 
 Como podemos apreciar ya se está instalando la nueva tarea de cron.
 
+Ahora vamos a configurar la **redirección** para enviar esos correo a tu correo de gmail.
 
+```
+root@croqueta:~# nano /etc/aliases
+
+root: debian
+```
+Ejecutamos la instrucción **newaliases** para que los cambios tengan efecto.
+
+    root@croqueta:~# newaliases
+
+Hacemos la prueba de la redireccion, enviando un correo a root:
+
+```
+root@croqueta:~# mail -s "Prueba de redireccion para root" root
+Cc: prueba
+prueba
+```
+
+![](https://i.imgur.com/S6cJR6v.png)
+
+![](https://i.imgur.com/usRSF1j.png)
+
+Como podemos apreciar ya nos ha llegado el correo de root en nuestro usuario.

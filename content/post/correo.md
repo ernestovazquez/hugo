@@ -232,10 +232,15 @@ Select an editor.  To change later, run 'select-editor'.
 
 ```
 debian@croqueta:~$ crontab -e
-    MAILTO = root
+MAILTO = root
+2 * * * * /home/debian/auto-update.sh
+
 no crontab for debian - using an empty one
 crontab: installing new crontab
 ```
+Permisos al script:
+
+    debian@croqueta:~$ sudo chmod 744 auto-update.sh 
 
 Como podemos apreciar ya se está instalando la nueva tarea de cron.
 
@@ -246,7 +251,7 @@ root@croqueta:~# nano /etc/aliases
 
 root: debian
 ```
-Ejecutamos la instrucción **newaliases** para que los cambios tengan efecto en el sistema.
+Ejecutamos la instrucción **newaliases** para que los cambios tengan efecto.
 
     root@croqueta:~# newaliases
 
@@ -258,9 +263,20 @@ Cc:
 Prueba
 Esto es una prueba tarea 6 correo
 ```
-
 ![](https://i.imgur.com/usRSF1j.png)
 
 ![](https://i.imgur.com/S6cJR6v.png)
 
 Como podemos apreciar ya nos ha llegado el correo de root en nuestro usuario.
+
+Ahora vamos a realizar el **.forward** en el usuario debian para que envie los correos a nuestro gmail
+
+```
+debian@croqueta:~$ nano .forward
+vazquezgarciaernesto@gmail.com
+```
+![](https://i.imgur.com/TOP0YhD.png)
+
+![](https://i.imgur.com/32HgVcq.png)
+
+Como podemos ver se ha realizado correctamente el script con cron y no ha enviado a nuestro correo.

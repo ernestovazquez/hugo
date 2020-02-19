@@ -25,9 +25,9 @@
       <pubDate>Tue, 18 Feb 2020 09:04:52 +0100</pubDate>
       
       <guid>https://ernestovazquez.es/post/proxy/</guid>
-      <description> Proxy En esta práctica vamos a instalar un proxy squid para configurar nuestro cliente para que acceda a internet por medio de este proxy.
-Vamos a usar el fichero Vagrantfile para crear el escenario: un ordenador llamado proxy donde instalaremos squid y un cliente interno (cliente_int).
-Tarea 1: Instala squid en la máquina squid y configúralo para que permita conexiones desde la red donde este tu ordenador. </description>
+      <description>Balanceador de carga Primero vamos a instalar HAproxy
+vagrant@balanceador:~$ sudo apt install haproxy  Vamos al fichero de configuración y pondremos lo siguiente:
+vagrant@balanceador:/etc/haproxy$ sudo nano haproxy.cfg global daemon maxconn 256 user haproxy group haproxy log 127.0.0.1 local0 log 127.0.0.1 local1 notice defaults mode http log global timeout connect 5000ms timeout client 50000ms timeout server 50000ms listen granja_cda bind 192.168.1.80:80 mode http stats enable stats auth cda:cda balance roundrobin server uno 10.</description>
     </item>
     
     <item>

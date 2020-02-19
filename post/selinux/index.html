@@ -294,7 +294,7 @@ httpd_can_network_connect --&gt; on
 
 <p>Tengo que añadir que tenemos que tener activado httpd, como hemos hecho anteriormente en <a href="#id1">SELinux Booleans</a>.</p>
 
-<h2 id="proftpd">Proftpd</h2>
+<h3 id="proftpd">Proftpd</h3>
 
 <p>Para el correcto funcionamiento vamos a activar las reglas para <strong>Proftpd</strong>.</p>
 
@@ -311,7 +311,7 @@ httpd_can_network_connect --&gt; on
 
 <p>Referencia: <a href="http://www.polarhome.com/service/man/?qf=ftpd_selinux&amp;tf=2&amp;of=CentOS&amp;sf=8">Documentación de CentOS sobre ftpd_selinux</a></p>
 
-<h2 id="mezzanine">Mezzanine</h2>
+<h3 id="mezzanine">Mezzanine</h3>
 
 <p>A continuación vamos a ver las reglas que he configurado para el uso de mezzanine.</p>
 
@@ -342,7 +342,7 @@ httpd_can_network_connect --&gt; on
 [centos@salmorejo ~]$ sudo semanage fcontext -a -t httpd_sys_content_t &quot;/var/www/wordpress(/.*)?&quot;
 </code></pre>
 
-<h2 id="nextcloud">Nextcloud</h2>
+<h3 id="nextcloud">Nextcloud</h3>
 
 <p>Para nextcloud vamos a activar <code>httpd_execmem</code>.</p>
 

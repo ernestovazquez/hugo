@@ -254,8 +254,9 @@ Hacemos la prueba de la redireccion, enviando un correo a root:
 
 ```
 root@croqueta:~# mail -s "Prueba de redireccion para root" root
-Cc: prueba
-prueba
+Cc: 
+Prueba
+Esto es una prueba tarea 6 correo
 ```
 
 ![](https://i.imgur.com/S6cJR6v.png)

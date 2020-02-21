@@ -16,7 +16,7 @@
       <pubDate>Fri, 21 Feb 2020 08:50:52 +0100</pubDate>
       
       <guid>https://ernestovazquez.es/post/lxc/</guid>
-      <description>Vagrant con LXC Explica los pasos necesarios para configurar Vagrant para que utilice LXC como proveedor y una vez configurado el sistema crea un Vagrantfile que lance dos contenedores sobre LXC en los que se instale una aplicación web en dos capas (contenedor1 con servidor web y contenedor2 con servidor de BBDD).
+      <description>Explica los pasos necesarios para configurar Vagrant para que utilice LXC como proveedor y una vez configurado el sistema crea un Vagrantfile que lance dos contenedores sobre LXC en los que se instale una aplicación web en dos capas (contenedor1 con servidor web y contenedor2 con servidor de BBDD).
 La configuración completa de la aplicación se realizará utilizando ansible como sistema de aprovisionamiento de Vagrant</description>
     </item>
     
@@ -26,7 +26,8 @@ La configuración completa de la aplicación se realizará utilizando ansible co
       <pubDate>Tue, 18 Feb 2020 11:50:52 +0100</pubDate>
       
       <guid>https://ernestovazquez.es/post/dockeriaw/</guid>
-      <description>Implantación de aplicaciones web PHP en docker Tarea 1 Primero vamos a realizar la creación del contenedor mariadb y carga de los datos.</description>
+      <description>Queremos ejecutar en un contenedor docker la aplicación web escrita en PHP: bookMedik.
+Tarea 1 Primero vamos a realizar la creación del contenedor mariadb y carga de los datos.</description>
     </item>
     
     <item>

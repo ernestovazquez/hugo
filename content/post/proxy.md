@@ -153,7 +153,11 @@ Vamos a cambiar el html:
 
 ![](https://i.imgur.com/m4GnlFc.png)
 
+```
+sudo nano /etc/hosts
+
 172.22.1.58 www.servidor.org
+```
 
 ### Tarea 2:
 

@@ -28,7 +28,10 @@ Lo primero que tenemos que hacer es instalar vagrant-lxc.</description>
       
       <guid>https://ernestovazquez.es/post/dockeriaw/</guid>
       <description>Queremos ejecutar en un contenedor docker la aplicación web escrita en PHP: bookMedik.
-Tarea 1 Primero vamos a realizar la creación del contenedor mariadb y carga de los datos.</description>
+Tarea 1 Creamos la red del contenedor:
+root@bookmedik:~/tarea1# docker network create bookmedik 156229b4609abda50303cc7cd7e355bbdf317087f4c511e1a6ca93addd592b89  Contenedor de la base de datos:
+root@bookmedik:~/tarea1# docker run -d --name servidor_mysql --network bookmedik -e MYSQL_DATABASE=bookmedik -e MYSQL_USER=bookmedik -e MYSQL_PASSWORD=bookmedik -e MYSQL_ROOT_PASSWORD=asdasd mariadb  Cargamos los datos en la base de datos
+root@bookmedik:~/tarea1/bookmedik# cat schema.sql | docker exec -i servidor_mysql /usr/bin/mysql -u root --password=asdasd bookmedik  root@bookmedik:~/tarea1# nano Dockerfile FROM debian RUN apt-get update &amp;amp;&amp;amp; apt-get install -y apache2 libapache2-mod-php7.</description>
     </item>
     
     <item>

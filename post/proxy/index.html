@@ -123,6 +123,24 @@ Executing: /lib/systemd/systemd-sysv-install enable haproxy
 10.10.10.1 - - [19/Feb/2020:15:45:25 +0000] &quot;GET /favicon.ico HTTP/1.1&quot; 404 435 &quot;-&quot; &quot;Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0&quot;
 </code></pre>
 
+<h3 id="configurar-la-persistencia-de-conexiones-web-sticky-sessions">Configurar la persistencia de conexiones Web (sticky sessions)</h3>
+
+<pre><code>vagrant@balanceador:~$ sudo nano /etc/haproxy/haproxy.cfg 
+
+...
+    cookie PHPSESSID prefix                             
+    server uno 10.10.10.11:80 cookie EL_UNO maxconn 128 
+    server dos 10.10.10.22:80 cookie EL_DOS maxconn 128    
+</code></pre>
+
+<p><img src="https://i.imgur.com/VbAymPi.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/ZeYasXv.png" alt="" /></p>
+
+<p>Cabecera:</p>
+
+<p><img src="https://i.imgur.com/nTa2cWK.png" alt="" /></p>
+
     </section>
     <footer class="post-footer">
       

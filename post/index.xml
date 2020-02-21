@@ -5,10 +5,20 @@
     <link>https://ernestovazquez.es/post/</link>
     <description>Recent content in Posts on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 18 Feb 2020 11:50:52 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 21 Feb 2020 08:50:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Vagrant con LXC</title>
+      <link>https://ernestovazquez.es/post/lxc/</link>
+      <pubDate>Fri, 21 Feb 2020 08:50:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/lxc/</guid>
+      <description>Explica los pasos necesarios para configurar Vagrant para que utilice LXC como proveedor y una vez configurado el sistema crea un Vagrantfile que lance dos contenedores sobre LXC en los que se instale una aplicación web en dos capas (contenedor1 con servidor web y contenedor2 con servidor de BBDD).
+La configuración completa de la aplicación se realizará utilizando ansible como sistema de aprovisionamiento de Vagrant</description>
+    </item>
     
     <item>
       <title>Implantación de aplicaciones web PHP en docker</title>

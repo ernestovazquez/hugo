@@ -66,4 +66,22 @@ root@apache1:~# cat /var/log/apache2/access.log
 10.10.10.1 - - [19/Feb/2020:15:45:25 +0000] "GET /favicon.ico HTTP/1.1" 404 435 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0"
 ```
 
+### Configurar la persistencia de conexiones Web (sticky sessions)
+
+```
+vagrant@balanceador:~$ sudo nano /etc/haproxy/haproxy.cfg 
+
+...
+    cookie PHPSESSID prefix                             
+    server uno 10.10.10.11:80 cookie EL_UNO maxconn 128 
+    server dos 10.10.10.22:80 cookie EL_DOS maxconn 128    
+```        
+
+![](https://i.imgur.com/VbAymPi.png)
+
+![](https://i.imgur.com/ZeYasXv.png)
+
+Cabecera:
+
+![](https://i.imgur.com/nTa2cWK.png)
 

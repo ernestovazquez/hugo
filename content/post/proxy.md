@@ -85,3 +85,102 @@ Cabecera:
 
 ![](https://i.imgur.com/nTa2cWK.png)
 
+
+## Proxy inverso
+
+### Para que se acceda a la primera aplicación con la URL www.app1.org y a la segunda aplicación con la URL www.app2.org.
+
+```
+vagrant@balanceador:~$ sudo apt install apache2
+
+vagrant@balanceador:~$ sudo a2enmod proxy proxy_http
+```
+
+```
+vagrant@balanceador:~$ sudo nano /etc/apache2/sites-available/app1.conf 
+
+        ServerName www.app1.org
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+        ProxyPass "/" "http://10.10.10.11/"
+        ProxyPassReverse "/" "http://10.10.10.11/"
+
+vagrant@balanceador:~$ sudo nano /etc/apache2/sites-available/app2.conf 
+
+        ServerName www.app2.org 
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+        ProxyPass "/" "http://10.10.10.22/"
+        ProxyPassReverse "/" "http://10.10.10.22/"
+```
+
+Habilitamos los cambios:
+
+```
+vagrant@balanceador:~$ sudo a2ensite app1.conf
+Enabling site app1.
+To activate the new configuration, you need to run:
+  systemctl reload apache2
+  
+vagrant@balanceador:~$ sudo a2ensite app2.conf
+Enabling site app2.
+To activate the new configuration, you need to run:
+  systemctl reload apache2
+  
+vagrant@balanceador:~$ sudo systemctl restart apache2
+```
+
+Lo añadimos al `/etc/hosts`.
+
+```
+sudo nano /etc/hosts
+
+172.22.0.236 www.app1.org
+172.22.0.236 www.app2.org
+```
+
+Vamos a cambiar el html:
+
+- www.app1.org
+
+![](https://i.imgur.com/FapCq6S.png)
+
+- www.app2.org
+
+![](https://i.imgur.com/m4GnlFc.png)
+
+172.22.1.58 www.servidor.org
+
+### Tarea 2:
+
+Vamos a configurar otro virtual host para esta tarea:
+
+```
+vagrant@balanceador:~$ sudo nano /etc/apache2/sites-available/app3.conf 
+
+...
+        ServerName www.servidor.org
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html/
+
+        <Location "/app1/">
+                ProxyPass "http://10.10.10.11/"
+                ProxyPassReverse "http://10.10.10.11/"
+        </Location>
+
+        <Location "/app2/">
+                ProxyPass "http://10.10.10.22/"
+                ProxyPassReverse "http://10.10.10.22/"
+        </Location>
+...
+```
+
+![](https://i.imgur.com/x5uv1SC.png)
+
+![](https://i.imgur.com/7AK8hpv.png)
+

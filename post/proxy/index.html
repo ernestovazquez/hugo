@@ -141,6 +141,103 @@ Executing: /lib/systemd/systemd-sysv-install enable haproxy
 
 <p><img src="https://i.imgur.com/nTa2cWK.png" alt="" /></p>
 
+<h2 id="proxy-inverso">Proxy inverso</h2>
+
+<h3 id="para-que-se-acceda-a-la-primera-aplicación-con-la-url-www-app1-org-y-a-la-segunda-aplicación-con-la-url-www-app2-org">Para que se acceda a la primera aplicación con la URL www.app1.org y a la segunda aplicación con la URL www.app2.org.</h3>
+
+<pre><code>vagrant@balanceador:~$ sudo apt install apache2
+
+vagrant@balanceador:~$ sudo a2enmod proxy proxy_http
+</code></pre>
+
+<pre><code>vagrant@balanceador:~$ sudo nano /etc/apache2/sites-available/app1.conf 
+
+        ServerName www.app1.org
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+        ProxyPass &quot;/&quot; &quot;http://10.10.10.11/&quot;
+        ProxyPassReverse &quot;/&quot; &quot;http://10.10.10.11/&quot;
+
+vagrant@balanceador:~$ sudo nano /etc/apache2/sites-available/app2.conf 
+
+        ServerName www.app2.org 
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html
+
+        ProxyPass &quot;/&quot; &quot;http://10.10.10.22/&quot;
+        ProxyPassReverse &quot;/&quot; &quot;http://10.10.10.22/&quot;
+</code></pre>
+
+<p>Habilitamos los cambios:</p>
+
+<pre><code>vagrant@balanceador:~$ sudo a2ensite app1.conf
+Enabling site app1.
+To activate the new configuration, you need to run:
+  systemctl reload apache2
+  
+vagrant@balanceador:~$ sudo a2ensite app2.conf
+Enabling site app2.
+To activate the new configuration, you need to run:
+  systemctl reload apache2
+  
+vagrant@balanceador:~$ sudo systemctl restart apache2
+</code></pre>
+
+<p>Lo añadimos al <code>/etc/hosts</code>.</p>
+
+<pre><code>sudo nano /etc/hosts
+
+172.22.0.236 www.app1.org
+172.22.0.236 www.app2.org
+</code></pre>
+
+<p>Vamos a cambiar el html:</p>
+
+<ul>
+<li>www.app1.org</li>
+</ul>
+
+<p><img src="https://i.imgur.com/FapCq6S.png" alt="" /></p>
+
+<ul>
+<li>www.app2.org</li>
+</ul>
+
+<p><img src="https://i.imgur.com/m4GnlFc.png" alt="" /></p>
+
+<p>172.22.1.58 www.servidor.org</p>
+
+<h3 id="tarea-2">Tarea 2:</h3>
+
+<p>Vamos a configurar otro virtual host para esta tarea:</p>
+
+<pre><code>vagrant@balanceador:~$ sudo nano /etc/apache2/sites-available/app3.conf 
+
+...
+        ServerName www.servidor.org
+
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/html/
+
+        &lt;Location &quot;/app1/&quot;&gt;
+                ProxyPass &quot;http://10.10.10.11/&quot;
+                ProxyPassReverse &quot;http://10.10.10.11/&quot;
+        &lt;/Location&gt;
+
+        &lt;Location &quot;/app2/&quot;&gt;
+                ProxyPass &quot;http://10.10.10.22/&quot;
+                ProxyPassReverse &quot;http://10.10.10.22/&quot;
+        &lt;/Location&gt;
+...
+</code></pre>
+
+<p><img src="https://i.imgur.com/x5uv1SC.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/7AK8hpv.png" alt="" /></p>
+
     </section>
     <footer class="post-footer">
       

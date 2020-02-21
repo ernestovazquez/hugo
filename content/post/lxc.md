@@ -10,4 +10,12 @@ La configuración completa de la aplicación se realizará utilizando ansible co
 
 ***
 
+Lo primero que tenemos que hacer es instalar **`vagrant-lxc`**.
+
+Para instalar vagrant-lxc en Debian ejecutaremos lel siguiente comando:
+
+`ernesto@honda:~/Documentos/vagrant/lxc$ sudo apt install vagrant-lxc`
+
+A continuación vamos a crear un **Vagrantfile** que lance dos contenedores sobre **LXC**.
+
 

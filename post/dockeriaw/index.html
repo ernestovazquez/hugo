@@ -162,18 +162,101 @@ ae3d89739b7ad7ed843caa7ec4657f4699d2cd85e86f0b29625129209af2e4d6
 
 <h2 id="tarea-2">Tarea 2</h2>
 
-<p>Realizaremos la imagen docker de la aplicación a partir de la imagen oficial PHP:</p>
+<h2 id="tarea-3">Tarea 3</h2>
 
-<pre><code>root@bookmedik:~/tarea2# nano Dokerfile
+<h2 id="tarea-4">Tarea 4</h2>
 
-FROM php:7.0-apache
+<h2 id="tarea-5">Tarea 5</h2>
 
-ADD . /var/www/html
+<p>Vamos a crear el docker-compose para crear el contenedor de la base de datos para owncloud</p>
 
-RUN docker-php-ext-install mysqli &amp;&amp; docker-php-ext-enable mysqli
+<pre><code>root@docker:~/owncloud# nano docker-compose.yml
+
+version: '3.1'
+
+services:
+  db:
+    container_name: owncloud_db
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: oc_db
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - /opt/docker/volt5/db:/var/lib/mysql
+
+  owncloud:
+    container_name: owncloud
+    image: owncloud
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - /opt/docker/volt5/owncloud/apps:/var/www/html/apps
+      - /opt/docker/volt5/owncloud/config:/var/www/html/config
+      - /opt/docker/volt5/owncloud/data:/var/www/html/data
 </code></pre>
 
-<p>Subimos la imagen a DockerHub.</p>
+<p>Activamos el docker-compose:</p>
+
+<pre><code>root@docker:~/owncloud# docker-compose up -d
+Creating network &quot;owncloud_default&quot; with the default driver
+Pulling owncloud (owncloud:)...
+latest: Pulling from library/owncloud
+177e7ef0df69: Pull complete
+9bf89f2eda24: Pull complete
+350207dcf1b7: Pull complete
+a8a33d96b4e7: Pull complete
+c0421d5b63d6: Pull complete
+f76e300fbe72: Pull complete
+af9ff1b9ce5b: Pull complete
+d9f072d61771: Pull complete
+a6c512d0c2db: Pull complete
+5a99458af5f8: Pull complete
+8f2842d661a0: Pull complete
+3c71c5361f06: Pull complete
+baeacbad0a0c: Pull complete
+e60049bf081a: Pull complete
+0619078e32d3: Pull complete
+a8e482ee2313: Pull complete
+174d1b06857d: Pull complete
+4a86c437f077: Pull complete
+5e9ed4c3df2d: Pull complete
+8a1479477c8e: Pull complete
+8ab262044e9e: Pull complete
+Digest: sha256:173811cb4c40505401595a45c39a802b89fb476885b3f6e8fe327aae08d20fe8
+Status: Downloaded newer image for owncloud:latest
+Creating owncloud_db ... done
+Creating owncloud    ... done
+</code></pre>
+
+<p>Creamos un usuario y accedemos dentro</p>
+
+<p>Hemos creado una carpeta de prueba para probar el volumen.</p>
+
+<p><img src="https://i.imgur.com/iGpdi64.png" alt="" /></p>
+
+<p>Borramos el contenedor y lo creamos de nuevo y vemos si siguen los archivos que hemos creado previamente</p>
+
+<pre><code>root@docker:~/owncloud# docker-compose stop
+Stopping owncloud    ... done
+Stopping owncloud_db ... done
+
+root@docker:~/owncloud# docker-compose rm
+Going to remove owncloud, owncloud_db
+Are you sure? [yN] y
+Removing owncloud    ... done
+Removing owncloud_db ... done
+
+root@docker:~/owncloud# docker-compose up -d
+Creating owncloud_db ... done
+Creating owncloud    ... done
+root@docker:~/owncloud# 
+</code></pre>
+
+<p><img src="https://i.imgur.com/yJXnaui.png" alt="" /></p>
+
+<p>Como podemos apreciar la carpeta sigue, ya que está en el volumen que hemos configurado con anterioridad para que la información sea persistente.</p>
 
     </section>
     <footer class="post-footer">

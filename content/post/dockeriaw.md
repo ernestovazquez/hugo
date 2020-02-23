@@ -10,6 +10,20 @@ Queremos ejecutar en un contenedor docker la aplicación web escrita en PHP: [bo
 
 ## Tarea 1
 
+
+**Ejecución de la aplicación web PHP bookMedik en docker**
+
+* Queremos ejecutar en un contenedor docker la aplicación web escrita en PHP: bookMedik (https://github.com/evilnapsis/bookmedik).
+* Es necesario tener un contenedor con mariadb donde vamos a crear la base de datos y los datos de la aplicación. El script para generar la base de datos y los registros lo encuentras en el repositorio y se llama schema.sql. Debes crear un usuario con su contraseña en la base de datos. La base de datos se llama bookmedik y se crea al ejecutar el script.
+* Ejecuta el contenedor mariadb y carga los datos del script schema.sql. Para más información.
+* El contenedor mariadb debe tener un volumen para guardar la base de datos.
+* Crea una imagen docker con la aplicación desde una imagen base de debian o ubuntu. Ten en cuenta que el fichero de configuración de la base de datos (core\controller\Database.php) lo tienes que configurar utilizando las variables de entorno del contenedor mariadb. (Nota: Para obtener las variables de entorno en PHP usar la función getenv. Para más infomación).
+* La imagen la tienes que crear en tu máquina con el comando docker build.
+* Crea un contenedor a partir de la imagen anterior, enlazado con el contenedor mariadb, y comprueba que está funcionando (Usuario: admin, contraseña: admin)
+* El contenedor que creas debe tener un volumen para guardar los logs de apache2.
+
+***
+
 Creamos la red del contenedor:
 
 ```
@@ -111,11 +125,146 @@ ae3d89739b7ad7ed843caa7ec4657f4699d2cd85e86f0b29625129209af2e4d6
 
 ## Tarea 2
 
+**Ejecución de una aplicación web PHP con imagenes de PHP y apache2 de DockerHub**
+
+* Realiza la imagen docker de la aplicación a partir de la imagen oficial PHP que encuentras en docker hub. Lee la documentación de la imagen para configurar una imagen con apache2 y php, además seguramente tengas que instalar alguna extensión de php.
+* Crea esta imagen en docker hub.
+* Crea un script con docker compose que levante el escenario con los dos contenedores.
+
+***
+
+Vamos a editar el Dockerfile:
+
+```
+root@docker:~/tarea2# nano Dockerfile
+
+FROM php:7.4.3-apache
+ENV MARIADB_USER bookmedik
+ENV MARIADB_PASS bookmedik
+ENV MARIADB_HOST servidor_mysqltarea2
+RUN docker-php-ext-install pdo pdo_mysql mysqli json
+RUN a2enmod rewrite
+EXPOSE 80
+WORKDIR /var/www/html
+COPY ./bookmedik /var/www/html
+ADD script.sh /usr/local/bin/script.sh
+
+RUN chmod +x /usr/local/bin/script.sh
+
+CMD ["/usr/local/bin/script.sh"]
+```
+
+A continuación realizamos la imagen:
+
+    root@docker:~/tarea2# docker build -t ernestovazquez/bookmediktarea2:v1 .
+
+**Contenedores**:
+
+```
+root@docker:~/tarea2# docker run -d --name servidor_mysqltarea2 --network bookmedik -v /opt/bbdd_mariadb:/var/lib/mysql -e MYSQL_DATABASE=bookmedik -e MYSQL_USER=bookmedik -e MYSQL_PASSWORD=bookmedik -e MYSQL_ROOT_PASSWORD=asdasd mariadb
+412d52fe93ed2892431e02d02c3713b01dee73fc7af0a0c536d1d3e001f7b57f
+
+root@docker:~/tarea2# docker run -d --name bookmediktarea2 --network bookmedik -v /opt/logs_apache2:/var/log/apache2 -p 80:80 ernestovazquez/bookmediktarea2:v1
+11ed11ddd0ec41c00c19ed8ef4ac26e8eec0b75a34bd16a2a4129baaa896e87a
+```
+
+![](https://i.imgur.com/IWSzcDF.png)
+
+Para crear esta imagen en docker hub haremos lo siguiente:
+
+    root@docker:~/tarea2# docker push ernestovazquez/bookmediktarea2:v1 
+
+Ahora vamos a crear un script con docker compose que levante el escenario con los dos contenedores.
+
+```
+version: '3.1'
+
+services:
+  bookmedikphp:
+    container_name: bookmediktarea2
+    image: php:7.4.3-apache
+    restart: always
+    environment:
+      MARIADB_USER: bookmedik
+      MARIADB_PASS: bookmedik
+      MARIADB_HOST: servidor_mysqltarea2
+    ports:
+      - 80:80
+    volumes:
+      - /opt/logs_apache2:/var/log/apache2
+      - ./script.sh:/usr/local/bin/script.sh
+      - ./bookmedik:/var/www/html
+    command: >
+      bash /usr/local/bin/script.sh
+  servidor_mysql2:
+    container_name: servidor_mysqltarea2
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: bookmedik
+      MYSQL_USER: bookmedik
+      MYSQL_PASSWORD: bookmedik
+      MYSQL_ROOT_PASSWORD: asdasd
+    volumes:
+      - /opt/bbdd_mariadb:/var/lib/mysql
+```
+
+Añadimos la siguiente linea al script que hemos creado anteriormente:
+
+    docker-php-ext-install pdo pdo_mysql mysqli json
+
+Levantamos docker-compose:
+
+```
+root@docker:~/tarea2# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+root@docker:~/tarea2# docker-compose up -d
+Creating network "tarea2_default" with the default driver
+Creating bookmediktarea2      ... done
+Creating servidor_mysqltarea2 ... done
+
+root@docker:~/tarea2# docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                NAMES
+01e16d302760        mariadb             "docker-entrypoint.s…"   4 seconds ago       Up 3 seconds        3306/tcp             servidor_mysqltarea2
+1574cc3753ff        php:7.4.3-apache    "docker-php-entrypoi…"   4 seconds ago       Up 3 seconds        0.0.0.0:80->80/tcp   bookmediktarea2
+```
+
+![](https://i.imgur.com/vAlZ0cQ.png)
+
+https://github.com/ernestovazquez/docker-tarea2
+
 ## Tarea 3
+
+
+**Ejecución de un CMS en docker**
+
+
+* En este caso queremos usar un contenedor que utilice nginx para servir la aplicación PHP. Puedes crear la imagen desde una imagen base debian o ubuntu o desde la imagen oficial de nginx.
+* Vamos a crear otro contenedor que sirva php-fpm.
+* Y finalmente nuestro contenedor con la aplicación.
+* Crea un script con docker compose que levante el escenario con los tres contenedores.
+
+A lo mejor te puede ayudar el siguiente enlace: Dockerise your PHP application with Nginx and PHP7-FPM
+
+
+***
 
 ## Tarea 4
 
+
+* A partir de una imagen base (que no sea una imagen con el CMS), genera una imagen que despliegue un CMS PHP (que no sea wordpress). El contenedor que se crea a partir de esta imagen se tendrá que enlazar con un contenedor mariadb o postgreSQL.
+* Crea los volúmenes necesarios para que la información que se guarda sea persistente.
+
+***
+
 ## Tarea 5
+
+**Ejecución de un CMS en docker con una imagen de DockerHub**
+
+* Busca una imagen oficial de un CMS PHP en docker hub (distinto al que has instalado en la tarea anterior, ni wordpress), y crea los contenedores necesarios para servir el CMS, siguiendo la documentación de docker hub.
+
+***
 
 Vamos a crear el docker-compose para crear el contenedor de la base de datos para owncloud
 
@@ -209,3 +358,5 @@ root@docker:~/owncloud#
 ![](https://i.imgur.com/yJXnaui.png)
 
 Como podemos apreciar la carpeta sigue, ya que está en el volumen que hemos configurado con anterioridad para que la información sea persistente.
+
+

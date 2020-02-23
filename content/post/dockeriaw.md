@@ -174,6 +174,7 @@ Para crear esta imagen en docker hub haremos lo siguiente:
 
     root@docker:~/tarea2# docker push ernestovazquez/bookmediktarea2:v1 
 
+
 Ahora vamos a crear un script con docker compose que levante el escenario con los dos contenedores.
 
 ```

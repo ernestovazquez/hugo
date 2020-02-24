@@ -133,61 +133,20 @@ ae3d89739b7ad7ed843caa7ec4657f4699d2cd85e86f0b29625129209af2e4d6
 
 ***
 
-Vamos a editar el Dockerfile:
-
-```
-root@docker:~/tarea2# nano Dockerfile
-
-FROM php:7.4.3-apache
-ENV MARIADB_USER bookmedik
-ENV MARIADB_PASS bookmedik
-ENV MARIADB_HOST servidor_mysqltarea2
-RUN docker-php-ext-install pdo pdo_mysql mysqli json
-RUN a2enmod rewrite
-EXPOSE 80
-WORKDIR /var/www/html
-COPY ./bookmedik /var/www/html
-ADD script.sh /usr/local/bin/script.sh
-
-RUN chmod +x /usr/local/bin/script.sh
-
-CMD ["/usr/local/bin/script.sh"]
-```
-
-A continuación realizamos la imagen:
-
-    root@docker:~/tarea2# docker build -t ernestovazquez/bookmediktarea2:v1 .
-
-**Contenedores**:
-
-```
-root@docker:~/tarea2# docker run -d --name servidor_mysqltarea2 --network bookmedik -v /opt/bbdd_mariadb:/var/lib/mysql -e MYSQL_DATABASE=bookmedik -e MYSQL_USER=bookmedik -e MYSQL_PASSWORD=bookmedik -e MYSQL_ROOT_PASSWORD=asdasd mariadb
-412d52fe93ed2892431e02d02c3713b01dee73fc7af0a0c536d1d3e001f7b57f
-
-root@docker:~/tarea2# docker run -d --name bookmediktarea2 --network bookmedik -v /opt/logs_apache2:/var/log/apache2 -p 80:80 ernestovazquez/bookmediktarea2:v1
-11ed11ddd0ec41c00c19ed8ef4ac26e8eec0b75a34bd16a2a4129baaa896e87a
-```
-
-![](https://i.imgur.com/IWSzcDF.png)
-
-Para crear esta imagen en docker hub haremos lo siguiente:
-
-    root@docker:~/tarea2# docker push ernestovazquez/bookmediktarea2:v1 
-
 Ahora vamos a crear un script con docker compose que levante el escenario con los dos contenedores.
 
 ```
 version: '3.1'
 
 services:
-  bookmedikphp:
-    container_name: bookmediktarea2
+  bookmedikt2:
+    container_name: bookmedikt2
     image: php:7.4.3-apache
     restart: always
     environment:
       MARIADB_USER: bookmedik
       MARIADB_PASS: bookmedik
-      MARIADB_HOST: servidor_mysqltarea2
+      MARIADB_HOST: mysqlt2
     ports:
       - 80:80
     volumes:
@@ -196,8 +155,8 @@ services:
       - ./bookmedik:/var/www/html
     command: >
       bash /usr/local/bin/script.sh
-  servidor_mysql2:
-    container_name: servidor_mysqltarea2
+  mysqlt2:
+    container_name: mysqlt2
     image: mariadb
     restart: always
     environment:
@@ -206,7 +165,24 @@ services:
       MYSQL_PASSWORD: bookmedik
       MYSQL_ROOT_PASSWORD: asdasd
     volumes:
-      - /opt/bbdd_mariadb:/var/lib/mysql
+      - /opt/mariat2:/var/lib/mysql
+```
+
+Dockerfile:
+
+```
+FROM php:7.4.3-apache
+ENV MARIADB_USER bookmedik
+ENV MARIADB_PASS bookmedik
+ENV MARIADB_HOST mysqlt2
+RUN docker-php-ext-install pdo pdo_mysql mysqli json
+RUN a2enmod rewrite
+EXPOSE 80
+WORKDIR /var/www/html
+COPY ./bookmedik /var/www/html
+ADD script.sh /usr/local/bin/script.sh
+RUN chmod +x /usr/local/bin/script.sh
+CMD ["/usr/local/bin/script.sh"]
 ```
 
 Añadimos la siguiente linea al script que hemos creado anteriormente:
@@ -220,14 +196,13 @@ root@docker:~/tarea2# docker ps -a
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 
 root@docker:~/tarea2# docker-compose up -d
-Creating network "tarea2_default" with the default driver
-Creating bookmediktarea2      ... done
-Creating servidor_mysqltarea2 ... done
+Creating bookmedikt2 ... done
+Creating mysqlt2     ... done
 
 root@docker:~/tarea2# docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                NAMES
-01e16d302760        mariadb             "docker-entrypoint.s…"   4 seconds ago       Up 3 seconds        3306/tcp             servidor_mysqltarea2
-1574cc3753ff        php:7.4.3-apache    "docker-php-entrypoi…"   4 seconds ago       Up 3 seconds        0.0.0.0:80->80/tcp   bookmediktarea2
+03c7ae76bdd2        mariadb             "docker-entrypoint.s…"   39 seconds ago      Up 38 seconds       3306/tcp             mysqlt2
+d6d8997f2cfc        php:7.4.3-apache    "docker-php-entrypoi…"   39 seconds ago      Up 38 seconds       0.0.0.0:80->80/tcp   bookmedikt2
 ```
 
 ![](https://i.imgur.com/vAlZ0cQ.png)

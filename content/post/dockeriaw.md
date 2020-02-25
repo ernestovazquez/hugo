@@ -10,7 +10,6 @@ Queremos ejecutar en un contenedor docker la aplicación web escrita en PHP: [bo
 
 ## Tarea 1
 
-
 **Ejecución de la aplicación web PHP bookMedik en docker**
 
 * Queremos ejecutar en un contenedor docker la aplicación web escrita en PHP: bookMedik (https://github.com/evilnapsis/bookmedik).

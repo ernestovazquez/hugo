@@ -211,7 +211,6 @@ https://github.com/ernestovazquez/docker-tarea2
 
 ## Tarea 3
 
-
 **Ejecución de un CMS en docker**
 
 
@@ -222,8 +221,95 @@ https://github.com/ernestovazquez/docker-tarea2
 
 A lo mejor te puede ayudar el siguiente enlace: Dockerise your PHP application with Nginx and PHP7-FPM
 
-
 ***
+
+Creamos el docker-compose:
+
+```
+version: '3.1'
+
+services:
+  db:
+    container_name: nginxdb           
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_USER: bookmedik
+      MYSQL_PASSWORD: bookmedik
+      MYSQL_DATABASE: bookmedik
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - /opt/mariat3:/var/lib/mysql
+```
+Levantamos el contenedor:
+
+```
+root@docker:~/tarea3# docker-compose up -d
+Creating network "tarea3_default" with the default driver
+Creating nginxdb ... done
+```
+Comprobaciones:
+
+```
+root@docker:~/tarea3/bookmedik# cat schema.sql | docker exec -i nginxdb /usr/bin/mysql -u root --password=root
+root@docker:~/tarea3/bookmedik# docker exec -it nginxdb bash
+MariaDB [bookmedik]> show tables;
++---------------------+
+| Tables_in_bookmedik |
++---------------------+
+| category            |
+| medic               |
+| pacient             |
+| payment             |
+| reservation         |
+| status              |
+| user                |
++---------------------+
+7 rows in set (0.001 sec)
+```
+
+Creación del Dockerfile:
+
+```
+root@docker:~/tarea3# nano Dockerfile
+
+FROM php:7-fpm
+RUN docker-php-ext-install mysqli
+ENV MYSQL_USER bookmedik
+ENV MYSQL_PASSWORD bookmedik
+ENV MYSQL_HOST nginxdb           
+ENV MYSQL_DB bookmedik
+EXPOSE 9000
+```
+Creamos la imagen.
+
+`root@docker:~/tarea3# docker build -t ernestovazquez/tarea3:v1 .`
+
+Editamos el docker-compose:
+
+```
+root@docker:~/tarea3# nano docker-compose.yml 
+
+  fpm:
+    container_name: nginxfpm
+    image: ernestovazquez/tarea3:v1
+    volumes:
+      - /opt/mariat3:/var/www/html
+  app:
+    container_name: bookmedik
+    image: nginx:latest
+    ports:
+      - 80:80
+    volumes:
+      - /opt/mariat3:/var/www/html
+      - ./bookmedik.conf:/etc/nginx/conf.d/default.conf
+```
+
+Por último levantamos los nuevos contenedores:
+
+```
+root@docker:~/tarea3# docker-compose up -d
+```
 
 ## Tarea 4
 
@@ -241,97 +327,64 @@ A lo mejor te puede ayudar el siguiente enlace: Dockerise your PHP application w
 
 ***
 
-Vamos a crear el docker-compose para crear el contenedor de la base de datos para owncloud
+Creamos el docker-compose:
 
 ```
-root@docker:~/owncloud# nano docker-compose.yml
-
-version: '3.1'
-
+version: '3'
 services:
-  db:
-    container_name: owncloud_db
+  mediawiki:
+    image: mediawiki
+    restart: always
+    ports:
+      - 8080:80
+    links:
+      - database
+    volumes:
+      - /var/www/html/images
+      - ./LocalSettings.php:/var/www/html/LocalSettings.php
+  database:
     image: mariadb
     restart: always
     environment:
-      MYSQL_DATABASE: oc_db
-      MYSQL_ROOT_PASSWORD: root
-    volumes:
-      - /opt/docker/volt5/db:/var/lib/mysql
-
-  owncloud:
-    container_name: owncloud
-    image: owncloud
-    restart: always
-    ports:
-      - 80:80
-    volumes:
-      - /opt/docker/volt5/owncloud/apps:/var/www/html/apps
-      - /opt/docker/volt5/owncloud/config:/var/www/html/config
-      - /opt/docker/volt5/owncloud/data:/var/www/html/data
+      MYSQL_DATABASE: my_wiki
+      MYSQL_USER: wikiuser
+      MYSQL_PASSWORD: example
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
 ```
 
-Activamos el docker-compose:
+Lanzamos los contenedores con:
 
 ```
-root@docker:~/owncloud# docker-compose up -d
-Creating network "owncloud_default" with the default driver
-Pulling owncloud (owncloud:)...
-latest: Pulling from library/owncloud
-177e7ef0df69: Pull complete
-9bf89f2eda24: Pull complete
-350207dcf1b7: Pull complete
-a8a33d96b4e7: Pull complete
-c0421d5b63d6: Pull complete
-f76e300fbe72: Pull complete
-af9ff1b9ce5b: Pull complete
-d9f072d61771: Pull complete
-a6c512d0c2db: Pull complete
-5a99458af5f8: Pull complete
-8f2842d661a0: Pull complete
-3c71c5361f06: Pull complete
-baeacbad0a0c: Pull complete
-e60049bf081a: Pull complete
-0619078e32d3: Pull complete
-a8e482ee2313: Pull complete
-174d1b06857d: Pull complete
-4a86c437f077: Pull complete
-5e9ed4c3df2d: Pull complete
-8a1479477c8e: Pull complete
-8ab262044e9e: Pull complete
-Digest: sha256:173811cb4c40505401595a45c39a802b89fb476885b3f6e8fe327aae08d20fe8
-Status: Downloaded newer image for owncloud:latest
-Creating owncloud_db ... done
-Creating owncloud    ... done
+root@docker:~/mediawiki# docker-compose up -d
+Creating mediawiki_database_1 ... done
+Creating mediawiki_mediawiki_1 ... done
 ```
 
-Creamos un usuario y accedemos dentro
+![](https://i.imgur.com/npeIROT.png)
 
-Hemos creado una carpeta de prueba para probar el volumen.
+![](https://i.imgur.com/reyDRZN.png)
 
-![](https://i.imgur.com/iGpdi64.png)
+![](https://i.imgur.com/Vshzxp9.png)
 
-Borramos el contenedor y lo creamos de nuevo y vemos si siguen los archivos que hemos creado previamente
+![](https://i.imgur.com/SOoIh4W.png)
+
+Nos descargamos el fichero y lo ponemos en el mismo directorio que el docker-compose.
 
 ```
-root@docker:~/owncloud# docker-compose stop
-Stopping owncloud    ... done
-Stopping owncloud_db ... done
-
-root@docker:~/owncloud# docker-compose rm
-Going to remove owncloud, owncloud_db
-Are you sure? [yN] y
-Removing owncloud    ... done
-Removing owncloud_db ... done
-
-root@docker:~/owncloud# docker-compose up -d
-Creating owncloud_db ... done
-Creating owncloud    ... done
-root@docker:~/owncloud# 
+root@docker:~/mediawiki# ls
+docker-compose.yml  LocalSettings.php
 ```
 
-![](https://i.imgur.com/yJXnaui.png)
+Cargamos de nuevo el docker-compose:
 
-Como podemos apreciar la carpeta sigue, ya que está en el volumen que hemos configurado con anterioridad para que la información sea persistente.
+```
+mediawiki_database_1 is up-to-date
+Recreating mediawiki_mediawiki_1 ... done
 
+root@docker:~/mediawiki# ls
+docker-compose.yml  LocalSettings.php
+```
 
+![](https://i.imgur.com/OD7GAPW.png)
+
+Ya tendremos nuestra página cargada e instalada.

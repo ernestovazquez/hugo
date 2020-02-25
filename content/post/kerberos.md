@@ -2,7 +2,7 @@
 ---
 title: "Creación de un sistema de cuentas de usuarios en GNU/Linux con LDAP, Kerberos 5 y NFS4"
 date: 2020-02-10T15:04:52+01:00
-draft: false
+draft: true
 ---
 
 Complementa el directorio instalado en croqueta creando un sistema centralizado de cuentas de usuarios en GNU/Linux con LDAP, Kerberos 5 y NFS4.

@@ -129,7 +129,7 @@ adding new entry "cn=pruebagroup,ou=Group,dc=ernesto,dc=gonzalonazareno,dc=org"
 adding new entry "uid=pruebauser,ou=People,dc=ernesto,dc=gonzalonazareno,dc=org"
 ```
 
-A continuación tenemos que editar el fichero debian@croqueta:~$ sudo nano `/etc/ldap/ldap.conf.`
+A continuación tenemos que editar el fichero `/etc/ldap/ldap.conf.` Tanto en el cliente como en el servidor.
 
 ```
 debian@croqueta:~$ sudo nano /etc/ldap/ldap.conf
@@ -491,7 +491,7 @@ Para ello vamos a instalar los paquetes necesarios.
 Vamos a cambiar los permisos al siguiente fichero, para que ldap pueda acceder.
 
 ```
-root@croqueta:~# chgrp openldap /etc/krb5.keytab 
+root@croqueta:~# chmod 640 /etc/krb5.keytab
 root@croqueta:~# chgrp openldap /etc/krb5.keytab
 ```
 
@@ -517,7 +517,7 @@ Ahora vamos a reiniciar los servicios:
 root@croqueta:~# systemctl restart slapd
 ```
 
-Para comprobar si está activado SASL/GSSAPI realizamos la siguiente consulta.
+Para comprobar si está activado **SASL/GSSAPI** realizamos la siguiente consulta.
 
 ```
 root@croqueta:~# ldapsearch -x -b "" -s base -LLL supportedSASLMechanisms
@@ -530,6 +530,100 @@ Ahora con el usuario **pruebauser** desde tortilla:
 
 ```
 ubuntu@tortilla:~$ ldapsearch "gidNumber=2510"
+
+ldap_sasl_interactive_bind_s: Unknown authentication method (-6)
+	additional info: SASL(-4): no mechanism available: No worthy mechs found
+```
+
+Para que funcione vamos a instalar en tortilla el siguiente paquete.
+
+```
+root@tortilla:/etc/ldap# apt install libsasl2-modules-gssapi-mit
+```
+
+He tenido que abrir los siguientes puertos: 464 tcp, 464 udp, 88 udp y 749 tcp.
+
+He tenido que realizar el **klist y kinit** en croqueta.
+
+```
+root@croqueta:~# kinit pruebauser
+Password for pruebauser@ERNESTO.GONZALONAZARENO.ORG: 
+
+root@croqueta:~# klist -5
+Ticket cache: FILE:/tmp/krb5cc_0
+Default principal: pruebauser@ERNESTO.GONZALONAZARENO.ORG
+
+Valid starting       Expires              Service principal
+02/26/2020 12:55:54  02/26/2020 22:55:54  krbtgt/ERNESTO.GONZALONAZARENO.ORG@ERNESTO.GONZALONAZARENO.ORG
+	renew until 02/27/2020 12:54:36
+    
+root@croqueta:~# ldapwhoami
+SASL/GSSAPI authentication started
+SASL username: pruebauser@ERNESTO.GONZALONAZARENO.ORG
+SASL SSF: 256
+SASL data security layer installed.
+dn:uid=pruebauser,cn=gssapi,cn=auth
+```
+
+He tenido que añadir la información al fichero de configuración:
+
+```
+root@tortilla:/etc/ldap# nano ldap.conf 
+
+BASE    dc=ernesto,dc=gonzalonazareno,dc=org
+URI     ldap://ldap.ernesto.gonzalonazareno.org
+...
+SASL_MECH GSSAPI
+SASL_REALM ERNESTO.GONZALONAZARENO.ORG
+SASL_NOCANON ON
+```
+
+```
+root@tortilla:~# sudo nano /etc/ldap/sasl2/slapd.conf
+
+mech_list GSSAPI
+```
+
+Si necesitamos quitar los tickets podemos realizar un `kdestoy`, en mi caso voy a realizar **klist y kinit.**
+
+```
+root@tortilla:/etc/ldap# kdestroy 
+
+root@tortilla:/etc/ldap# kinit pruebauser
+Password for pruebauser@ERNESTO.GONZALONAZARENO.ORG: 
+
+root@tortilla:~# klist -5
+Ticket cache: FILE:/tmp/krb5cc_0
+Default principal: pruebauser@ERNESTO.GONZALONAZARENO.ORG
+
+Valid starting     Expires            Service principal
+02/26/20 12:56:42  02/26/20 22:56:42  krbtgt/ERNESTO.GONZALONAZARENO.ORG@ERNESTO.GONZALONAZARENO.ORG
+	renew until 02/27/20 12:56:39
+02/26/20 13:00:43  02/26/20 22:56:42  ldap/croqueta.ernesto.gonzalonazareno.org@ERNESTO.GONZALONAZARENO.ORG
+	renew until 02/27/20 12:56:39
+
+root@tortilla:/etc/ldap# ldapwhoami
+SASL/GSSAPI authentication started
+SASL username: pruebauser@ERNESTO.GONZALONAZARENO.ORG
+SASL SSF: 56
+SASL data security layer installed.
+dn:uid=pruebauser,cn=gssapi,cn=auth
+```
+
+## PAM
+
+Para que el sistema pueda usar kerberos es necesario instalar los siguientes paquetes.
+
+```
+root@croqueta:~# apt install libpam-krb5
+root@tortilla:~# apt install libpam-krb5
+```
+
+Vamos a realizar una copia del fichero que vamos a modificar, por seguridad.
+
+```
+root@croqueta:~# cp -r /etc/pam.d /etc/pam.d.old
+root@tortilla:~# cp -r /etc/pam.d /etc/pam.d.old
 ```
 
 

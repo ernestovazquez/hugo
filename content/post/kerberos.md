@@ -92,6 +92,16 @@ Vamos a crear el usuario y el grupo en un nuevo fichero.
 ```
 debian@croqueta:~/kerberos$ nano inicio.ldif
 
+dn: ou=People,dc=ernesto,dc=gonzalonazareno,dc=org
+ou: People
+objectClass: top
+objectClass: organizationalUnit
+
+dn: ou=Group,dc=ernesto,dc=gonzalonazareno,dc=org
+ou: Group
+objectClass: top
+objectClass: organizationalUnit
+
 dn: cn=pruebagroup,ou=Group,dc=ernesto,dc=gonzalonazareno,dc=org
 objectClass: posixGroup
 objectClass: top
@@ -453,6 +463,9 @@ Para ver los tickets de la sesión de usuario utilizarenos el comanto `klist -5`
 Para autenticarnos utilizarenos `kinit` seguido del nombre de usuario.
 
 ```
+ubuntu@tortilla:~$ klist -5
+klist: No credentials cache found (filename: /tmp/krb5cc_1000
+
 root@tortilla:/home/ubuntu# kinit pruebauser
 Password for pruebauser@ERNESTO.GONZALONAZARENO.ORG: 
 
@@ -478,8 +491,8 @@ Para ello vamos a instalar los paquetes necesarios.
 Vamos a cambiar los permisos al siguiente fichero, para que ldap pueda acceder.
 
 ```
-debian@croqueta:~$ chgrp openldap /etc/krb5.keytab 
-debian@croqueta:~$ sudo chgrp openldap /etc/krb5.keytab 
+root@croqueta:~# chgrp openldap /etc/krb5.keytab 
+root@croqueta:~# chgrp openldap /etc/krb5.keytab
 ```
 
 A continuación vamos a añadir al fichero de configuración de slapd lo siguiente.
@@ -497,4 +510,26 @@ SASL_MECH GSSAPI
 SASL_REALM ERNESTO.GONZALONAZARENO.ORG
 SASL_NOCANON ON
 ```
+
+Ahora vamos a reiniciar los servicios:
+
+```
+root@croqueta:~# systemctl restart slapd
+```
+
+Para comprobar si está activado SASL/GSSAPI realizamos la siguiente consulta.
+
+```
+root@croqueta:~# ldapsearch -x -b "" -s base -LLL supportedSASLMechanisms
+
+dn:
+supportedSASLMechanisms: GSSAPI
+```
+
+Ahora con el usuario **pruebauser** desde tortilla:
+
+```
+ubuntu@tortilla:~$ ldapsearch "gidNumber=2510"
+```
+
 

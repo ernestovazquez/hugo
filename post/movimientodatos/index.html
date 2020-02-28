@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      Práctica 7 Movimiento de datos - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title">Práctica 7 Movimiento de datos</h2>
+      <section class="post-meta">
+        <time class="post-date">February 28, 2020</time>
+      </section>
+    </header>
+    <section class="post-content">
+      
+
+<h2 id="alumno-1-ernesto-vázquez-garcía">Alumno 1 (Ernesto Vázquez García)</h2>
+
+<p><strong>1. Realiza una exportación del esquema de SCOTT usando la consola Enterprise Manager, con las siguientes condiciones:</strong>
+<strong>• Exporta tanto la estructura de las tablas como los datos de las mismas.</strong>
+<strong>• Excluye la tabla BONUS y los departamentos sin empleados.</strong>
+<strong>• Realiza una estimación previa del tamaño necesario para el fichero de exportación.</strong>
+<strong>• Programa la operación para dentro de 5 minutos.</strong>
+<strong>• Genera un archivo de log en el directorio raíz.
+Realiza ahora la operación con Oracle Data Pump.</strong></p>
+
+<p>Para realizar la exportación primero tenemos que entrar en la consola de Enterprise Manager.</p>
+
+<p>Nos dirigimos a la pestaña de <strong>Movimiento de Datos</strong> y entramos en <strong>Exportar a Archivos de Exportación</strong></p>
+
+<p><img src="https://i.imgur.com/CDFjUSe.png" alt="" /></p>
+
+<p>A continuación vamos a marcar el <strong>tipo de exportación</strong>:</p>
+
+<p><img src="https://i.imgur.com/cxE91Do.png" alt="" /></p>
+
+<p>En esta pantalla vamos a elegir que esquema queremos exportar en nuestro caso seleccionamos el <strong>esquema de SCOTT</strong>:</p>
+
+<p><img src="https://i.imgur.com/SFhR3ek.png" alt="" /></p>
+
+<p>A continuación vamos a desplegar las opciones avanzadas para poder seleccionar la tabla bonus.</p>
+
+<p>Para ello, seleccionamos lo siguiente:</p>
+
+<ul>
+<li>Tipo de Objeto: <strong>TABLE</strong></li>
+<li>Expresión de Nombre de Objeto: <strong>=&lsquo;BONUS&rsquo;</strong></li>
+</ul>
+
+<p><img src="https://i.imgur.com/etrojbm.png" alt="" /></p>
+
+<p>Ahora vamos a darle nombre al trabajo y podemos planificar la hora y fecha de inicio. Aquí podremos programar la operación para dentro de 5 minutos.</p>
+
+<p><img src="https://i.imgur.com/oy4mEPJ.png" alt="" /></p>
+
+<p>Una vez le demos a <strong>Siguiente</strong> nos aparecerá un <strong>resumen</strong> de los datos que vamos a realizar.</p>
+
+<p><img src="https://i.imgur.com/5zhoCam.png" alt="" /></p>
+
+<p>Por último nos aparecerá una pantalla de carga, y una vez finalize el proceso nos pararecerá la siguiente pantalla.</p>
+
+<p><img src="https://i.imgur.com/Dzq7yxR.png" alt="" /></p>
+
+<p>Para verificar que se ha creado el fichero de importación nos vamos a la siguiente carpeta:</p>
+
+<p><img src="https://i.imgur.com/KtBVHQQ.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/AA46Aul.png" alt="" /></p>
+
+<p>Como podemos apreciar se ha exportado las tablas deseadas.</p>
+
+<p>Para exportarlo con Oracle Data Pump podremos hacerlo con el siguiente comando:</p>
+
+<pre><code>expdp system/dios dumpfile=EXP_SCOTT.DMP schemas=scott directory=DATA_PUMP_DIR
+</code></pre>
+
+<p><img src="https://i.imgur.com/1wmWWnR.png" alt="" /></p>
+
+<p><strong>2. Importa el fichero obtenido anteriormente usando Enterprise Manager pero en un usuario distinto de la misma base de datos.</strong></p>
+
+<p>Este paso se puede hacer por Enterprise Manager o por la terminal.</p>
+
+<p>En nuestro caso vamos a elegir <strong>Enterprise Manager</strong>. Para ello, nos dirigimos a <strong>Importar de Archivos de Exportación.</strong></p>
+
+<p>Nos conectamos con otro usuario y accedemos a la misma pestaña que antes.</p>
+
+<p><img src="https://i.imgur.com/7CIo48M.png" alt="" /></p>
+
+<p>Como se puede apreciar me he conectado con el usuario: <strong>ERNESTO.</strong> El cual no tiene ninguna tabla introducida.</p>
+
+<p>Ahora entramos en la pestaña de <strong>Importar de Archivos de Exportación</strong></p>
+
+<p><img src="https://i.imgur.com/XpmuAow.png" alt="" /></p>
+
+<p>En la siguiente pantalla vamos a tener que agregar el esquema anterior.</p>
+
+<p><img src="https://i.imgur.com/6yFqdBp.png" alt="" /></p>
+
+<p>Aqui podremos ver el nombre del fichero de log y el directorio donde se guarda dicho fichero.</p>
+
+<p><img src="https://i.imgur.com/Ph0Hc0j.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/F11FNdH.png" alt="" /></p>
+
+<p><img src="https://i.imgur.com/nDWxxE9.png" alt="" /></p>
+
+<p>Ya tendremos en el nuevo usuario el esquema de SCOTT realizando una importación.</p>
+
+<p>Para <strong>importar</strong> un esquema de la base de datos con <strong>Oracle Data Pump</strong> podremos lo siguiente.</p>
+
+<pre><code>impdp ernesto/ernesto dumpfile=EXP_SCOTT.DMP schemas=scott directory=DATA_PUMP_DIR remap_schema=scott:ernesto
+</code></pre>
+
+<p><strong>3. Realiza una exportación de la estructura de todas las tablas de la base de datos usando el comando expdp de Oracle Data Pump probando todas las posibles opciones que ofrece dicho comando y documentándolas adecuadamente.</strong></p>
+
+<p>Primero vamos a vamos a ver las diferentes opciones que nos ofrece el comando expdp, para ello vamos a ver el manual.</p>
+
+<pre><code>expdp HELP=Y
+</code></pre>
+
+<p><img src="https://i.imgur.com/GB9TmhU.png" alt="" /></p>
+
+<p>Como podemos apreciar estas son las diferentes opciones que tiene el comando <strong>expdp.</strong></p>
+
+<p>A continuación vamos a comentar todas las opciones que nos ofrece esta herramienta.</p>
+
+<ul>
+<li><strong>ATTACH</strong>: Nombre de un Job existente para conectarte. Esta opción necesita los privilegios <strong>EXP_FULL_DATABASE</strong> para otros esquemas.</li>
+<li><strong>COMPRESSION</strong>: Comprime el contenido del archivo.</li>
+<li><strong>CONSISTENT</strong>: Copia de seguridad de lectura consistente.</li>
+<li><strong>CONTENT</strong>: Especifica datos para cargar.</li>
+<li><strong>DIRECTORY</strong>: Nombre del objeto que apunta a un directorio.</li>
+<li><strong>DUMPFILE</strong>: El nombre del archivo de datos de exportación.</li>
+<li><strong>ESTIMATE</strong>: Solamente calcule el espacio en disco requerido.</li>
+<li><strong>ESTIMATE_ONLY</strong>: Se utiliza para calcular el espacio en disco solo para datos.</li>
+<li><strong>EXCLUDE</strong>: Excluye de la exportación de la base de datos un tipo de objeto.</li>
+<li><strong>FILESIZE</strong>: El tamaño máximo de archivo permitido para cualquier archivo de volcado de exportación.</li>
+<li><strong>FLASHBACK_TIME</strong>: Al igual que en <strong>CONSISTENT</strong>, permite una exportación consistente de lectura</li>
+<li><strong>FULL</strong>: Exportación completa de la base de datos. Esta opción necesita los privilegios <strong>EXP_FULL_DATABASE</strong>.</li>
+<li><strong>INCLUDE</strong>: Al contrario que <strong>EXCLUDE</strong>, esta opción es para incluir específicamente en la exportación.</li>
+<li><strong>JOB_NAME</strong>: Parecido al parámetro <strong>ATTACH</strong>, Nombre por el que se puede hacer referencia al trabajo de exportación.</li>
+<li><strong>LOGFILE</strong>: El nombre del archivo de registro de exportación.</li>
+<li><strong>NOLOGFILE</strong>: Para suprimir la creación del archivo en la exportación.</li>
+<li><strong>PARALLEL</strong>: El número máximo de subprocesos concurrentes para la exportación.</li>
+<li><strong>PARFILE</strong>: Nombre del archivo de parámetros específicos del sistema operativo.</li>
+<li><strong>QUERY</strong>: Filtrado de datos y nombres de objetos durante la exportación.</li>
+<li><strong>REUSE_DUMPFILES</strong>: Sobrescribir los archivos existentes del volcado de la exportación</li>
+<li><strong>SAMPLE</strong>: Porcentaje de datos a exportar.</li>
+<li><strong>SCHEMAS</strong>: El esquema que queremos exportar. Esta opción necesita los privilegios <strong>EXP_FULL_DATABASE</strong></li>
+<li><strong>STATUS</strong>: El estado dl trabajo en frecuencia.</li>
+<li><strong>TABLES</strong>: Lista de tablas para una exportación.</li>
+<li><strong>TABLESPACES</strong>: Lista de espacios de tabla para una exportación.</li>
+<li><strong>TRANSPORT_FULL_CHECK</strong>: Verifica los segmentos de almacenamiento de todas las tablas.</li>
+<li><strong>TRANSPORT_TABLESAPCES</strong>: Lista de espacios de tablas desde los que se descargarán los metadatos.</li>
+</ul>
+
+<blockquote>
+<p>Estas opciones se pueden concatenar para tener mayor número de parámetros y opciones para tener la exportación deseada.</p>
+</blockquote>
+
+<p>Vamos a realizar una exportación de ejemplo</p>
+
+<p><img src="https://i.imgur.com/Hk0ckfl.png" alt="" /></p>
+
+<p><strong>4. Intenta realizar operaciones similares de importación y exportación con las herramientas proporcionadas con MySQL desde línea de comandos, documentando el proceso.</strong></p>
+
+<p>Primero tenemos que agregar unas tablas a la base de datos que queremos exportar para realizar la prueba.</p>
+
+<p>Para ello hacemos lo siguiente:</p>
+
+<pre><code>MariaDB [(none)]&gt; CREATE DATABASE exportacion;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]&gt; use exportacion;
+Database changed
+
+MariaDB [exportacion]&gt; show tables;
++-----------------------+
+| Tables_in_exportacion |
++-----------------------+
+| animales              |
+| clientes              |
++-----------------------+
+2 rows in set (0.001 sec)
+</code></pre>
+
+<p>Realizaremos la exportacion:</p>
+
+<pre><code>vagrant@mysql:~$ mysqldump -u ernesto -p exportacion &gt; exportacion.sql
+Enter password: 
+
+vagrant@mysql:~$ ls
+exportacion.sql
+</code></pre>
+
+<p>Tendremos que crear la nueva base de datos para la importacion.</p>
+
+<pre><code>vagrant@mysql:~$ sudo mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 62
+Server version: 10.3.18-MariaDB-0+deb10u1 Debian 10
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]&gt; CREATE DATABASE importacion;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]&gt; Bye
+</code></pre>
+
+<p>Importación a otra base de datos.</p>
+
+<pre><code>vagrant@mysql:~$ mysql -u ernesto -p importacion &lt; exportacion.sql 
+Enter password: 
+
+vagrant@mysql:~$ sudo mysql -u ernesto -p importacion
+Enter password: 
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 65
+Server version: 10.3.18-MariaDB-0+deb10u1 Debian 10
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [importacion]&gt; show tables;
++-----------------------+
+| Tables_in_importacion |
++-----------------------+
+| animales              |
+| clientes              |
++-----------------------+
+2 rows in set (0.001 sec)
+</code></pre>
+
+<p><img src="https://i.imgur.com/4vqq0bG.png" alt="" /></p>
+
+<p>Referencia: <a href="https://www.stackscale.com/es/blog/importar-exportar-bases-datos-mysql-mariadb/">Artículo sobre MySQL</a></p>
+
+<p><strong>5. Realiza operaciones de importación y exportación de colecciones en MongoDB.</strong></p>
+
+<p>Primero vamos a crear un usuario y una base de datos con algunas colecciones dentro para la exportación.</p>
+
+<pre><code>&gt; use peliculas
+switched to db peliculas
+
+&gt; db.peliculas.save({titulo:'Batman el caballero oscuro'});
+WriteResult({ &quot;nInserted&quot; : 1 })
+
+&gt; db.peliculas.find();
+{ &quot;_id&quot; : ObjectId(&quot;5e54d0003488f9e6b3ffc688&quot;), &quot;titulo&quot; : &quot;Batman el caballero oscuro&quot; }
+
+&gt; show dbs;
+admin      0.000GB
+config     0.000GB
+local      0.000GB
+peliculas  0.000GB
+
+&gt; db
+peliculas
+
+&gt; db.createUser(
+... {
+... user: &quot;ernesto&quot;,
+... pwd: &quot;ernesto&quot;,
+... roles: [&quot;dbOwner&quot;]
+... }
+... )
+Successfully added user: { &quot;user&quot; : &quot;ernesto&quot;, &quot;roles&quot; : [ &quot;dbOwner&quot; ] }
+</code></pre>
+
+<p>Ahora si muestro los usuarios tendremos la siguiente información:</p>
+
+<pre><code>&gt; show users
+{
+	&quot;_id&quot; : &quot;peliculas.ernesto&quot;,
+	&quot;userId&quot; : UUID(&quot;0079cc4b-bd5c-4978-b6a7-8b32aed32965&quot;),
+	&quot;user&quot; : &quot;ernesto&quot;,
+	&quot;db&quot; : &quot;peliculas&quot;,
+	&quot;roles&quot; : [
+		{
+			&quot;role&quot; : &quot;dbOwner&quot;,
+			&quot;db&quot; : &quot;peliculas&quot;
+		}
+	],
+	&quot;mechanisms&quot; : [
+		&quot;SCRAM-SHA-1&quot;,
+		&quot;SCRAM-SHA-256&quot;
+	]
+}
+</code></pre>
+
+<p>Ahora vamos a realizar la exportación de dicha colección.</p>
+
+<pre><code>vagrant@mongodb:~$ mongodump -d peliculas -o exportacion -u ernesto -p ernesto
+2020-02-25T07:53:26.070+0000	writing peliculas.peliculas to 
+2020-02-25T07:53:26.071+0000	done dumping peliculas.peliculas (1 document)
+
+vagrant@mongodb:~$ ls
+exportacion
+</code></pre>
+
+<pre><code>vagrant@mongodb:~/exportacion$ tree
+.
+└── peliculas
+    ├── peliculas.bson
+    └── peliculas.metadata.json
+
+1 directory, 2 files
+</code></pre>
+
+<p>Como se puede apreciar se ha realizado correctamente la exportación.</p>
+
+<p>Ahora vamos a importar la colección en otra base de datos. También se puede importar a otro servidor/máquina local que tenga un nombre de usuario y una contraseña.</p>
+
+<pre><code>vagrant@mongodb:~$ mongorestore -d importacion exportacion/peliculas/ -u ernesto -p ernesto
+</code></pre>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

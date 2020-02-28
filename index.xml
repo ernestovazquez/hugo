@@ -5,10 +5,19 @@
     <link>https://ernestovazquez.es/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 21 Feb 2020 08:50:52 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 28 Feb 2020 15:04:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Práctica 7 Movimiento de datos</title>
+      <link>https://ernestovazquez.es/post/movimientodatos/</link>
+      <pubDate>Fri, 28 Feb 2020 15:04:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/movimientodatos/</guid>
+      <description>Alumno 1 (Ernesto Vázquez García) 1. Realiza una exportación del esquema de SCOTT usando la consola Enterprise Manager, con las siguientes condiciones: • Exporta tanto la estructura de las tablas como los datos de las mismas. • Excluye la tabla BONUS y los departamentos sin empleados. • Realiza una estimación previa del tamaño necesario para el fichero de exportación. • Programa la operación para dentro de 5 minutos. • Genera un archivo de log en el directorio raíz.</description>
+    </item>
     
     <item>
       <title>Vagrant con LXC</title>

@@ -67,13 +67,31 @@
     
         <a class="newer-posts" href="/">&larr; Newer Posts</a>
     
-    <span class="page-number">Page 2 of 7</span>
+    <span class="page-number">Page 2 of 8</span>
     
         <a class="older-posts" href="/page/3/">Older Posts &rarr;</a>
     
 </nav>
 
     </div>
+		
+      <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/post/proxy/">Proxy, proxy inverso y balanceadores de carga</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Balanceador de carga Primero vamos a instalar HAproxy
+vagrant@balanceador:~$ sudo apt install haproxy  Vamos al fichero de configuración y pondremos lo siguiente:
+vagrant@balanceador:/etc/haproxy$ sudo nano haproxy.cfg global daemon maxconn 256 user haproxy group haproxy log 127.0.0.1 local0 log 127.0.0.1 local1 notice defaults mode http log global timeout connect 5000ms timeout client 50000ms timeout server 50000ms listen granja_cda bind 192.168.1.80:80 mode http stats enable stats auth cda:cda balance roundrobin server uno 10. &hellip; <a class="read-more" href="/post/proxy/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">February 18, 2020</time>
+	</footer>
+</article>
+
 		
       <article class="post">
 	<header class="post-header">
@@ -110,30 +128,13 @@ SELinux ha sido integrado a la rama principal del núcleo Linux desde la versió
 </article>
 
 		
-      <article class="post">
-	<header class="post-header">
-    
-		<h2 class="post-title"><a href="/post/correo/">Servidor de correos en los servidores cloud</a></h2>
-	</header>
-	<section class="post-excerpt">
-    <p>
-      Esta tarea consiste en instalar y configurar un servidor de correo similar al de cualquier organización, capaz de enviar y recibir directamente correo, almacenar los usuarios en LDAP, filtrar el correo en busca de virus o spam y servirlo a sus usuarios a través de los protocolos POP, IMAP y configurar un Webmail.
- El servidor de correos se va a instalar en croqueta (debian) Los servidores que necesites para realizar la práctica serán los del cloud: salmorejo (servidor web) y croqueta (servidor dns y ldap). &hellip; <a class="read-more" href="/post/correo/">&raquo;</a>
-    </p>
-	</section>
-	<footer class="post-meta">
-    <time class="post-date">February 05, 2020</time>
-	</footer>
-</article>
-
-		
     
 
 <nav class="pagination" role="navigation">
     
         <a class="newer-posts" href="/">&larr; Newer Posts</a>
     
-    <span class="page-number">Page 2 of 7</span>
+    <span class="page-number">Page 2 of 8</span>
     
         <a class="older-posts" href="/page/3/">Older Posts &rarr;</a>
     

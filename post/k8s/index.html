@@ -62,11 +62,458 @@
       </section>
     </header>
     <section class="post-content">
-      <p>Elige un sistema sencillo de instalación multinodo de k8s de los disponibles en cncf.io y despliega una aplicación explicando detalladamente las características.</p>
+      
+
+<p>Elige un sistema sencillo de instalación multinodo de k8s de los disponibles en cncf.io y despliega una aplicación explicando detalladamente las características.</p>
 
 <p>Este cluster puede estar ubicado en MVs en tu propio equipo o en instancias nuevas en OpenStack.</p>
 
 <hr />
+
+<h2 id="introducción">Introducción</h2>
+
+<p>Es una <strong>distribución certificada</strong> de Kubernetes. Para instalarla solo nos bajaremos un binario donde solo hace falta <strong>512 MB de RAM</strong> ya que es muy <strong>ligero</strong>.</p>
+
+<h2 id="desplegar-cluster-kubernetes">Desplegar cluster kubernetes</h2>
+
+<p>Accedemos a la primera máquina y procedemos a <strong>instalar k3s</strong>.</p>
+
+<pre><code>vagrant@maquina1:~$ sudo su -
+root@maquina1:~# cd /usr/local/bin/
+root@maquina1:/usr/local/bin# wget https://github.com/rancher/k3s/releases/download/v0.2.0/k3s
+
+...
+
+Saving to: ‘k3s’
+
+k3s                                   100%[=======================================================================&gt;]  35.99M  5.35MB/s    in 7.4s    
+
+2020-02-29 12:58:24 (4.84 MB/s) - ‘k3s’ saved [37735552/37735552]
+</code></pre>
+
+<p>Como se puede observar ocupa 35.99M.
+A continuación vamos a darle <strong>permisos de ejecución</strong>.</p>
+
+<pre><code>root@maquina1:/usr/local/bin# chmod +x k3s 
+</code></pre>
+
+<p>Para comenzar a <strong>desplegar nuestro cluster</strong> (el nodo master) ejecutaremos lo siguiente:</p>
+
+<pre><code>root@maquina1:/usr/local/bin# k3s server &amp;
+</code></pre>
+
+<p>Ahora tendremos el comando k3s que nos permite <strong>gestionar el cluster</strong> y sin necesidad de autenticarnos en el cluster podemos ejecutar comandos con kubectl.</p>
+
+<pre><code>vagrant@maquina1:~$ k3s kubectl get nodes
+NAME       STATUS   ROLES    AGE   VERSION
+maquina1   Ready    &lt;none&gt;   88s   v1.13.4-k3s.1
+</code></pre>
+
+<p>Podemos observar que ya tendremos la <strong>maquina1</strong> dentro del cluster.</p>
+
+<p>A continuación vamos a configurar la segunda máquina.</p>
+
+<p>Para ello tendremos que acceder y descargarnos el <strong>binario k3s</strong> como hemos realizado previamente.</p>
+
+<pre><code>vagrant@maquina2:~$ sudo su -
+root@maquina2:~# cd /usr/local/bin/
+root@maquina2:/usr/local/bin# wget https://github.com/rancher/k3s/releases/download/v0.2.0/k3s
+root@maquina2:/usr/local/bin# chmod +x k3s 
+</code></pre>
+
+<p>Ahora vamos a necesitar <strong>el token de autentificación</strong> de la <strong>maquina1</strong> para que podamos introducir la segunda máquina en nuestro custer.</p>
+
+<pre><code>root@maquina1:~# cat /var/lib/rancher/k3s/server/node-token 
+K10e890d9eea043fe30e8ef86a508aef63e7a3b040f8973f30607ef734fa0958c28::node:3b293a3082963dc4d0ea71923fd7e93e
+</code></pre>
+
+<p>Ya podremos ejecutar el siguiente comando, donde pondremos <strong>la ip y el token</strong> de la primera máquina para que se conecta al cluster.</p>
+
+<pre><code>root@maquina2:/usr/local/bin# k3s agent --server https://192.168.33.10:6443 --token K10e890d9eea043fe30e8ef86a508aef63e7a3b040f8973f30607ef734fa0958c28::node:3b293a3082963dc4d0ea71923fd7e93e
+</code></pre>
+
+<p>Se ejecuta <strong>k3s</strong> en la <strong>maquina2</strong> y si accedemos a la <strong>maquina1</strong> y le decimos al cluster que nos devuelva los nodos de nuestro cluster los saldria lo siguiente.</p>
+
+<pre><code>vagrant@maquina1:~$ k3s kubectl get nodes
+NAME       STATUS   ROLES    AGE     VERSION
+maquina1   Ready    &lt;none&gt;   15m     v1.13.4-k3s.1
+maquina2   Ready    &lt;none&gt;   2m32s   v1.13.4-k3s.1
+</code></pre>
+
+<p><img src="https://i.imgur.com/VMlsQMu.png" alt="" /></p>
+
+<p>Ahora vamos a realizar los mismos pasos con la <strong>maquina3</strong>.</p>
+
+<pre><code>vagrant@maquina3:~$ sudo su -
+root@maquina3:~# cd /usr/local/bin/
+root@maquina3:/usr/local/bin# wget https://github.com/rancher/k3s/releases/download/v0.2.0/k3s
+root@maquina3:/usr/local/bin# chmod +x k3s 
+root@maquina3:/usr/local/bin# k3s agent --server https://192.168.33.10:6443 --token K10e890d9eea043fe30e8ef86a508aef63e7a3b040f8973f30607ef734fa0958c28::node:3b293a3082963dc4d0ea71923fd7e93e
+</code></pre>
+
+<p>Ya tendremos los tres nodos en nuestro cluster</p>
+
+<p><img src="https://i.imgur.com/J7OTCU4.png" alt="" /></p>
+
+<p>Tambien podemos ver los pods que tenemos ahora mismo en el sistema.</p>
+
+<pre><code>vagrant@maquina1:~$ k3s kubectl get pods -n kube-system
+NAME                             READY   STATUS      RESTARTS   AGE
+coredns-7748f7f6df-psglj         1/1     Running     0          22m
+helm-install-traefik-5rjj2       0/1     Completed   0          22m
+svclb-traefik-699465787c-tmwhs   2/2     Running     0          22m
+traefik-5468f76b59-zqgtp         1/1     Running     0          22m
+</code></pre>
+
+<p>A continuación vamos entrar en una máquina independiente, instalaremos <strong>kubectl</strong> y desde ahí vamos a trabajar en nuestro cluster.</p>
+
+<p>Para ello vamos a entrar en nuestra máquina cliente.</p>
+
+<pre><code>sudo apt-get update &amp;&amp; sudo apt-get install -y apt-transport-https
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+echo &quot;deb https://apt.kubernetes.io/ kubernetes-xenial main&quot; | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+sudo apt-get update
+sudo apt-get install -y kubectl
+</code></pre>
+
+<p>Ahora vamos a configurar el entorno para autentificarnos en el cluster que acabamos de crear.</p>
+
+<p>VAmos a crear un directorio para los ficheros de configuración para acceder al cluster.</p>
+
+<pre><code>vagrant@cliente:~$ mkdir .kube
+vagrant@cliente:~$ cd .kube/
+vagrant@cliente:~/.kube$ 
+</code></pre>
+
+<p>Ahora copiamos el fichero <code>/etc/rancher/k3s/k3s.yaml</code> para cambiar la dirección del server.</p>
+
+<p>En la línea de server cambiamos localhost por la ip del servidor del cluster.</p>
+
+<p><img src="https://i.imgur.com/hHSYIfd.png" alt="" /></p>
+
+<p>Para cargar las credenciales vamos a crear una variable de entorno que guarda el fichero.</p>
+
+<pre><code>vagrant@cliente:~/.kube$ export KUBECONFIG=~/.kube/config 
+</code></pre>
+
+<p>Ya podremos hacer el siguiente comando para que nos devuelve los nodos de nuestro cluster.</p>
+
+<pre><code>vagrant@cliente:~/.kube$ kubectl get nodes
+NAME       STATUS   ROLES    AGE   VERSION
+maquina1   Ready    &lt;none&gt;   49m   v1.13.4-k3s.1
+maquina2   Ready    &lt;none&gt;   36m   v1.13.4-k3s.1
+maquina3   Ready    &lt;none&gt;   28m   v1.13.4-k3s.1
+</code></pre>
+
+<p><img src="https://i.imgur.com/CimyFqG.png" alt="" /></p>
+
+<p>Ya estaria interaccionando con nuestro cluster donde estarian los tres nodos.</p>
+
+<h2 id="despliegue-de-nginx">Despliegue de Nginx</h2>
+
+<p>Lo primero que vamos a hacer es instalar un contenedor con un servidor nginx, con la siguiente instrucción:</p>
+
+<pre><code>vagrant@cliente:~$ kubectl create deploy nginx --image=nginx
+deployment.apps/nginx created
+</code></pre>
+
+<p>Vamos a usar un recurso del cluster que se llama deploy (despliegue), donde indicaremos la imagen docker que se va a utilizar para crear el pod.</p>
+
+<p>Este pod va a ejecutar un contenedor y este contenedor va a ejecutar un proceso que será un servidor nginx.</p>
+
+<pre><code>vagrant@cliente:~$ kubectl get deploy,pod
+NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.extensions/nginx   1/1     1            1           95s
+
+NAME                       READY   STATUS    RESTARTS   AGE
+pod/nginx-5c7588df-6x2ff   1/1     Running   0          95s
+</code></pre>
+
+<p>Con ese comando podremos ver queya está funcionando. Donde tendremos un deployment y un pod.</p>
+
+<p>Vamos a crear un nuevo recurso en el cluster de kubernetes llamado servicios, donde nos va a permitir acceder a las aplicaciones que se están ejecutando en los contenedores. Vamos a utilizar los siguientes tipos:</p>
+
+<ul>
+<li><strong>NodePort</strong>: Este nos permite acceder desde el exterior.</li>
+<li><strong>ClusterIP</strong>: Este también proporciona la posibilidad de acceder a la aplicación o al proceso del pod, pero internamente dentro del cluster de kubernetes, no desde el exterior.</li>
+</ul>
+
+<p>A continuación vamos a crear un servicio, donde indicaremos el nombre del despliegue, el puerto donde esta funcionando la aplicación y el tipo de servicio.</p>
+
+<pre><code>vagrant@cliente:~$ kubectl expose deploy nginx --port=80 --type=NodePort
+service/nginx exposed
+</code></pre>
+
+<pre><code>vagrant@cliente:~$ kubectl get services
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.43.0.1       &lt;none&gt;        443/TCP        3h53m
+nginx        NodePort    10.43.142.205   &lt;none&gt;        80:31907/TCP   25s
+</code></pre>
+
+<p>Como podemos apreciar tenemos el servicio nginx, tipo NodePort  y nos ha mapeado el puerto 31907.</p>
+
+<p>Ahora podremos acceder a la ip del master junto al puerto que nos ha dado.</p>
+
+<p>A continuación vamos a realizar la escabilidad de los contendores.
+Actualmente contamos con un pod con un contenedor que esta ejecutando nuestra aplicación, vamos a hacer que se ejecute en varios pods.</p>
+
+<p>Para ello vamos a realizar el siguiente comando:</p>
+
+<pre><code>vagrant@cliente:~$ kubectl scale --replicas=3 deploy/nginx
+deployment.extensions/nginx scaled
+
+vagrant@cliente:~$ kubectl get deploy,pod
+NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.extensions/nginx   3/3     3            3           3h2m
+
+NAME                       READY   STATUS    RESTARTS   AGE
+pod/nginx-5c7588df-5hcf8   1/1     Running   0          29s
+pod/nginx-5c7588df-6x2ff   1/1     Running   0          3h2m
+pod/nginx-5c7588df-6znqp   1/1     Running   0          29s
+</code></pre>
+
+<p>Como podemos apreciar con el segundo comando, se ha creado dos nuevos pods. Ahora se esta balanceando la carga entre los tres contenedores.</p>
+
+<p>Con el siguiente comando podremos también ver que estos pods se están ejecutando en los distintos nodos o máquinas de nuestro cluster.</p>
+
+<pre><code>
+vagrant@cliente:~$ kubectl get pod -o wide
+NAME                   READY   STATUS    RESTARTS   AGE    IP          NODE       NOMINATED NODE   READINESS GATES
+nginx-5c7588df-5hcf8   1/1     Running   0          3m1s   10.42.0.7   maquina1   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-6x2ff   1/1     Running   0          3h5m   10.42.1.2   maquina2   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-6znqp   1/1     Running   0          3m1s   10.42.2.3   maquina3   &lt;none&gt;           &lt;none&gt;
+</code></pre>
+
+<p>En la columna <strong>NODE</strong>, podemos ver que se están ejecutando cada pod en un nodo diferente, haciendo un mejor balanceo y rendimiento de nuestro cluster.</p>
+
+<p>Vamos a crear un cuarto pod para ver donde se situaria.</p>
+
+<pre><code>vagrant@cliente:~$ kubectl scale --replicas=4 deploy/nginx
+deployment.extensions/nginx scaled
+
+vagrant@cliente:~$ kubectl get pod -o wide
+NAME                   READY   STATUS    RESTARTS   AGE     IP          NODE       NOMINATED NODE   READINESS GATES
+nginx-5c7588df-5hcf8   1/1     Running   0          5m44s   10.42.0.7   maquina1   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-6x2ff   1/1     Running   0          3h7m    10.42.1.2   maquina2   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-6znqp   1/1     Running   0          5m44s   10.42.2.3   maquina3   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-f6kq5   1/1     Running   0          10s     10.42.1.3   maquina2   &lt;none&gt;           &lt;none&gt;
+</code></pre>
+
+<p><img src="https://i.imgur.com/In1rcrW.png" alt="" /></p>
+
+<p>Podremos ver que este último pod se esta ejecutando en el segundo nodo <strong>(maquina2)</strong>.</p>
+
+<p>Esta herramiento también nos proporciona <strong>tolerancia a fallo</strong>, vamos a ver un ejemplo.</p>
+
+<p>En el caso de borrar un pod, ya sea porque lo borramos a mano o falla, se va a crear un nuevo pod.</p>
+
+<pre><code>vagrant@cliente:~$ kubectl get pod -o wide
+NAME                   READY   STATUS    RESTARTS   AGE     IP          NODE       NOMINATED NODE   READINESS GATES
+nginx-5c7588df-5hcf8   1/1     Running   0          5m44s   10.42.0.7   maquina1   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-6x2ff   1/1     Running   0          3h7m    10.42.1.2   maquina2   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-6znqp   1/1     Running   0          5m44s   10.42.2.3   maquina3   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-f6kq5   1/1     Running   0          10s     10.42.1.3   maquina2   &lt;none&gt;           &lt;none&gt;
+
+vagrant@cliente:~$ kubectl delete pod nginx-5c7588df-6x2ff
+pod &quot;nginx-5c7588df-6x2ff&quot; deleted
+
+vagrant@cliente:~$ kubectl get pod -o wide
+NAME                   READY   STATUS    RESTARTS   AGE     IP          NODE       NOMINATED NODE   READINESS GATES
+nginx-5c7588df-5hcf8   1/1     Running   0          11m     10.42.0.7   maquina1   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-6znqp   1/1     Running   0          11m     10.42.2.3   maquina3   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-f6kq5   1/1     Running   0          6m10s   10.42.1.3   maquina2   &lt;none&gt;           &lt;none&gt;
+nginx-5c7588df-kh9ks   1/1     Running   0          4s      10.42.2.4   maquina3   &lt;none&gt;           &lt;none&gt;
+</code></pre>
+
+<p>Podemos ver que hemos eliminado un pod, pero el despliegue nos asegura que siempre vamos a tener los pods que hemos configurado.</p>
+
+<h2 id="despligue-de-una-aplicación">Despligue de una aplicación.</h2>
+
+<p>Ya sabemos <strong>desplegar nginx en kubernetes</strong> como un <strong>escenario de pruebas</strong>, ahora vamos a implantar una <strong>aplicación real</strong>, como es el caso de <strong>Let&rsquo;s Chat</strong>.</p>
+
+<p>Los fichero que vamos a configurar son los siguientes. Donde pondremos en cada uno el nombre y las especificaciones que va a tener los despliegues.</p>
+
+<pre><code>vagrant@cliente:~/letschat$ ls
+ingress.yaml              letschat-srv.yaml      mongo-srv.yaml
+letschat-deployment.yaml  mongo-deployment.yaml
+</code></pre>
+
+<p>En el caso de nginx lo hemos configurado en la misma línea de ejecución del deploy, pero en este caso lo haremos de una manera más <strong>ordenada y profesional</strong> realizandolo en un fichero de configuración. Este uso es más <strong>eficiente</strong> por si tenemos que pasarlo a otro compañero y tener exactamente el mismo escenario.</p>
+
+<p>Primero tenemos que tener el despliegue de mongodb, el cual es la base de datos que utiliza la aplicación let&rsquo;s chat.</p>
+
+<p>Este fichero contiene lo siguiente:</p>
+
+<pre><code>vagrant@cliente:~/letschat$ nano mongo-deployment.yaml 
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mongo
+  labels:
+    name: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: mongo
+  template:
+    metadata:
+      labels:
+        name: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo
+        ports:
+          - name: mongo
+            containerPort: 27017
+</code></pre>
+
+<p>Para crear este despliegue de mongodb pondremos lo siguiente:</p>
+
+<pre><code>vagrant@cliente:~/letschat$ kubectl create -f mongo-deployment.yaml 
+deployment.extensions/mongo created
+</code></pre>
+
+<p>Ya lo tendremos creado y ahora se estan creado los pods y el despligue.</p>
+
+<pre><code>vagrant@cliente:~/letschat$ kubectl get deploy,pod
+NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.extensions/mongo   1/1     1            1           92s
+
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/mongo-854684b4c5-ffz66   1/1     Running   0          92s
+</code></pre>
+
+<p>A continuación, vamos a desplegar let&rsquo;s chat. Primero vamos a ver el fichero de configuración que vamos a utilizar para el despliegue.</p>
+
+<pre><code>vagrant@cliente:~/letschat$ nano letschat-deployment.yaml 
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: letschat
+  labels:
+    name: letschat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: letschat
+  template:
+    metadata:
+      labels:
+        name: letschat
+    spec:
+      containers:
+      - name: letschat
+        image: sdelements/lets-chat
+        ports:
+          - name: http-server
+            containerPort: 8080
+</code></pre>
+
+<p>Creamos el despligue:</p>
+
+<pre><code>vagrant@cliente:~/letschat$ kubectl create -f letschat-deployment.yaml 
+deployment.extensions/letschat created
+</code></pre>
+
+<p>Ya tendremos el deploy y el pod creados. Como podemos ver solamente tarda unos segundos, a pensar de que tiene que bajar la imagen.</p>
+
+<pre><code>vagrant@cliente:~/letschat$ kubectl get deploy,pod
+NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.extensions/letschat   1/1     1            1           27s
+deployment.extensions/mongo      1/1     1            1           5m42s
+
+NAME                           READY   STATUS    RESTARTS   AGE
+pod/letschat-bc787f6b8-hxkld   1/1     Running   0          27s
+pod/mongo-854684b4c5-ffz66     1/1     Running   0          5m42s
+</code></pre>
+
+<p>Ahora vamos a ver donde se esta ejecutando cada despliegue.</p>
+
+<pre><code>vagrant@cliente:~/letschat$ kubectl get pod -o wide
+NAME                       READY   STATUS    RESTARTS   AGE     IP          NODE       NOMINATED NODE   READINESS GATES
+letschat-bc787f6b8-hxkld   1/1     Running   3          2m57s   10.42.1.3   maquina2   &lt;none&gt;           &lt;none&gt;
+mongo-854684b4c5-ffz66     1/1     Running   0          8m12s   10.42.3.2   maquina3   &lt;none&gt;           &lt;none&gt;
+</code></pre>
+
+<p>Podemos apreciar que se están ejecutando en nodos diferente.</p>
+
+<p>Ya estarian los servicios funcionando ahora tendremos que <strong>acceder a ellos</strong>. Nosotros no necesitamos entrar a MongoDB desde el exterior, solamente necesitamos que la aplicación let&rsquo;s chat pueda acceder al servicio.</p>
+
+<p>Vamos a crear un servicio tipo <strong>ClusterIP para MongoDB</strong> y para <strong>Let&rsquo;s Chat será de tipo NodePort</strong> para poder acceder desde el exterior.</p>
+
+<p>Vamos a crear el siguiente fichero.</p>
+
+<ul>
+<li><strong>Servicio MongoDB</strong></li>
+</ul>
+
+<pre><code>vagrant@cliente:~/letschat$ nano mongo-srv.yaml 
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+spec:
+  ports:
+  - name: mongo
+    port: 27017
+    targetPort: mongo
+  selector:
+    name: mongo
+</code></pre>
+
+<ul>
+<li><strong>Servicio Let&rsquo;s Chat</strong></li>
+</ul>
+
+<pre><code>vagrant@cliente:~/letschat$ nano letschat-srv.yaml 
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: letschat
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 8080
+    targetPort: http-server
+  selector:
+    name: letschat
+</code></pre>
+
+<p>Ya podremos crear los servicios para ambos.</p>
+
+<pre><code>vagrant@cliente:~/letschat$ kubectl create -f mongo-srv.yaml 
+service/mongo created
+
+vagrant@cliente:~/letschat$ kubectl create -f letschat-srv.yaml 
+service/letschat created
+</code></pre>
+
+<p>Ahora vamos a ver los servicios que se han creado:</p>
+
+<pre><code>vagrant@cliente:~/letschat$ kubectl get services
+NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+kubernetes   ClusterIP   10.43.0.1      &lt;none&gt;        443/TCP          48m
+letschat     NodePort    10.43.170.68   &lt;none&gt;        8080:31647/TCP   2m40s
+mongo        ClusterIP   10.43.78.230   &lt;none&gt;        27017/TCP        3m1s
+</code></pre>
+
+<p>Como se puede apreciar para mongo no ha MongoDB no ha mapeado ninguna IP, ya que el unico servicio que va a poder acceder a él será letschat, mientras que para letschat si se ha mapeado el puerto.</p>
+
+<p>A través de la IP del master y con el puerto ya podremos entrar en la aplicación.</p>
+
+<h2 id="conclusión">Conclusión</h2>
+
+<p>De una manera muy sencilla hemos instalado un cluster de kubernetes con la herramienta k3s y hemos desplegado una aplicación de pruebas.</p>
+
+<p>Con esta demostración, se puede observar las posibilidades que nos ofrece esta herramienta.</p>
 
     </section>
     <footer class="post-footer">

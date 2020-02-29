@@ -5,10 +5,20 @@
     <link>https://ernestovazquez.es/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 28 Feb 2020 15:04:52 +0100</lastBuildDate>
+    <lastBuildDate>Sat, 29 Feb 2020 11:04:52 +0100</lastBuildDate>
     
 	<atom:link href="https://ernestovazquez.es/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Despliegue de una aplicación en un Cluster nuevo de k8s</title>
+      <link>https://ernestovazquez.es/post/k8s/</link>
+      <pubDate>Sat, 29 Feb 2020 11:04:52 +0100</pubDate>
+      
+      <guid>https://ernestovazquez.es/post/k8s/</guid>
+      <description>Elige un sistema sencillo de instalación multinodo de k8s de los disponibles en cncf.io y despliega una aplicación explicando detalladamente las características.
+Este cluster puede estar ubicado en MVs en tu propio equipo o en instancias nuevas en OpenStack</description>
+    </item>
     
     <item>
       <title>Práctica 7 Movimiento de datos</title>

@@ -17,7 +17,7 @@
       
       <guid>https://ernestovazquez.es/post/k8s/</guid>
       <description>Elige un sistema sencillo de instalación multinodo de k8s de los disponibles en cncf.io y despliega una aplicación explicando detalladamente las características.
-Este cluster puede estar ubicado en MVs en tu propio equipo o en instancias nuevas en OpenStack</description>
+Este cluster puede estar ubicado en MVs en tu propio equipo o en instancias nuevas en OpenStack.</description>
     </item>
     
     <item>

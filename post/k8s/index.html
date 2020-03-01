@@ -74,6 +74,16 @@
 
 <p>Es una <strong>distribución certificada</strong> de Kubernetes. Para instalarla solo nos bajaremos un binario donde solo hace falta <strong>512 MB de RAM</strong> ya que es muy <strong>ligero</strong>.</p>
 
+<h2 id="puertos-necesarios">Puertos necesarios</h2>
+
+<p>Antes de empezar vamos a ver cuales son los puertos que deben estar accesibles.</p>
+
+<pre><code>80: Para acceder a los servicios con Ingress.
+443: Para acceder a los servicios con Ingress y HTTPS.
+6443: Para acceder a la API de Kubernetes.
+30000-40000: Para acceder a las aplicaciones con el servicio NodePort.
+</code></pre>
+
 <h2 id="desplegar-cluster-kubernetes">Desplegar cluster kubernetes</h2>
 
 <p>Accedemos a la primera máquina y procedemos a <strong>instalar k3s</strong>.</p>

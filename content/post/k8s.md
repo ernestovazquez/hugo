@@ -14,6 +14,15 @@ Este cluster puede estar ubicado en MVs en tu propio equipo o en instancias nuev
 
 Es una **distribución certificada** de Kubernetes. Para instalarla solo nos bajaremos un binario donde solo hace falta **512 MB de RAM** ya que es muy **ligero**.
 
+## Puertos necesarios
+
+Antes de empezar vamos a ver cuales son los puertos que deben estar accesibles.
+
+    80: Para acceder a los servicios con Ingress.
+    443: Para acceder a los servicios con Ingress y HTTPS.
+    6443: Para acceder a la API de Kubernetes.
+    30000-40000: Para acceder a las aplicaciones con el servicio NodePort.
+
 ## Desplegar cluster kubernetes
 
 Accedemos a la primera máquina y procedemos a **instalar k3s**.

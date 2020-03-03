@@ -1,7 +1,6 @@
 ---
 title: "Gestión de Almacenamiento"
 date: 2020-02-04T17:08:52+01:00
-draft: true
 ---
 
 # Práctica: Gestión del Almacenamiento

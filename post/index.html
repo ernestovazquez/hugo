@@ -231,12 +231,13 @@ SELinux ha sido integrado a la rama principal del núcleo Linux desde la versió
   <article class="post">
 	<header class="post-header">
     
-		<h2 class="post-title"><a href="/post/iscsi/">iSCSI</a></h2>
+		<h2 class="post-title"><a href="/post/almacenamiento/">Gestión de Almacenamiento</a></h2>
 	</header>
 	<section class="post-excerpt">
     <p>
-      Configura un sistema que exporte algunos targets por iSCSI y los conecte a diversos clientes, explicando con detalle la forma de trabajar.
- Crea un target con una LUN y conéctala a un cliente GNU/Linux. Explica cómo escaneas desde el cliente buscando los targets disponibles y utiliza la unidad lógica proporcionada, formateándola si es necesario y montándola. Utiliza systemd mount para que el target se monte automáticamente al arrancar el cliente. &hellip; <a class="read-more" href="/post/iscsi/">&raquo;</a>
+      Práctica: Gestión del Almacenamiento Alumno 1 (Luis Vázquez Alejo) ORACLE 1. Muestra los espacios de tablas existentes en tu base de datos y la ruta de los ficheros que los componen. ¿Están las extensiones gestionadas localmente o por diccionario?
+Para visualizar los tablespaces del sistema, tendremos que ejcutar el siguiente comando.
+SQL&gt; col FILE_NAME form A40; SQL&gt; select FILE_NAME, TABLESPACE_NAME from dba_data_files UNION select FILE_NAME, TABLESPACE_NAME from dba_temp_files; FILE_NAME	TABLESPACE_NAME ---------------------------------------- ------------------------------ /opt/oracle/oradata/orcl/sysaux01. &hellip; <a class="read-more" href="/post/almacenamiento/">&raquo;</a>
     </p>
 	</section>
 	<footer class="post-meta">

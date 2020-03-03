@@ -68,13 +68,59 @@
 
 <hr />
 
+<p>Voy a realizar una nueva instancia en OpenStack para realizar la instalación.</p>
+
 <p>Lo primero que tenemos que hacer es instalar <strong><code>vagrant-lxc</code></strong>.</p>
 
 <p>Para instalar vagrant-lxc en Debian ejecutaremos lel siguiente comando:</p>
 
-<p><code>ernesto@honda:~/Documentos/vagrant/lxc$ sudo apt install vagrant-lxc</code></p>
+<p><code>sudo apt install vagrant-lxc</code></p>
 
-<p>A continuación vamos a crear un <strong>Vagrantfile</strong> que lance dos contenedores sobre <strong>LXC</strong>.</p>
+<p>Configuraciones y paquetes necesarios para la red.</p>
+
+<pre><code>debian@lxc:~$ sudo nano /etc/lxc/default.conf 
+
+lxc.net.0.type = veth
+lxc.net.0.link = virbr0
+lxc.net.0.flags = up
+lxc.apparmor.profile = generated
+lxc.apparmor.allow_nesting = 1
+</code></pre>
+
+<pre><code>debian@lxc:~$ sudo apt-get install -qy libvirt-clients libvirt-daemon-system iptables ebtables dnsmasq-base
+debian@lxc:~$ sudo virsh net-start default
+</code></pre>
+
+<p>Agregamos lo siguiente al Vagranfile:</p>
+
+<pre><code>Vagrant.configure(&quot;2&quot;) do |config|
+    config.vm.box = &quot;isc/lxc-ubuntu-19.10&quot;
+    config.vm.box_version = &quot;1&quot;
+    config.vm.provider :lxc do |lxc|
+    lxc.customize 'cgroup.memory.limit_in_bytes', '1024M'
+  end
+end
+</code></pre>
+
+<p>Ya podremos levantar la máquina:</p>
+
+<pre><code>debian@lxc:~$ sudo vagrant up
+</code></pre>
+
+<p>Entraremos a la máquina con vagrant ssh:</p>
+
+<pre><code>debian@lxc:~$ sudo vagrant ssh
+Welcome to Ubuntu 19.10 (GNU/Linux 4.19.0-6-cloud-amd64 x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+To run a command as administrator (user &quot;root&quot;), use &quot;sudo &lt;command&gt;&quot;.
+See &quot;man sudo_root&quot; for details.
+
+vagrant@ubuntu-19:~$ 
+</code></pre>
 
     </section>
     <footer class="post-footer">

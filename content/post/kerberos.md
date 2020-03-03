@@ -626,4 +626,51 @@ root@croqueta:~# cp -r /etc/pam.d /etc/pam.d.old
 root@tortilla:~# cp -r /etc/pam.d /etc/pam.d.old
 ```
 
+Vamos configurar los siguientes ficheros:
 
+* **/etc/pam.d/common-auth**
+
+```
+auth    sufficient      pam_krb5.so minimum_uid=2000
+auth    required        pam_unix.so try_first_pass nullok_secure
+```
+
+* **/etc/pam.d/common-session**
+
+```
+session optional        pam_krb5.so     minimum_uid=2000
+session required        pam_unix.so
+```
+
+* **/etc/pam.d/common-account**
+
+```
+account	sufficient	pam_krb5.so	minimum_uid=2000
+account	required	pam_unix.so
+```
+
+* **/etc/pam.d/common-password**
+
+```
+password  sufficient  pam_krb5.so minimum_uid=1000
+password  required    pam_unix.so nullok obscure sha512
+```
+
+Estos pasos lo realizaremos también en tortilla.
+
+Ahora provamos hacer login:
+
+```
+root@croqueta:~# login pruebauser
+Password: 
+Linux croqueta 4.19.0-6-cloud-amd64 #1 SMP Debian 4.19.67-2+deb10u2 (2019-11-11) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+
+pruebauser@croqueta:~$ 
+```

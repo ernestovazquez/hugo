@@ -113,7 +113,7 @@ Ya tendremos los tres nodos en nuestro cluster
 
 ![](https://i.imgur.com/J7OTCU4.png)
 
-Tambien podemos ver los pods que tenemos ahora mismo en el sistema.
+También podemos ver los pods que tenemos ahora mismo en el sistema.
 
 ```
 vagrant@maquina1:~$ k3s kubectl get pods -n kube-system
@@ -136,7 +136,7 @@ Para ello vamos a entrar en nuestra máquina cliente.
     
 Ahora vamos a configurar el entorno para autentificarnos en el cluster que acabamos de crear.
 
-VAmos a crear un directorio para los ficheros de configuración para acceder al cluster.
+Vamos a crear un directorio para los ficheros de configuración para acceder al cluster.
 
 ```
 vagrant@cliente:~$ mkdir .kube
@@ -190,7 +190,7 @@ NAME                       READY   STATUS    RESTARTS   AGE
 pod/nginx-5c7588df-6x2ff   1/1     Running   0          95s
 ```
 
-Con ese comando podremos ver queya está funcionando. Donde tendremos un deployment y un pod.
+Con ese comando podremos ver que ya está funcionando. Donde tendremos un deployment y un pod.
 
 Vamos a crear un nuevo recurso en el cluster de kubernetes llamado servicios, donde nos va a permitir acceder a las aplicaciones que se están ejecutando en los contenedores. Vamos a utilizar los siguientes tipos:
 

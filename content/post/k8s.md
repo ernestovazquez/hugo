@@ -10,9 +10,15 @@ Este cluster puede estar ubicado en MVs en tu propio equipo o en instancias nuev
 
 ***
 
+
+# K3S
+
 ## Introducción
 
-Es una **distribución certificada** de Kubernetes. Para instalarla solo nos bajaremos un binario donde solo hace falta **512 MB de RAM** ya que es muy **ligero**.
+
+Voy a utilizar k3s como sistema de instalación multinodo de k8s. Es una **distribución certificada** de Kubernetes. Para instalarla solo nos bajaremos un binario donde solo hace falta **512 MB de RAM** ya que es muy **ligero**.
+
+El **escenario** que voy a utilizar va a ser 3 máquinas vagrant con debian y un cliente que va a ser mi propio equipo, aunque al princio lo estaba realizando tambien en una máquina vagrant.
 
 ## Puertos necesarios
 
@@ -142,7 +148,7 @@ Ahora copiamos el fichero `/etc/rancher/k3s/k3s.yaml` para cambiar la dirección
 
 En la línea de server cambiamos localhost por la ip del servidor del cluster.
 
-![](https://i.imgur.com/hHSYIfd.png)
+![](https://i.imgur.com/oSCIwAg.png)
 
 Para cargar las credenciales vamos a crear una variable de entorno que guarda el fichero.
 
@@ -160,7 +166,7 @@ maquina3   Ready    <none>   28m   v1.13.4-k3s.1
 
 ![](https://i.imgur.com/CimyFqG.png)
 
-Ya estaria interaccionando con nuestro cluster donde estarian los tres nodos.
+Ya estaria interactuando con nuestro cluster donde estarian los tres nodos.
 
 ## Despliegue de Nginx
 
@@ -285,198 +291,359 @@ nginx-5c7588df-kh9ks   1/1     Running   0          4s      10.42.2.4   maquina3
 
 Podemos ver que hemos eliminado un pod, pero el despliegue nos asegura que siempre vamos a tener los pods que hemos configurado.
 
-## Despligue de una aplicación.
+## Despligue de la aplicación Guestbook
 
-Ya sabemos **desplegar nginx en kubernetes** como un **escenario de pruebas**, ahora vamos a implantar una **aplicación real**, como es el caso de **Let's Chat**.
+Ya sabemos **desplegar nginx en kubernetes** como un **escenario de pruebas**, ahora vamos a implantar una **aplicación real**, como es el caso de **Guestbook**.
 
 Los fichero que vamos a configurar son los siguientes. Donde pondremos en cada uno el nombre y las especificaciones que va a tener los despliegues.
 
-```
-vagrant@cliente:~/letschat$ ls
-ingress.yaml              letschat-srv.yaml      mongo-srv.yaml
-letschat-deployment.yaml  mongo-deployment.yaml
-```
+Vamos a crear los ficheros para el despligue, el cual va a tener 3 replicas.
 
 En el caso de nginx lo hemos configurado en la misma línea de ejecución del deploy, pero en este caso lo haremos de una manera más **ordenada y profesional** realizandolo en un fichero de configuración. Este uso es más **eficiente** por si tenemos que pasarlo a otro compañero y tener exactamente el mismo escenario.
 
-Primero tenemos que tener el despliegue de mongodb, el cual es la base de datos que utiliza la aplicación let's chat.
-
-Este fichero contiene lo siguiente:
-
 ```
-vagrant@cliente:~/letschat$ nano mongo-deployment.yaml 
+ernesto@honda:~/.kubernetes/guestbook$ nano frontend-deployment.yaml
 
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: mongo
+  name: guestbook
   labels:
-    name: mongo
+    app: guestbook
+    tier: frontend
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
-      name: mongo
+      app: guestbook
+      tier: frontend
   template:
     metadata:
       labels:
-        name: mongo
+        app: guestbook
+        tier: frontend
     spec:
       containers:
-      - name: mongo
-        image: mongo
-        ports:
-          - name: mongo
-            containerPort: 27017
-```
-
-Para crear este despliegue de mongodb pondremos lo siguiente: 
-
-```
-vagrant@cliente:~/letschat$ kubectl create -f mongo-deployment.yaml 
-deployment.extensions/mongo created
-```
-
-Ya lo tendremos creado y ahora se estan creado los pods y el despligue.
-
-```
-vagrant@cliente:~/letschat$ kubectl get deploy,pod
-NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.extensions/mongo   1/1     1            1           92s
-
-NAME                         READY   STATUS    RESTARTS   AGE
-pod/mongo-854684b4c5-ffz66   1/1     Running   0          92s
-```
-
-A continuación, vamos a desplegar let's chat. Primero vamos a ver el fichero de configuración que vamos a utilizar para el despliegue.
-
-```
-vagrant@cliente:~/letschat$ nano letschat-deployment.yaml 
-
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: letschat
-  labels:
-    name: letschat
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      name: letschat
-  template:
-    metadata:
-      labels:
-        name: letschat
-    spec:
-      containers:
-      - name: letschat
-        image: sdelements/lets-chat
+      - name: guestbook
+        image: gcr.io/google_containers/guestbook:v3
         ports:
           - name: http-server
-            containerPort: 8080
+            containerPort: 3000
 ```
 
-Creamos el despligue:
+Para crear este despliegue pondremos lo siguiente: 
 
 ```
-vagrant@cliente:~/letschat$ kubectl create -f letschat-deployment.yaml 
-deployment.extensions/letschat created
+ernesto@honda:~/.kubernetes/guestbook$ kubectl create -f frontend-deployment.yaml 
+deployment.extensions/guestbook created
 ```
 
-Ya tendremos el deploy y el pod creados. Como podemos ver solamente tarda unos segundos, a pensar de que tiene que bajar la imagen.
+Ya lo tendremos creado y ahora se estan creado los pods, el despligue y las replicas.
 
 ```
-vagrant@cliente:~/letschat$ kubectl get deploy,pod
-NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.extensions/letschat   1/1     1            1           27s
-deployment.extensions/mongo      1/1     1            1           5m42s
+ernesto@honda:~/.kubernetes/guestbook$ kubectl get all
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/guestbook-5df4d55b75-dmhfr   1/1     Running   0          82s
+pod/guestbook-5df4d55b75-t88z7   1/1     Running   0          82s
+pod/guestbook-5df4d55b75-xcfr4   1/1     Running   0          82s
 
-NAME                           READY   STATUS    RESTARTS   AGE
-pod/letschat-bc787f6b8-hxkld   1/1     Running   0          27s
-pod/mongo-854684b4c5-ffz66     1/1     Running   0          5m42s
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.43.0.1    <none>        443/TCP   9m11s
+
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/guestbook   3/3     3            3           82s
+
+NAME                                   DESIRED   CURRENT   READY   AGE
+replicaset.apps/guestbook-5df4d55b75   3         3         3       82s
 ```
 
-Ahora vamos a ver donde se esta ejecutando cada despliegue.
+A continuación vamos a realizar el despligue de la base de datos redis master. Ya que vamos a realizar dos despligues uno como master y otro como esclavo.
+
+Para ellos vamos a crear el siguiente fichero de configuración.
 
 ```
-vagrant@cliente:~/letschat$ kubectl get pod -o wide
-NAME                       READY   STATUS    RESTARTS   AGE     IP          NODE       NOMINATED NODE   READINESS GATES
-letschat-bc787f6b8-hxkld   1/1     Running   3          2m57s   10.42.1.3   maquina2   <none>           <none>
-mongo-854684b4c5-ffz66     1/1     Running   0          8m12s   10.42.3.2   maquina3   <none>           <none>
+ernesto@honda:~/.kubernetes/guestbook$ nano redis-master-deployment.yaml
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis-master
+  labels:
+    app: redis
+    role: master
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      role: master
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: master
+        tier: backend
+    spec:
+      containers:
+        - name: master
+          image: redis
+          ports:
+            - name: redis-server
+              containerPort: 6379
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+            - name: REDIS_REPLICATION_MODE
+              value: master
 ```
 
-Podemos apreciar que se están ejecutando en nodos diferente.
+Para crear el despligue pondremos lo siguiente:
 
-Ya estarian los servicios funcionando ahora tendremos que **acceder a ellos**. Nosotros no necesitamos entrar a MongoDB desde el exterior, solamente necesitamos que la aplicación let's chat pueda acceder al servicio.
-
-Vamos a crear un servicio tipo **ClusterIP para MongoDB** y para **Let's Chat será de tipo NodePort** para poder acceder desde el exterior.
-
-Vamos a crear el siguiente fichero.
-
-- **Servicio MongoDB**
+    ernesto@honda:~/.kubernetes/guestbook$ kubectl create -f redis-master-deployment.yaml 
 
 ```
-vagrant@cliente:~/letschat$ nano mongo-srv.yaml 
+ernesto@honda:~/.kubernetes/guestbook$ kubectl get all
+NAME                                READY   STATUS              RESTARTS   AGE
+pod/guestbook-5df4d55b75-dmhfr      1/1     Running             0          2m11s
+pod/guestbook-5df4d55b75-t88z7      1/1     Running             0          2m11s
+pod/guestbook-5df4d55b75-xcfr4      1/1     Running             0          2m11s
+pod/redis-master-5769b46579-4jg97   0/1     ContainerCreating   0          6s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.43.0.1    <none>        443/TCP   10m
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/guestbook      3/3     3            3           2m11s
+deployment.apps/redis-master   0/1     1            0           6s
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/guestbook-5df4d55b75      3         3         3       2m11s
+replicaset.apps/redis-master-5769b46579   1         1         0       6s
+```
+
+Al igual que antes ahora vamos a configurar el redis esclavo:
+
+```
+ernesto@honda:~/.kubernetes/guestbook$ nano redis-slave-deployment.yaml
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis-slave
+  labels:
+    app: redis
+    role: slave
+    tier: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis
+      role: slave
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: slave
+        tier: backend
+    spec:
+      containers:
+        - name: slave
+          image: redis
+          ports:
+            - name: redis-server
+              containerPort: 6379
+          env:
+            - name: ALLOW_EMPTY_PASSWORD
+              value: "yes"
+            - name: REDIS_REPLICATION_MODE
+              value: slave
+            - name: REDIS_MASTER_HOST
+              value: redis-master
+            - name: REDIS_MASTER_PORT_NUMBER
+              value: "6379"
+```
+
+Lo creamos con el siguiente comando:
+
+```
+ernesto@honda:~/.kubernetes/guestbook$ kubectl create -f redis-slave-deployment.yaml 
+deployment.extensions/redis-slave created
+```
+
+```
+ernesto@honda:~/.kubernetes/guestbook$ kubectl get all
+NAME                                READY   STATUS              RESTARTS   AGE
+pod/guestbook-5df4d55b75-dmhfr      1/1     Running             0          3m4s
+pod/guestbook-5df4d55b75-t88z7      1/1     Running             0          3m4s
+pod/guestbook-5df4d55b75-xcfr4      1/1     Running             0          3m4s
+pod/redis-master-5769b46579-4jg97   1/1     Running             0          59s
+pod/redis-slave-8648d79854-95dhs    0/1     ContainerCreating   0          4s
+pod/redis-slave-8648d79854-9j59x    1/1     Running             0          4s
+pod/redis-slave-8648d79854-wlck8    0/1     ContainerCreating   0          4s
+
+NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+service/kubernetes   ClusterIP   10.43.0.1    <none>        443/TCP   10m
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/guestbook      3/3     3            3           3m4s
+deployment.apps/redis-master   1/1     1            1           59s
+deployment.apps/redis-slave    1/3     3            1           4s
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/guestbook-5df4d55b75      3         3         3       3m4s
+replicaset.apps/redis-master-5769b46579   1         1         1       59s
+replicaset.apps/redis-slave-8648d79854    3         3         1       4s
+```
+
+Accedemos a la aplicación.
+
+`ernesto@honda:~/.kubernetes/guestbook$ kubectl port-forward deployment/guestbook 3000:3000`
+
+![](https://i.imgur.com/Afxj5UH.png)
+
+Como podemos apreciar la aplicación no funciona **(Waiting for database connection...)** porque la aplicación no puede conectar a la base de datos.
+
+Vamos a ver como solucionarlo
+
+## Creacion del servicio
+
+Ahora vamos a agregar los servicios.
+
+```
+ernesto@honda:~/.kubernetes/guestbook$ nano redis-master-srv.yaml 
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo
+  name: redis-master
+  labels:
+    app: redis
+    role: master
+    tier: backend
 spec:
   ports:
-  - name: mongo
-    port: 27017
-    targetPort: mongo
+  - port: 6379
+    targetPort: redis-server
   selector:
-    name: mongo
+    app: redis
+    role: master
+    tier: backend
+  type: ClusterIP
 ```
 
-- **Servicio Let's Chat**
-
 ```
-vagrant@cliente:~/letschat$ nano letschat-srv.yaml 
+ernesto@honda:~/.kubernetes/guestbook$ nano redis-slave-srv.yaml
 
 apiVersion: v1
 kind: Service
 metadata:
-  name: letschat
+  name: redis-slave
+  labels:
+    app: redis
+    role: slave
+    tier: backend
+spec:
+  ports:
+  - port: 6379
+    targetPort: redis-server
+  selector:
+    app: redis
+    role: slave
+    tier: backend
+  type: ClusterIP
+```
+
+```
+ernesto@honda:~/.kubernetes/guestbook$ nano frontend-srv.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    app: guestbook
+    tier: frontend
 spec:
   type: NodePort
   ports:
-  - name: http
-    port: 8080
+  - port: 80
     targetPort: http-server
   selector:
-    name: letschat
+    app: guestbook
+    tier: frontend
 ```
 
-Ya podremos crear los servicios para ambos.
+Lo creamos con los siguientes comandos:
 
 ```
-vagrant@cliente:~/letschat$ kubectl create -f mongo-srv.yaml 
-service/mongo created
+ernesto@honda:~/.kubernetes/guestbook$ kubectl create -f redis-master-srv.yaml 
+service/redis-master created
 
-vagrant@cliente:~/letschat$ kubectl create -f letschat-srv.yaml 
-service/letschat created
+ernesto@honda:~/.kubernetes/guestbook$ kubectl create -f redis-slave-srv.yaml 
+service/redis-slave created
+
+ernesto@honda:~/.kubernetes/guestbook$ kubectl create -f frontend-srv.yaml 
+service/frontend created
 ```
 
-Ahora vamos a ver los servicios que se han creado:
+
+Como podemos apreciar se han creado correctamente todos los nuevos servicios:
 
 ```
-vagrant@cliente:~/letschat$ kubectl get services
-NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
-kubernetes   ClusterIP   10.43.0.1      <none>        443/TCP          48m
-letschat     NodePort    10.43.170.68   <none>        8080:31647/TCP   2m40s
-mongo        ClusterIP   10.43.78.230   <none>        27017/TCP        3m1s
+ernesto@honda:~/.kubernetes/guestbook$ kubectl get services
+NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+frontend       NodePort    10.43.57.94     <none>        80:30403/TCP   3m9s
+kubernetes     ClusterIP   10.43.0.1       <none>        443/TCP        62m
+redis-master   ClusterIP   10.43.110.124   <none>        6379/TCP       3m16s
+redis-slave    ClusterIP   10.43.144.103   <none>        6379/TCP       3m15s
 ```
 
-Como se puede apreciar para mongo no ha MongoDB no ha mapeado ninguna IP, ya que el unico servicio que va a poder acceder a él será letschat, mientras que para letschat si se ha mapeado el puerto.
+Salida de todos:
 
-A través de la IP del master y con el puerto ya podremos entrar en la aplicación.
+```
+ernesto@honda:~/.kubernetes/guestbook$ kubectl get all
+NAME                                READY   STATUS    RESTARTS   AGE
+pod/guestbook-5df4d55b75-4fbsd      1/1     Running   0          19m
+pod/guestbook-5df4d55b75-6gwb6      1/1     Running   0          19m
+pod/guestbook-5df4d55b75-h28tq      1/1     Running   0          19m
+pod/redis-master-5769b46579-78688   1/1     Running   0          19m
+pod/redis-slave-8648d79854-fxlkl    1/1     Running   0          18m
+pod/redis-slave-8648d79854-qksgr    1/1     Running   0          18m
+pod/redis-slave-8648d79854-sl2fd    1/1     Running   0          18m
+
+NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/frontend       NodePort    10.43.57.94     <none>        80:30403/TCP   10m
+service/kubernetes     ClusterIP   10.43.0.1       <none>        443/TCP        70m
+service/redis-master   ClusterIP   10.43.110.124   <none>        6379/TCP       10m
+service/redis-slave    ClusterIP   10.43.144.103   <none>        6379/TCP       10m
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/guestbook      3/3     3            3           19m
+deployment.apps/redis-master   1/1     1            1           19m
+deployment.apps/redis-slave    3/3     3            3           18m
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/guestbook-5df4d55b75      3         3         3       19m
+replicaset.apps/redis-master-5769b46579   1         1         1       19m
+replicaset.apps/redis-slave-8648d79854    3         3         3       18m
+```
+
+Como se puede apreciar para la base de datos **no ha mapeado ninguna IP**, ya que el unico servicio que va a poder acceder a él será la propia aplicación, mientras que para guestbook si se ha mapeado el puerto.
+
+Ahora si queremos acceder solamente tendremos que poner la ip junto al puerto, en este caso el 30403. 
 
 ## Conclusión
 
-De una manera muy sencilla hemos instalado un cluster de kubernetes con la herramienta k3s y hemos desplegado una aplicación de pruebas. 
+De una **manera muy sencilla** hemos instalado un **cluster de kubernetes** con la **herramienta k3s** y hemos desplegado una aplicación de pruebas. 
 
-Con esta demostración, se puede observar las posibilidades que nos ofrece esta herramienta.
+Con esta demostración, se puede observar las **posibilidades que nos ofrece esta herramienta**. Podremos gestionar la vida de nuestros contenedores e implantar de una manera más **eficiente** las aplicaciones o demás proyectos. 
+
+También una de las **ventajas o desventaja** que tiene es que es un proyecto **muy vivo** y tenemos muchas actualizaciones que nos ofrecen **nuevas funcionalidades.** 
+
+Otra de las grandes **ventajas de Kubernetes** es poder **gestionar** toda nuestra infraestructura desde sus **API’s**.
+
+

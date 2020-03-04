@@ -76,7 +76,7 @@
 
 <p>Voy a utilizar k3s como sistema de instalación multinodo de k8s. Es una <strong>distribución certificada</strong> de Kubernetes. Para instalarla solo nos bajaremos un binario donde solo hace falta <strong>512 MB de RAM</strong> ya que es muy <strong>ligero</strong>.</p>
 
-<p>El <strong>escenario</strong> que voy a utilizar va a ser 3 máquinas vagrant con debian y un cliente que va a ser mi propio equipo, aunque al princio lo estaba realizando tambien en una máquina vagrant.</p>
+<p>El <strong>escenario</strong> que voy a utilizar va a ser 3 máquinas vagrant con debian y un cliente que va a ser mi propio equipo, aunque al princio lo estaba realizando también en una máquina vagrant.</p>
 
 <h2 id="puertos-necesarios">Puertos necesarios</h2>
 
@@ -671,6 +671,16 @@ replicaset.apps/redis-slave-8648d79854    3         3         3       18m
 <p>Como se puede apreciar para la base de datos <strong>no ha mapeado ninguna IP</strong>, ya que el unico servicio que va a poder acceder a él será la propia aplicación, mientras que para guestbook si se ha mapeado el puerto.</p>
 
 <p>Ahora si queremos acceder solamente tendremos que poner la ip junto al puerto, en este caso el 30403.</p>
+
+<h2 id="corrección-de-errores">Corrección de errores</h2>
+
+<p>A lo largo de esta práctica me he encontrado con un problema en la red de kubernetes.</p>
+
+<p>Al realizar la práctica desde vagrant me he dado cuenta que no me dejaba acceder con el puerto que nos ofrede <strong>NodePort</strong>, al parecer vagrant no conecta bien los diferentes nodos entre sí.</p>
+
+<p>Por lo tanto he realizado el escenario en el cloud de OpenStack y abriendo los puertos necesarios ya se puede acceder perfectamente a la aplicación que hemos implantado.</p>
+
+<p><img src="https://i.imgur.com/DzB2r7c.png" alt="" /></p>
 
 <h2 id="conclusión">Conclusión</h2>
 

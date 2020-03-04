@@ -10,7 +10,6 @@ Este cluster puede estar ubicado en MVs en tu propio equipo o en instancias nuev
 
 ***
 
-
 # K3S
 
 ## Introducción
@@ -18,7 +17,7 @@ Este cluster puede estar ubicado en MVs en tu propio equipo o en instancias nuev
 
 Voy a utilizar k3s como sistema de instalación multinodo de k8s. Es una **distribución certificada** de Kubernetes. Para instalarla solo nos bajaremos un binario donde solo hace falta **512 MB de RAM** ya que es muy **ligero**.
 
-El **escenario** que voy a utilizar va a ser 3 máquinas vagrant con debian y un cliente que va a ser mi propio equipo, aunque al princio lo estaba realizando tambien en una máquina vagrant.
+El **escenario** que voy a utilizar va a ser 3 máquinas vagrant con debian y un cliente que va a ser mi propio equipo, aunque al princio lo estaba realizando también en una máquina vagrant.
 
 ## Puertos necesarios
 
@@ -635,6 +634,16 @@ replicaset.apps/redis-slave-8648d79854    3         3         3       18m
 Como se puede apreciar para la base de datos **no ha mapeado ninguna IP**, ya que el unico servicio que va a poder acceder a él será la propia aplicación, mientras que para guestbook si se ha mapeado el puerto.
 
 Ahora si queremos acceder solamente tendremos que poner la ip junto al puerto, en este caso el 30403. 
+
+## Corrección de errores
+
+A lo largo de esta práctica me he encontrado con un problema en la red de kubernetes. 
+
+Al realizar la práctica desde vagrant me he dado cuenta que no me dejaba acceder con el puerto que nos ofrede **NodePort**, al parecer vagrant no conecta bien los diferentes nodos entre sí. 
+
+Por lo tanto he realizado el escenario en el cloud de OpenStack y abriendo los puertos necesarios ya se puede acceder perfectamente a la aplicación que hemos implantado. 
+
+![](https://i.imgur.com/DzB2r7c.png)
 
 ## Conclusión
 

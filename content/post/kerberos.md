@@ -674,3 +674,169 @@ permitted by applicable law.
 
 pruebauser@croqueta:~$ 
 ```
+
+## Network File System 4 (NFS4)
+
+Vamos a instalar los paquetes para el servidor:
+
+```
+debian@croqueta:~$ sudo apt install nfs-kernel-server
+```
+
+Vamos a editar el siguiente fichero de configuración para que pueda utilizar kerberos:
+
+```
+debian@croqueta:~$ sudo nano /etc/default/nfs-common 
+
+# Do you want to start the idmapd daemon? It is only needed for NFSv4.
+NEED_IDMAPD=yes
+
+# Do you want to start the gssd daemon? It is required for Kerberos mount$
+NEED_GSSD=yes
+```
+
+```
+debian@croqueta:~$ sudo nano /etc/default/nfs-kernel-server
+
+# Do you want to start the svcgssd daemon? It is only required for Kerberos
+# exports. Valid alternatives are "yes" and "no"; the default is "no".
+NEED_SVCGSSD="yes"
+```
+
+Descomentamos la siguiente línea y añadimos nuestro dominio.
+
+```
+debian@croqueta:~$ sudo nano /etc/idmapd.conf
+
+# set your own domain here, if it differs from FQDN minus hostname
+# Domain = localdomain
+
+Domain = ernesto.gonzalonazareno.org
+```
+
+```
+debian@croqueta:~$ sudo kadmin.local
+Authenticating as principal pruebauser/admin@ERNESTO.GONZALONAZARENO.ORG with password.
+
+kadmin.local:  add_principal -randkey nfs/croqueta.ernesto.gonzalonazanareno.org
+WARNING: no policy specified for nfs/croqueta.ernesto.gonzalonazanareno.org@ERNESTO.GONZALONAZARENO.ORG; defaulting to no policy
+Principal "nfs/croqueta.ernesto.gonzalonazanareno.org@ERNESTO.GONZALONAZARENO.ORG" created.
+
+kadmin.local:  add_principal -randkey nfs/tortilla.ernesto.gonzalonazareno.org
+WARNING: no policy specified for nfs/tortilla.ernesto.gonzalonazareno.org@ERNESTO.GONZALONAZARENO.ORG; defaulting to no policy
+Principal "nfs/tortilla.ernesto.gonzalonazareno.org@ERNESTO.GONZALONAZARENO.ORG" created.
+
+kadmin.local:  ktadd nfs/croqueta.ernesto.gonzalonazanareno.org
+Entry for principal nfs/croqueta.ernesto.gonzalonazanareno.org with kvno 2, encryption type aes256-cts-hmac-sha1-96 added to keytab FILE:/etc/krb5.keytab.
+Entry for principal nfs/croqueta.ernesto.gonzalonazanareno.org with kvno 2, encryption type aes128-cts-hmac-sha1-96 added to keytab FILE:/etc/krb5.keytab.
+
+kadmin.local:  ktadd -k /tmp/krb5.keytab nfs/tortilla.ernesto.gonzalonazareno.org
+Entry for principal nfs/tortilla.ernesto.gonzalonazareno.org with kvno 2, encryption type aes256-cts-hmac-sha1-96 added to keytab WRFILE:/tmp/krb5.keytab.
+Entry for principal nfs/tortilla.ernesto.gonzalonazareno.org with kvno 2, encryption type aes128-cts-hmac-sha1-96 added to keytab WRFILE:/tmp/krb5.keytab.
+```
+
+A continuación vamos a tener copiar dicho fichero en tortilla
+
+Para ello podemos utilizar `scp` y lo meteremos en el directorio `/etc/krb5.keytab`.
+
+Ahora vamos a crear el directorio para guardar el home de los usuarios:
+
+```
+root@croqueta:~# mkdir -p /srv/nfs4/homes
+root@croqueta:~# cd /srv/nfs4/homes/
+root@croqueta:/srv/nfs4/homes# mount --bind /home /srv/nfs4/homes
+```
+
+Vamos editar el fichero de exportación y descomentamos las últimas líneas.
+
+```
+root@croqueta:/srv/nfs4/homes# nano /etc/exports 
+
+# Example for NFSv4:
+# /srv/nfs4        gss/krb5i(rw,sync,fsid=0,crossmnt,no_subtree_check)
+# /srv/nfs4/homes  gss/krb5i(rw,sync,no_subtree_check)
+```
+
+A continuación vamos reiniciar los servicios:
+
+```
+root@croqueta:~# systemctl restart nfs-kernel-server
+root@croqueta:~# systemctl restart nfs-common
+Failed to restart nfs-common.service: Unit nfs-common.service is masked.
+```
+
+Como se puede apreciar no se puede reiniciar el servicio de nfs-common, para ello vamos a realizar la siguiente instrucción.
+
+```
+root@croqueta:~# rm /lib/systemd/system/nfs-common.service 
+root@croqueta:~# systemctl daemon-reload 
+root@croqueta:~# systemctl restart nfs-common.service 
+```
+
+Ya podremos reiniciar los servicios, esto se debe a que la unidad está enmascarada.
+
+```
+root@croqueta:~# showmount -e
+Export list for croqueta:
+/srv/nfs4/homes gss/krb5i
+/srv/nfs4       gss/krb5i
+```
+
+Con ese comando podremos ver si se han montado correctamente.
+
+## Cliente NFS
+
+En este apartado vamos a configurar el cliente NFS en tortilla
+
+Para ello vamos a instalarlo:
+
+```
+ubuntu@tortilla:~$ sudo apt install nfs-common 
+```
+
+A continuación tendremos que configurarlo, igual que lo hemos realizado en croquete:
+
+```
+ubuntu@tortilla:~$ sudo nano /etc/default/nfs-common 
+
+# Do you want to start the gssd daemon? It is required for Kerberos moun$
+NEED_GSSD=yes
+NEED_IDMAPD=yes
+```
+
+```
+ubuntu@tortilla:~$ sudo nano /etc/idmapd.conf
+
+Domain = ernesto.gonzalonazareno.org
+```
+
+Volvemos a reiniciar los servicios:
+
+```
+root@tortilla:~# rm /lib/systemd/system/nfs-common.service 
+root@tortilla:~# systemctl daemon-reload
+root@tortilla:~# systemctl restart nfs-common
+```
+
+Por último vamos a configurar el fichero `/etc/fstab`:
+
+- **Croqueta**:
+
+```
+root@croqueta:~# nano /etc/fstab 
+
+/home           /srv/nfs4/homes                         none            rw,bind         0       0
+```
+
+- **Tortilla**:
+
+```
+root@tortilla:~# nano /etc/fstab 
+
+croqueta.ernesto.gonzalonazareno.org    /home/nfs4      nfs4    rw,sec=krb5i    0 0
+```
+
+
+
+
+

@@ -69,7 +69,7 @@ end
 
 ## Ansible
 
-Instalamos ansible en la máquina.
+Instalamos Ansible en la máquina.
 
     ernesto@honda:~$ sudo apt install ansible
 

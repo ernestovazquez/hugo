@@ -41,7 +41,7 @@ ernesto@honda:~$ sudo virsh net-start default
 
 ## Vagrantfile
 
-Agregamos la siguiente instrucción al Vagranfile:
+Agregamos lo siguiente al Vagranfile:
 
 ```
 ernesto@honda:~/Documentos/vagrant/lxc$ nano Vagrantfile 
@@ -73,9 +73,7 @@ Instalamos ansible en la máquina.
 
     ernesto@honda:~$ sudo apt install ansible
 
-Creamos la receta:
-
-    https://github.com/ernestovazquez/lxc-ansible
+Creamos la receta: [**Receta ansible**](https://github.com/ernestovazquez/lxc-ansible)
 
 Tendremos que cambiar los siguientes ficheros de configuración del mismo repositorio para que pueda tener conexión entre ellos:
 
@@ -83,21 +81,21 @@ Tendremos que cambiar los siguientes ficheros de configuración del mismo reposi
 ernesto@honda:~/GitHub/lxc-ansible$ nano hosts 
 
 [servidores_web]
-nodo1 ansible_ssh_host=192.168.122.101 ansible_ssh_private_key_file="../.vagrant/machines/servidorweb/$
+nodo1 ansible_ssh_host=192.168.122.101 ansible_ssh_private_key_file="../.vagrant/machines/servidorweb/lxc/private_key"
 
 [db]
-nodo2 ansible_ssh_host=192.168.122.102 ansible_ssh_private_key_file="../.vagrant/machines/db/lxc/priva$
+nodo2 ansible_ssh_host=192.168.122.100 ansible_ssh_private_key_file="../.vagrant/machines/db/lxc/private_key"
 ```
 
 ```
 ernesto@honda:~/GitHub/lxc-ansible$ nano group_vars/all 
 
-wordpress_bd: servidordb
-wordpress_user: wordpress
-wordpress_pass: wordpress
+wordpress_bd: wordpress_bd
+wordpress_user: userwp
+wordpress_pass: userwp
 wordpress_host: 192.168.122.100
+mariadb_host: '%'
 ```
-
 
 Clonamos la receta
 
@@ -197,6 +195,33 @@ Para que se inicie con el Vagrantfile solamente tendremos que añadir los siguie
 ```
 
 Tambien he tenido que cambiar el nombre de la máquina a **servidores_web.**
+
+Quedaria de la siguiente forma:
+
+```
+Vagrant.configure("2") do |config|
+  config.vm.define "db" do |ubun|
+  ubun.vm.box = "sagiru/buster-amd64"
+  ubun.vm.network "private_network", ip: "192.168.122.100", lxc__bridge_name: 'virbr0'
+  ubun.vm.provider :lxc do |lxc|
+    lxc.container_name = :servidordb
+    lxc.container_name = 'servidordb'
+  end
+ end
+
+  config.vm.define "servidores_web" do |ubun|
+  ubun.vm.box = "sagiru/buster-amd64"
+  ubun.vm.network "private_network", ip: "192.168.122.101", lxc__bridge_name: 'virbr0'
+  ubun.vm.provider :lxc do |lxc|
+    lxc.container_name = :servidores_web
+    lxc.container_name = 'servidores_web'
+  end
+ end
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "lxc-ansible/site.yaml"
+  end
+end
+```
 
 Vamos a ver como realizaria el despligue:
 

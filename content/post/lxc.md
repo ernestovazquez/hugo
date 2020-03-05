@@ -41,7 +41,7 @@ ernesto@honda:~$ sudo virsh net-start default
 
 ## Vagrantfile
 
-Agregamos lo siguiente al Vagranfile:
+Agregamos la siguiente instrucción al Vagranfile:
 
 ```
 ernesto@honda:~/Documentos/vagrant/lxc$ nano Vagrantfile 

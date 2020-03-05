@@ -47,7 +47,7 @@ K3S Introducción Voy a utilizar k3s como sistema de instalación multinodo de k
       <guid>https://ernestovazquez.es/post/lxc/</guid>
       <description>Explica los pasos necesarios para configurar Vagrant para que utilice LXC como proveedor y una vez configurado el sistema crea un Vagrantfile que lance dos contenedores sobre LXC en los que se instale una aplicación web en dos capas (contenedor1 con servidor web y contenedor2 con servidor de BBDD).
 La configuración completa de la aplicación se realizará utilizando ansible como sistema de aprovisionamiento de Vagrant
-Voy a realizar una nueva instancia en OpenStack para realizar la instalación.</description>
+Voy a utilizar una máquina vagrant para realizar la instalación.</description>
     </item>
     
     <item>

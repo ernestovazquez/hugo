@@ -24,6 +24,10 @@ Forma de corregir:
 
 ## Introducción
 
+Vamos a realizar un sistema de cuentas de usuarios con **LDAP**, **Kerberos 5** y **NFS4**. 
+
+**Kerberos** es diferente de los métodos de autenticación de nombre de usuario/contraseña. En vez de validar cada usuario para cada servicio de red, **Kerberos** autentifica los usuarios a un conjunto de servicios de red. 
+
 ## Configuración del DNS
 
 Para empezar tenemos que hacer algunas **configuraciones previas**, una de ellas es la **configuración del DNS**, en nuestro caso con **Bind9**

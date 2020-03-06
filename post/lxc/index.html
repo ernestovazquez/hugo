@@ -108,8 +108,7 @@ Vagrant.configure(&quot;2&quot;) do |config|
   ubun.vm.box = &quot;sagiru/buster-amd64&quot;
   ubun.vm.network &quot;private_network&quot;, ip: &quot;192.168.122.100&quot;, lxc__bridge_name: 'virbr0'
   ubun.vm.provider :lxc do |lxc|
-    lxc.container_name = :servidordb
-    lxc.container_name = 'servidordb'
+    lxc.container_name = &quot;servidordb&quot;
   end
  end
 
@@ -117,8 +116,7 @@ Vagrant.configure(&quot;2&quot;) do |config|
   ubun.vm.box = &quot;sagiru/buster-amd64&quot;
   ubun.vm.network &quot;private_network&quot;, ip: &quot;192.168.122.101&quot;, lxc__bridge_name: 'virbr0'
   ubun.vm.provider :lxc do |lxc|
-    lxc.container_name = :servidorweb
-    lxc.container_name = 'servidorweb'
+    lxc.container_name = &quot;servidorweb&quot;
   end
  end
 end
@@ -126,7 +124,7 @@ end
 
 <h2 id="ansible">Ansible</h2>
 
-<p>Instalamos Ansible en la máquina.</p>
+<p>Instalamos ansible en la máquina.</p>
 
 <pre><code>ernesto@honda:~$ sudo apt install ansible
 </code></pre>
@@ -256,17 +254,14 @@ nodo2                      : ok=7    changed=0    unreachable=0    failed=0
   ubun.vm.box = &quot;sagiru/buster-amd64&quot;
   ubun.vm.network &quot;private_network&quot;, ip: &quot;192.168.122.100&quot;, lxc__bridge_name: 'virbr0'
   ubun.vm.provider :lxc do |lxc|
-    lxc.container_name = :servidordb
-    lxc.container_name = 'servidordb'
+    lxc.container_name = &quot;servidordb&quot;
   end
  end
-
   config.vm.define &quot;servidores_web&quot; do |ubun|
   ubun.vm.box = &quot;sagiru/buster-amd64&quot;
   ubun.vm.network &quot;private_network&quot;, ip: &quot;192.168.122.101&quot;, lxc__bridge_name: 'virbr0'
   ubun.vm.provider :lxc do |lxc|
-    lxc.container_name = :servidores_web
-    lxc.container_name = 'servidores_web'
+    lxc.container_name = &quot;servidores_web&quot;
   end
  end
   config.vm.provision &quot;ansible&quot; do |ansible|

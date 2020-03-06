@@ -184,6 +184,8 @@ nodo2                      : ok=7    changed=0    unreachable=0    failed=0
 
 ![](https://i.imgur.com/wk0s5Lu.png)
 
+## Ansible en el Vagrantfile
+
 Para que se inicie con el Vagrantfile solamente tendremos que añadir los siguiente al fichero de configuración:
 
 ```

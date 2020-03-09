@@ -67,31 +67,13 @@
     
         <a class="newer-posts" href="/page/6/">&larr; Newer Posts</a>
     
-    <span class="page-number">Page 7 of 9</span>
+    <span class="page-number">Page 7 of 8</span>
     
         <a class="older-posts" href="/page/8/">Older Posts &rarr;</a>
     
 </nav>
 
     </div>
-		
-      <article class="post">
-	<header class="post-header">
-    
-		<h2 class="post-title"><a href="/post/servidorest7/">T7. Hosting.</a></h2>
-	</header>
-	<section class="post-excerpt">
-    <p>
-      Queremos que diferentes usuarios, puedan gestionar una página web en vuestro servidor que esté gestionada por medio de un FTP. También se creará una base de datos para cada usuario.
-Por ejemplo, el usuario josedom quiere hacer una página cuyo nombre será servicios:
- La página que vamos a crear será accesible en https://servicios.tunombre.gonzalonazareno.org. Se creará un usuario user_josedom, que tendrá una contraseña, para que accediendo a ftp.tunombre.gonzalonazareno.org, pueda gestionar los ficheros de su página web. &hellip; <a class="read-more" href="/post/servidorest7/">&raquo;</a>
-    </p>
-	</section>
-	<footer class="post-meta">
-    <time class="post-date">December 11, 2019</time>
-	</footer>
-</article>
-
 		
       <article class="post">
 	<header class="post-header">
@@ -132,13 +114,30 @@ Instalamos los repositorios de EPEL :
 </article>
 
 		
+      <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/post/oraclevspostgresql/">PL/SQL vs PL/PGSQL</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Vamos a ver las principales diferencias entre estos dos gestores. Diferencias en cursores: Recorreremos los cursores de formas diferentes en los dos gestores.
+ PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir. &hellip; <a class="read-more" href="/post/oraclevspostgresql/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">November 09, 2019</time>
+	</footer>
+</article>
+
+		
     
 
 <nav class="pagination" role="navigation">
     
         <a class="newer-posts" href="/page/6/">&larr; Newer Posts</a>
     
-    <span class="page-number">Page 7 of 9</span>
+    <span class="page-number">Page 7 of 8</span>
     
         <a class="older-posts" href="/page/8/">Older Posts &rarr;</a>
     

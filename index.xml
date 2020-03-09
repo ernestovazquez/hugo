@@ -22,15 +22,6 @@ K3S Introducción Voy a utilizar k3s como sistema de instalación multinodo de k
     </item>
     
     <item>
-      <title>Instalación de OpenStack</title>
-      <link>https://ernestovazquez.es/post/openstack/</link>
-      <pubDate>Sat, 29 Feb 2020 11:04:52 +0100</pubDate>
-      
-      <guid>https://ernestovazquez.es/post/openstack/</guid>
-      <description>Elige un método de los comentados en clase y realiza una instalación completa de OpenStack en multinodo (al menos utilizando un nodo controlador y un nodo de computación), bien utilizando máquinas virtuales en tu equipo, bien solicitando el uso de los servidores disponibles.</description>
-    </item>
-    
-    <item>
       <title>Práctica 7 Movimiento de datos</title>
       <link>https://ernestovazquez.es/post/movimientodatos/</link>
       <pubDate>Fri, 28 Feb 2020 15:04:52 +0100</pubDate>

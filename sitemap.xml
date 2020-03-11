@@ -3,144 +3,144 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://ernestovazquez.es/post/k8s/</loc>
+    <loc>https://example.com/post/k8s/</loc>
     <lastmod>2020-02-29T11:04:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/movimientodatos/</loc>
+    <loc>https://example.com/post/movimientodatos/</loc>
     <lastmod>2020-02-28T15:04:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/lxc/</loc>
+    <loc>https://example.com/post/lxc/</loc>
     <lastmod>2020-02-21T08:50:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/dockeriaw/</loc>
+    <loc>https://example.com/post/dockeriaw/</loc>
     <lastmod>2020-02-18T11:50:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/proxy/</loc>
+    <loc>https://example.com/post/proxy/</loc>
     <lastmod>2020-02-18T09:04:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/auditoria/</loc>
+    <loc>https://example.com/post/auditoria/</loc>
     <lastmod>2020-02-16T12:04:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/selinux/</loc>
+    <loc>https://example.com/post/selinux/</loc>
     <lastmod>2020-02-13T19:04:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/correo/</loc>
+    <loc>https://example.com/post/correo/</loc>
     <lastmod>2020-02-05T08:50:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/almacenamiento/</loc>
+    <loc>https://example.com/post/almacenamiento/</loc>
     <lastmod>2020-02-04T17:08:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/iscsi/</loc>
+    <loc>https://example.com/post/iscsi/</loc>
     <lastmod>2020-02-04T12:08:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/java/</loc>
+    <loc>https://example.com/post/java/</loc>
     <lastmod>2020-01-30T09:04:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/metricas/</loc>
+    <loc>https://example.com/post/metricas/</loc>
     <lastmod>2020-01-28T08:04:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/btrfs/</loc>
+    <loc>https://example.com/post/btrfs/</loc>
     <lastmod>2020-01-23T21:20:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/almacenamientobbdd/</loc>
+    <loc>https://example.com/post/almacenamientobbdd/</loc>
     <lastmod>2020-01-22T09:20:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/bacula/</loc>
+    <loc>https://example.com/post/bacula/</loc>
     <lastmod>2020-01-22T08:04:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/travis/</loc>
+    <loc>https://example.com/post/travis/</loc>
     <lastmod>2019-12-15T15:29:57+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/servidorest8/</loc>
+    <loc>https://example.com/post/servidorest8/</loc>
     <lastmod>2019-12-11T15:29:57+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/servidorest7/</loc>
+    <loc>https://example.com/post/servidorest7/</loc>
     <lastmod>2019-12-11T14:29:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/servidorest6/</loc>
+    <loc>https://example.com/post/servidorest6/</loc>
     <lastmod>2019-11-19T13:15:31+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/servidorest5/</loc>
+    <loc>https://example.com/post/servidorest5/</loc>
     <lastmod>2019-11-11T13:10:28+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/oraclevspostgresql/</loc>
+    <loc>https://example.com/post/oraclevspostgresql/</loc>
     <lastmod>2019-11-09T18:38:43+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/servidorest3/</loc>
+    <loc>https://example.com/post/servidorest3/</loc>
     <lastmod>2019-10-30T12:20:59+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/servidorest2/</loc>
+    <loc>https://example.com/post/servidorest2/</loc>
     <lastmod>2019-10-29T10:49:14+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/servidorest1/</loc>
+    <loc>https://example.com/post/servidorest1/</loc>
     <lastmod>2019-10-13T10:36:33+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/categories/</loc>
+    <loc>https://example.com/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/</loc>
+    <loc>https://example.com/</loc>
     <lastmod>2020-02-29T11:04:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/post/</loc>
+    <loc>https://example.com/post/</loc>
     <lastmod>2020-02-29T11:04:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ernestovazquez.es/tags/</loc>
+    <loc>https://example.com/tags/</loc>
     <priority>0</priority>
   </url>
   

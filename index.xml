@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>De Rookie a Leyenda</title>
-    <link>https://ernestovazquez.es/</link>
+    <link>https://example.com/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sat, 29 Feb 2020 11:04:52 +0100</lastBuildDate>
     
-	<atom:link href="https://ernestovazquez.es/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Despliegue de una aplicación en un Cluster nuevo de k8s</title>
-      <link>https://ernestovazquez.es/post/k8s/</link>
+      <link>https://example.com/post/k8s/</link>
       <pubDate>Sat, 29 Feb 2020 11:04:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/k8s/</guid>
+      <guid>https://example.com/post/k8s/</guid>
       <description>Elige un sistema sencillo de instalación multinodo de k8s de los disponibles en cncf.io y despliega una aplicación explicando detalladamente las características.
 Este cluster puede estar ubicado en MVs en tu propio equipo o en instancias nuevas en OpenStack.
 K3S Introducción Voy a utilizar k3s como sistema de instalación multinodo de k8s. Es una distribución certificada de Kubernetes. Para instalarla solo nos bajaremos un binario donde solo hace falta 512 MB de RAM ya que es muy ligero.</description>
@@ -23,19 +23,19 @@ K3S Introducción Voy a utilizar k3s como sistema de instalación multinodo de k
     
     <item>
       <title>Práctica 7 Movimiento de datos</title>
-      <link>https://ernestovazquez.es/post/movimientodatos/</link>
+      <link>https://example.com/post/movimientodatos/</link>
       <pubDate>Fri, 28 Feb 2020 15:04:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/movimientodatos/</guid>
+      <guid>https://example.com/post/movimientodatos/</guid>
       <description>Alumno 1 (Ernesto Vázquez García) 1. Realiza una exportación del esquema de SCOTT usando la consola Enterprise Manager, con las siguientes condiciones: • Exporta tanto la estructura de las tablas como los datos de las mismas. • Excluye la tabla BONUS y los departamentos sin empleados. • Realiza una estimación previa del tamaño necesario para el fichero de exportación. • Programa la operación para dentro de 5 minutos. • Genera un archivo de log en el directorio raíz.</description>
     </item>
     
     <item>
       <title>Vagrant con LXC</title>
-      <link>https://ernestovazquez.es/post/lxc/</link>
+      <link>https://example.com/post/lxc/</link>
       <pubDate>Fri, 21 Feb 2020 08:50:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/lxc/</guid>
+      <guid>https://example.com/post/lxc/</guid>
       <description>Explica los pasos necesarios para configurar Vagrant para que utilice LXC como proveedor y una vez configurado el sistema crea un Vagrantfile que lance dos contenedores sobre LXC en los que se instale una aplicación web en dos capas (contenedor1 con servidor web y contenedor2 con servidor de BBDD).
 La configuración completa de la aplicación se realizará utilizando ansible como sistema de aprovisionamiento de Vagrant
 Voy a utilizar una máquina vagrant para realizar la instalación.</description>
@@ -43,10 +43,10 @@ Voy a utilizar una máquina vagrant para realizar la instalación.</description>
     
     <item>
       <title>Implantación de aplicaciones web PHP en docker</title>
-      <link>https://ernestovazquez.es/post/dockeriaw/</link>
+      <link>https://example.com/post/dockeriaw/</link>
       <pubDate>Tue, 18 Feb 2020 11:50:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/dockeriaw/</guid>
+      <guid>https://example.com/post/dockeriaw/</guid>
       <description>Queremos ejecutar en un contenedor docker la aplicación web escrita en PHP: bookMedik.
 Tarea 1 Ejecución de la aplicación web PHP bookMedik en docker
  Queremos ejecutar en un contenedor docker la aplicación web escrita en PHP: bookMedik (https://github.com/evilnapsis/bookmedik). Es necesario tener un contenedor con mariadb donde vamos a crear la base de datos y los datos de la aplicación. El script para generar la base de datos y los registros lo encuentras en el repositorio y se llama schema.</description>
@@ -54,10 +54,10 @@ Tarea 1 Ejecución de la aplicación web PHP bookMedik en docker
     
     <item>
       <title>Proxy, proxy inverso y balanceadores de carga</title>
-      <link>https://ernestovazquez.es/post/proxy/</link>
+      <link>https://example.com/post/proxy/</link>
       <pubDate>Tue, 18 Feb 2020 09:04:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/proxy/</guid>
+      <guid>https://example.com/post/proxy/</guid>
       <description>Balanceador de carga Primero vamos a instalar HAproxy
 vagrant@balanceador:~$ sudo apt install haproxy  Vamos al fichero de configuración y pondremos lo siguiente:
 vagrant@balanceador:/etc/haproxy$ sudo nano haproxy.cfg global daemon maxconn 256 user haproxy group haproxy log 127.0.0.1 local0 log 127.0.0.1 local1 notice defaults mode http log global timeout connect 5000ms timeout client 50000ms timeout server 50000ms listen granja_cda bind 192.168.1.80:80 mode http stats enable stats auth cda:cda balance roundrobin server uno 10.</description>
@@ -65,20 +65,20 @@ vagrant@balanceador:/etc/haproxy$ sudo nano haproxy.cfg global daemon maxconn 25
     
     <item>
       <title>Auditorías en bases de datos</title>
-      <link>https://ernestovazquez.es/post/auditoria/</link>
+      <link>https://example.com/post/auditoria/</link>
       <pubDate>Sun, 16 Feb 2020 12:04:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/auditoria/</guid>
+      <guid>https://example.com/post/auditoria/</guid>
       <description>Realiza y documenta adecuadamente las siguientes operaciones: 1. Activa desde SQL*Plus la auditoría de los intentos de acceso fallidos al sistema. Comprueba su funcionamiento. Para activar la auditoría de los intentos de acceso fallidos primero tenemos que ver los parámetros de auditoría:
   05-02-2020 17:42:51 SYS@XE SQL SHOW PARAMETER AUDIT NAME TYPE VALUE ------------------------------------ ----------- ------------------------------ audit_file_dest string /u01/app/oracle/admin/XE/adump audit_syslog_level string audit_sys_operations boolean FALSE audit_trail string NONE 05-02-2020 17:46:55 SYS@XE SQL   Vamos a activar audit_tail:</description>
     </item>
     
     <item>
       <title>Configuración/activación de SELinux</title>
-      <link>https://ernestovazquez.es/post/selinux/</link>
+      <link>https://example.com/post/selinux/</link>
       <pubDate>Thu, 13 Feb 2020 19:04:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/selinux/</guid>
+      <guid>https://example.com/post/selinux/</guid>
       <description>Habilita SELinux en salmorejo y asegúrate de que todas las aplicaciones web funcionan correctamente con una configuración estricta y segura de SELinux
 Intoducción SELinux es una característica de seguridad de Linux que provee una variedad de políticas de seguridad que otorga a los administradores mayor control sobre las personas que pueden acceder al sistema y con el objetivo de proteger sus recursos.
 SELinux ha sido integrado a la rama principal del núcleo Linux desde la versión 2.</description>
@@ -86,20 +86,20 @@ SELinux ha sido integrado a la rama principal del núcleo Linux desde la versió
     
     <item>
       <title>Servidor de correos en los servidores cloud</title>
-      <link>https://ernestovazquez.es/post/correo/</link>
+      <link>https://example.com/post/correo/</link>
       <pubDate>Wed, 05 Feb 2020 08:50:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/correo/</guid>
+      <guid>https://example.com/post/correo/</guid>
       <description>Esta tarea consiste en instalar y configurar un servidor de correo similar al de cualquier organización, capaz de enviar y recibir directamente correo, almacenar los usuarios en LDAP, filtrar el correo en busca de virus o spam y servirlo a sus usuarios a través de los protocolos POP, IMAP y configurar un Webmail.
  El servidor de correos se va a instalar en croqueta (debian) Los servidores que necesites para realizar la práctica serán los del cloud: salmorejo (servidor web) y croqueta (servidor dns y ldap).</description>
     </item>
     
     <item>
       <title>Gestión de Almacenamiento</title>
-      <link>https://ernestovazquez.es/post/almacenamiento/</link>
+      <link>https://example.com/post/almacenamiento/</link>
       <pubDate>Tue, 04 Feb 2020 17:08:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/almacenamiento/</guid>
+      <guid>https://example.com/post/almacenamiento/</guid>
       <description>Práctica: Gestión del Almacenamiento Alumno 1 (Luis Vázquez Alejo) ORACLE 1. Muestra los espacios de tablas existentes en tu base de datos y la ruta de los ficheros que los componen. ¿Están las extensiones gestionadas localmente o por diccionario?
 Para visualizar los tablespaces del sistema, tendremos que ejcutar el siguiente comando.
 SQL&amp;gt; col FILE_NAME form A40; SQL&amp;gt; select FILE_NAME, TABLESPACE_NAME from dba_data_files UNION select FILE_NAME, TABLESPACE_NAME from dba_temp_files; FILE_NAME	TABLESPACE_NAME ---------------------------------------- ------------------------------ /opt/oracle/oradata/orcl/sysaux01.</description>
@@ -107,50 +107,50 @@ SQL&amp;gt; col FILE_NAME form A40; SQL&amp;gt; select FILE_NAME, TABLESPACE_NAM
     
     <item>
       <title>iSCSI</title>
-      <link>https://ernestovazquez.es/post/iscsi/</link>
+      <link>https://example.com/post/iscsi/</link>
       <pubDate>Tue, 04 Feb 2020 12:08:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/iscsi/</guid>
+      <guid>https://example.com/post/iscsi/</guid>
       <description>Configura un sistema que exporte algunos targets por iSCSI y los conecte a diversos clientes, explicando con detalle la forma de trabajar.
  Crea un target con una LUN y conéctala a un cliente GNU/Linux. Explica cómo escaneas desde el cliente buscando los targets disponibles y utiliza la unidad lógica proporcionada, formateándola si es necesario y montándola. Utiliza systemd mount para que el target se monte automáticamente al arrancar el cliente.</description>
     </item>
     
     <item>
       <title>Despliegue de CMS java</title>
-      <link>https://ernestovazquez.es/post/java/</link>
+      <link>https://example.com/post/java/</link>
       <pubDate>Thu, 30 Jan 2020 09:04:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/java/</guid>
+      <guid>https://example.com/post/java/</guid>
       <description>En esta práctica vamos a desplegar un CMS escrito en java. Puedes escoger la aplicación que vas a desplegar de CMS escritos en Java o de Aplicaciones Java en Bitnami.
  Indica la aplicación escogida y su funcionalidad. Escribe una guía de los pasas fundamentales para realizar la instalación. ¿Has necesitado instalar alguna librería?¿Has necesitado instalar un conector de una base de datos? Entrega una captura de pantalla donde se vea la aplicación funcionando.</description>
     </item>
     
     <item>
       <title>Métricas, logs y monitorización</title>
-      <link>https://ernestovazquez.es/post/metricas/</link>
+      <link>https://example.com/post/metricas/</link>
       <pubDate>Tue, 28 Jan 2020 08:04:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/metricas/</guid>
+      <guid>https://example.com/post/metricas/</guid>
       <description>Crea una nueva instancia de nombre serranito o reutiliza la que ya se estaba utilizando para copias de seguridad y realiza las partes que elijas entre las siguientes sobre de croqueta, salmorejo, tortilla y serranito (se puede hacer una, dos o las tres partes y el peso de la tarea se modificará consecuentemente):
  Métricas: recolección, gestión centralizada, filtrado y representación gráfica de los parámetros que consideres necesarios Monitorización: Configuración de alertas por uso excesivo de recursos (memoria, disco raíz, etc.</description>
     </item>
     
     <item>
       <title>Sistemas de ficheros avanzados Btrfs</title>
-      <link>https://ernestovazquez.es/post/btrfs/</link>
+      <link>https://example.com/post/btrfs/</link>
       <pubDate>Thu, 23 Jan 2020 21:20:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/btrfs/</guid>
+      <guid>https://example.com/post/btrfs/</guid>
       <description>Elige uno de los dos sistemas de ficheros &amp;ldquo;avanzados&amp;rdquo; que hemos visto en clase.
  Crea un escenario que incluya una máquina y varios discos asociados a ella. Instala si es necesario el software de ZFS/Btrfs Gestiona los discos adicionales con ZFS/Btrfs. Configura los discos en RAID, haciendo pruebas de fallo de algún disco y sustitución, restauración del RAID. Comenta ventajas e inconvenientes respecto al uso de RAID software con mdadm Realiza ejercicios con pruebas de funcionamiento de las principales funcionalidades: compresión, cow, deduplicación, cifrado, etc.</description>
     </item>
     
     <item>
       <title>Diferencias entre MySQL y PostgreSQL respecto a Oracle para gestionar el almacenamiento</title>
-      <link>https://ernestovazquez.es/post/almacenamientobbdd/</link>
+      <link>https://example.com/post/almacenamientobbdd/</link>
       <pubDate>Wed, 22 Jan 2020 09:20:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/almacenamientobbdd/</guid>
+      <guid>https://example.com/post/almacenamientobbdd/</guid>
       <description>Realizaremos un pequeño artículo o una entrada para un blog técnico explicando las limitaciones que presentan MySQL y Postgres para gestionar el almacenamiento de los datos respecto a ORACLE, si es que presentan alguna.
 En esta entrada vamos a ver las limitaciones que presentan MySQL y PostgreSQL respecto a ORACLE en la gestión de almacenamiento.
 MySQL Mysql utiliza el sistema de almacenamiento mediante tablespaces. Motores de almacenamiento: InnoDB y NDB.</description>
@@ -158,20 +158,20 @@ MySQL Mysql utiliza el sistema de almacenamiento mediante tablespaces. Motores d
     
     <item>
       <title>Sistema de copias de seguridad</title>
-      <link>https://ernestovazquez.es/post/bacula/</link>
+      <link>https://example.com/post/bacula/</link>
       <pubDate>Wed, 22 Jan 2020 08:04:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/bacula/</guid>
+      <guid>https://example.com/post/bacula/</guid>
       <description>Implementar un sistema de copias de seguridad para las instancias del cloud, teniendo en cuenta las siguientes características:
  Selecciona una aplicación para realizar el proceso: bacula, amanda, shell script con tar, rsync, dar, afio, etc. Utiliza una de las instancias como servidor de copias de seguridad, añadiéndole un volumen y almacenando localmente las copias de seguridad que consideres adecuadas en él. El proceso debe realizarse de forma completamente automática Selecciona qué información es necesaria guardar (listado de paquetes, ficheros de configuración, documentos, datos, etc.</description>
     </item>
     
     <item>
       <title>Introducción a la integración continua</title>
-      <link>https://ernestovazquez.es/post/travis/</link>
+      <link>https://example.com/post/travis/</link>
       <pubDate>Sun, 15 Dec 2019 15:29:57 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/travis/</guid>
+      <guid>https://example.com/post/travis/</guid>
       <description>Tarea 1: Despliegue de una página web estática (build, deploy) (4 puntos)
 En esta práctica investiga como generar una página web estática con la herramienta que elegiste en la práctica 1 de la asignatura y desplegarla en el servicio que utilizaste en esa práctica.
  En el repositorio GitHub sólo tienen que estar los ficheros markdown. La página se debe generar en el sistema de integración continúa, por lo tanto debemos instalar las herramientas necesarias.</description>
@@ -179,20 +179,20 @@ En esta práctica investiga como generar una página web estática con la herram
     
     <item>
       <title>T8. Instalación de aplicación python.</title>
-      <link>https://ernestovazquez.es/post/servidorest8/</link>
+      <link>https://example.com/post/servidorest8/</link>
       <pubDate>Wed, 11 Dec 2019 15:29:57 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/servidorest8/</guid>
+      <guid>https://example.com/post/servidorest8/</guid>
       <description>En esta tarea vamos a desplegar un CMS python. Hemos elegido Mezzanine, pero puedes elegir otro CMS python basado en django.
  Instala el CMS en el entorno de desarrollo. Debes utilizar un entorno virtual. Personaliza la página (cambia el nombre al blog y pon tu nombre) y añade contenido (algún artículo con alguna imagen). Guarda los ficheros generados durante la instalación en un repositorio github. Guarda también en ese repositorio la copia de seguridad de la bese de datos.</description>
     </item>
     
     <item>
       <title>T7. Hosting.</title>
-      <link>https://ernestovazquez.es/post/servidorest7/</link>
+      <link>https://example.com/post/servidorest7/</link>
       <pubDate>Wed, 11 Dec 2019 14:29:52 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/servidorest7/</guid>
+      <guid>https://example.com/post/servidorest7/</guid>
       <description>Queremos que diferentes usuarios, puedan gestionar una página web en vuestro servidor que esté gestionada por medio de un FTP. También se creará una base de datos para cada usuario.
 Por ejemplo, el usuario josedom quiere hacer una página cuyo nombre será servicios:
  La página que vamos a crear será accesible en https://servicios.tunombre.gonzalonazareno.org. Se creará un usuario user_josedom, que tendrá una contraseña, para que accediendo a ftp.tunombre.gonzalonazareno.org, pueda gestionar los ficheros de su página web.</description>
@@ -200,10 +200,10 @@ Por ejemplo, el usuario josedom quiere hacer una página cuyo nombre será servi
     
     <item>
       <title>T6. DNS.</title>
-      <link>https://ernestovazquez.es/post/servidorest6/</link>
+      <link>https://example.com/post/servidorest6/</link>
       <pubDate>Tue, 19 Nov 2019 13:15:31 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/servidorest6/</guid>
+      <guid>https://example.com/post/servidorest6/</guid>
       <description>Vamos a instalar un servidor dns que nos permita gestionar la resolución directa e inversa de nuestros nombres. Cada alumno va a poseer un servidor dns con autoridad sobre un subdominio de nuestro dominio principal gonzalonazareno.org, que se llamará tu_nombre.gonzalonazareno.org.
 Indica al profesor el nombre de tu dominio para que pueda realizar la delegación en el servidor DNS principal papion-dns.
 El servidor DNS se va a instalar en el servidor1 (croqueta).</description>
@@ -211,10 +211,10 @@ El servidor DNS se va a instalar en el servidor1 (croqueta).</description>
     
     <item>
       <title>T5. Actualización a CentOS 8.</title>
-      <link>https://ernestovazquez.es/post/servidorest5/</link>
+      <link>https://example.com/post/servidorest5/</link>
       <pubDate>Mon, 11 Nov 2019 13:10:28 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/servidorest5/</guid>
+      <guid>https://example.com/post/servidorest5/</guid>
       <description>Actualiza salmorejo a CentOS 8 garantizando que todos los servicios previamente configurados sigan funcionando correctamente.
 Instalamos los repositorios de EPEL :
 [root@salmorejo centos]# yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm  Instalamos yum-utils :
@@ -225,30 +225,30 @@ Instalamos los repositorios de EPEL :
     
     <item>
       <title>PL/SQL vs PL/PGSQL</title>
-      <link>https://ernestovazquez.es/post/oraclevspostgresql/</link>
+      <link>https://example.com/post/oraclevspostgresql/</link>
       <pubDate>Sat, 09 Nov 2019 18:38:43 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/oraclevspostgresql/</guid>
+      <guid>https://example.com/post/oraclevspostgresql/</guid>
       <description>Vamos a ver las principales diferencias entre estos dos gestores. Diferencias en cursores: Recorreremos los cursores de formas diferentes en los dos gestores.
  PL/SQL:  CURSOR c_cursor IS SELECT ... FROM nombretabla; FOR i IN c_cursor LOOP END LOOP;   PL/PGSQL:  FOR c_cursor IN SELECT ... FROM table LOOP; END LOOP;  En cuanto a triggers en PL/PGSQL primero creamos la función y después llamamos a dicha función CREATE OR REPLACE FUNCTION nombrefuncion RETURNS TRIGGER AS $nombretrigger$ DECLARE BEGIN END; $nombretrigger$ LANGUAGE PLPGSQL CREATE OR REPLACE nombretrigger (AFTER OR BEFORE)(INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH(FILA O SENTENCIA) EXECUTE FUNCTION nombrefuncion;   PL/SQL:  CREATE OR REPLACE TRIGGER name (AFTER/BEFORE) (INSERT,UPDATE OR DELETE) ON nombretabla FOR EACH (fila o sentencia) BEGIN END; /  También tendremos que cambiar la forma de imprimir.</description>
     </item>
     
     <item>
       <title>T3. Instalación aplicaciones web.</title>
-      <link>https://ernestovazquez.es/post/servidorest3/</link>
+      <link>https://example.com/post/servidorest3/</link>
       <pubDate>Wed, 30 Oct 2019 12:20:59 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/servidorest3/</guid>
+      <guid>https://example.com/post/servidorest3/</guid>
       <description>Vamos a instalar dos aplicaciones web php en nuestros servidores:
  En www.tunombre.gonzalonazareno.org vamos a instalar WordPress. En WordPress debemos configurar de forma correcta las URL limpias. En cloud.tunombre.gonzalonazareno.org vamos a instalar NextCloud.  Modifica las aplicaciones web y personalizalas para que se demuestre que son tus aplicaciones. Entrega una breve descripción de los pasos dados para conseguir la instalación de las aplicaciones web. Usando resolución estática entrega algunas capturas donde se demuestre que las aplicaciones están funcionando.</description>
     </item>
     
     <item>
       <title>T2. Instalación de un servidor Web.</title>
-      <link>https://ernestovazquez.es/post/servidorest2/</link>
+      <link>https://example.com/post/servidorest2/</link>
       <pubDate>Tue, 29 Oct 2019 10:49:14 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/servidorest2/</guid>
+      <guid>https://example.com/post/servidorest2/</guid>
       <description>Ante de realizar la instalación del servidor web vamos a configurar el nombre de nuestras máquinas, para ello:
 Piensa en un nombre de dominio, que sera un subdominio de gonzalonazareno.org, y que contenga tu nombre, por ejemplo: josedom.gonzalonazareno.org. Siguiendo con el ejemplo, los nombres de mis máquinas serán:
  croqueta.josedom.gonzalonazareno.org tortilla.josedom.gonzalonazareno.org salmorejo.josedom.gonzalonazareno.org  Comprueba que los servidores tienen configurados el nuevo nombre de dominio de forma adecuada después de volver a reiniciar el servidor (o tomar una nueva configuración DHCP).</description>
@@ -256,10 +256,10 @@ Piensa en un nombre de dominio, que sera un subdominio de gonzalonazareno.org, y
     
     <item>
       <title>T1. Instalación de los servidores.</title>
-      <link>https://ernestovazquez.es/post/servidorest1/</link>
+      <link>https://example.com/post/servidorest1/</link>
       <pubDate>Sun, 13 Oct 2019 10:36:33 +0100</pubDate>
       
-      <guid>https://ernestovazquez.es/post/servidorest1/</guid>
+      <guid>https://example.com/post/servidorest1/</guid>
       <description>Tarea 1) Instalación de los servidores
 Crear tres máquinas en el cloud con los siguientes nombres y sistemas operativos:
 Croqueta (Debian 10) Tortilla (Ubunut 18.04) Salmorejo (CentOs 7)

@@ -5,10 +5,24 @@
     <link>https://example.com/</link>
     <description>Recent content on De Rookie a Leyenda</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 29 Feb 2020 11:04:52 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 30 Nov 2020 11:08:52 +0100</lastBuildDate>
     
 	<atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>WSO2 Update 2.0</title>
+      <link>https://example.com/post/wso2update/</link>
+      <pubDate>Mon, 30 Nov 2020 11:08:52 +0100</pubDate>
+      
+      <guid>https://example.com/post/wso2update/</guid>
+      <description>Productos WSO2 Instalación de WSO2 Enterprise Integrator (wso2ei-6.6.0) https://github.com/wso2/product-ei/releases/tag/v6.6.0
+Instalación de WSO2 API Manager (wso2am-3.2.0) https://wso2.com/api-management/
+Informacion de las actualizaciones mediante un entorno grafico: https://updates-info.wso2.com/
+Comandos Sinopsis:
+wso2update_linux [--version | version] [--help | help] [&amp;lt;options&amp;gt;] &amp;lt;command&amp;gt; [&amp;lt;args&amp;gt;]  Cuando ejecutemos la herramienta nos pedirá las credenciales de acceso de WSO2, esta herramienta determina qué actualizaciones son nuevas y relevantes, luego descarga y actualiza el producto.
+ Version: Con el siguiente comando podremos ver la version en la que estamos trabajando.</description>
+    </item>
     
     <item>
       <title>Despliegue de una aplicación en un Cluster nuevo de k8s</title>

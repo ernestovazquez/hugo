@@ -67,13 +67,30 @@
     
         <a class="newer-posts" href="/page/2/">&larr; Newer Posts</a>
     
-    <span class="page-number">Page 3 of 8</span>
+    <span class="page-number">Page 3 of 9</span>
     
         <a class="older-posts" href="/page/4/">Older Posts &rarr;</a>
     
 </nav>
 
     </div>
+		
+      <article class="post">
+	<header class="post-header">
+    
+		<h2 class="post-title"><a href="/post/auditoria/">Auditorías en bases de datos</a></h2>
+	</header>
+	<section class="post-excerpt">
+    <p>
+      Realiza y documenta adecuadamente las siguientes operaciones: 1. Activa desde SQL*Plus la auditoría de los intentos de acceso fallidos al sistema. Comprueba su funcionamiento. Para activar la auditoría de los intentos de acceso fallidos primero tenemos que ver los parámetros de auditoría:
+  05-02-2020 17:42:51 SYS@XE SQL SHOW PARAMETER AUDIT NAME TYPE VALUE ------------------------------------ ----------- ------------------------------ audit_file_dest string /u01/app/oracle/admin/XE/adump audit_syslog_level string audit_sys_operations boolean FALSE audit_trail string NONE 05-02-2020 17:46:55 SYS@XE SQL   Vamos a activar audit_tail: &hellip; <a class="read-more" href="/post/auditoria/">&raquo;</a>
+    </p>
+	</section>
+	<footer class="post-meta">
+    <time class="post-date">February 16, 2020</time>
+	</footer>
+</article>
+
 		
       <article class="post">
 	<header class="post-header">
@@ -110,31 +127,13 @@ SELinux ha sido integrado a la rama principal del núcleo Linux desde la versió
 </article>
 
 		
-      <article class="post">
-	<header class="post-header">
-    
-		<h2 class="post-title"><a href="/post/almacenamiento/">Gestión de Almacenamiento</a></h2>
-	</header>
-	<section class="post-excerpt">
-    <p>
-      Práctica: Gestión del Almacenamiento Alumno 1 (Luis Vázquez Alejo) ORACLE 1. Muestra los espacios de tablas existentes en tu base de datos y la ruta de los ficheros que los componen. ¿Están las extensiones gestionadas localmente o por diccionario?
-Para visualizar los tablespaces del sistema, tendremos que ejcutar el siguiente comando.
-SQL&gt; col FILE_NAME form A40; SQL&gt; select FILE_NAME, TABLESPACE_NAME from dba_data_files UNION select FILE_NAME, TABLESPACE_NAME from dba_temp_files; FILE_NAME	TABLESPACE_NAME ---------------------------------------- ------------------------------ /opt/oracle/oradata/orcl/sysaux01. &hellip; <a class="read-more" href="/post/almacenamiento/">&raquo;</a>
-    </p>
-	</section>
-	<footer class="post-meta">
-    <time class="post-date">February 04, 2020</time>
-	</footer>
-</article>
-
-		
     
 
 <nav class="pagination" role="navigation">
     
         <a class="newer-posts" href="/page/2/">&larr; Newer Posts</a>
     
-    <span class="page-number">Page 3 of 8</span>
+    <span class="page-number">Page 3 of 9</span>
     
         <a class="older-posts" href="/page/4/">Older Posts &rarr;</a>
     

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    
+    <title>
+      
+      WSO2 Update 2.0 - De Rookie a Leyenda
+      
+		</title>
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" type="text/css" href="/assets/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    
+    <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Lato:100,100i,300,300i,400,400i,700,700i|Source+Code+Pro:300,400,500,700" rel="stylesheet">
+    
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/assets/bigfoot/dist/bigfoot.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/bigfoot/dist/bigfoot-number.css" />
+    <script type="text/javascript">
+        $.bigfoot();
+    </script>
+    
+    
+</head>
+
+    <body class="post-template">
+        <header class="main-header">
+	<div class="main-header-content">
+		<h1 class="blog-title">
+			<a href="/">
+				
+           De Rookie a Leyenda
+				
+			</a>
+		</h1>
+		<h2 class="blog-description">Ernesto Vázquez García</h2>
+	</div>
+
+	<div class="nav">
+    
+		
+	</div>
+</header>
+
+        
+<main class="content" role="main">
+  <article class="post">
+    <header class="post-header">
+      
+      <h2 class="post-title">WSO2 Update 2.0</h2>
+      <section class="post-meta">
+        <time class="post-date">November 30, 2020</time>
+      </section>
+    </header>
+    <section class="post-content">
+      
+
+<h2 id="productos-wso2">Productos WSO2</h2>
+
+<p>Instalación de <strong>WSO2 Enterprise Integrator</strong> (wso2ei-6.6.0)
+    <a href="https://github.com/wso2/product-ei/releases/tag/v6.6.0">https://github.com/wso2/product-ei/releases/tag/v6.6.0</a></p>
+
+<p>Instalación de <strong>WSO2 API Manager</strong> (wso2am-3.2.0)
+    <a href="https://wso2.com/api-management/">https://wso2.com/api-management/</a></p>
+
+<p>Informacion de las <strong>actualizaciones</strong> mediante un <strong>entorno grafico</strong>:
+<a href="https://updates-info.wso2.com/">https://updates-info.wso2.com/</a></p>
+
+<h2 id="comandos">Comandos</h2>
+
+<p>Sinopsis:</p>
+
+<pre><code>wso2update_linux [--version | version] [--help | help]
+                 [&lt;options&gt;]
+                 &lt;command&gt; [&lt;args&gt;]
+</code></pre>
+
+<p>Cuando ejecutemos la herramienta nos pedirá las <strong>credenciales de acceso</strong> de WSO2, esta herramienta determina qué <strong>actualizaciones</strong> son nuevas y relevantes, luego descarga y actualiza el producto.</p>
+
+<ul>
+<li><strong>Version</strong>: Con el siguiente comando podremos ver la version en la que estamos trabajando.</li>
+</ul>
+
+<pre><code>devops@chakray:~/Descargas/wso2ei-6.6.0/bin$ ./wso2update_linux version
+
+wso2updates version: 1.2.1
+Release date: 2020-11-26 05:36:41 UTC
+OS\Arch: linux\amd64
+Go version: go1.13.15
+</code></pre>
+
+<ul>
+<li><strong>Help</strong>: Con el comando help podremos ver todos los comandos disponibles.</li>
+</ul>
+
+<pre><code>devops@chakray:~/Descargas/wso2ei-6.6.0/bin$ ./wso2update_linux help
+
+wso2update tool is a simple command-line tool that connects to the  
+WSO2 Update service, determines which updates are new and relevant, and 
+downloads them and updates the product.
+
+To find out the latest on WSO2 Update, visit https://wso2.com/updates
+
+Usage:
+  wso2update [flags]
+  wso2update [command]
+
+Examples:
+	# Check the current version of Update tool in use on your system
+  	wso2update_linux version
+
+	# Get help on how to use the update command
+  	wso2update_linux help check
+
+	# Update the product to the latest level. You will be prompted to enter WSO2 credentials.
+	  wso2update_linux
+	  Username: user@wso2.com
+	  Password for ‘user@wso2.com’: my_password
+
+    # Update the product to the latest level by entering WSO2 credentials as arguments.
+      wso2update_linux --username user@wso2.com --password my_password
+
+    # Update the product up to a given level
+      wso2update_linux --level 3.0.0.10
+
+    # Simulate the update 
+      wso2update_linux --dry-run
+
+
+Available Commands:
+  apply-hotfix  Apply an available hotfix.
+  check         Check available new levels for the product
+  create-docker Create Docker image of the product
+  current-state Show current details of the product.
+  help          Help about any command
+  revert-hotfix Revert most recently applied hotfix.
+  version       Print the Update tool version information.
+
+Flags:
+  -b, --backup string        Specify updates backup directory
+  -c, --channel string       Channel updates should be downloaded from (default &quot;full&quot;)
+      --continue             Merge resolved conflicts
+      --dry-run              Simulate the update
+  -h, --help                 help for wso2update
+  -l, --level string         Level in which the product should be updated to
+  -p, --password string      Specify your WSO2 account password
+      --revert               Revert to the previous update level
+      --template string      Specify the template output
+      --trial-subscription   Continue with a trial subscription
+  -u, --username string      Specify your WSO2 account email
+  -v, --verbose              Enable verbose mode
+
+Use &quot;wso2update [command] --help&quot; for more information about a command.
+</code></pre>
+
+<ul>
+<li><strong>Check</strong>: Comprobar <strong>nuevos niveles</strong>:</li>
+</ul>
+
+<pre><code>devops@chakray:~/Descargas/wso2ei-6.6.0/bin$ ./wso2update_linux check
+
+Checking for latest update tool version
+Checking updates for product wso2ei-6.6.0 from update level 2
+Checking updates for 'wso2ei-6.6.0' via 'full' channel
+Checking for updates
+wso2ei-6.6.0.2 is the latest update level available for the product wso2ei-6.6.0
+</code></pre>
+
+<ul>
+<li><strong>Current-state</strong>: Muestra los detalles del estado actual del producto.</li>
+</ul>
+
+<pre><code>devops@chakray:~/Descargas/wso2ei-6.6.0/bin$ ./wso2update_linux current-state
+
+Checking for latest update tool version
+WSO2 product: wso2ei-6.6.0.2
+There are no hotfixes applied on this pack.
+</code></pre>
+
+    </section>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+</main>
+
+        <footer class="site-footer">
+  <section class="rss"><a class="subscribe-button icon-feed" href="/index.xml"></a></section>
+  <section class="twitter"><a class="icon-twitter" href="https://twitter.com/ernestovazgar"> ernestovazgar</a></section>
+  
+  <section class="copyright">&copy; 2020 De Rookie a Leyenda</section>
+  <section class="poweredby"><a href="https://github.com/nirocfz/arabica">Arabica</a> theme by Sean Lunsford. Published with <a href="https://gohugo.io">Hugo</a>.</section>
+</footer>
+
+
+
+    </body>
+</html>

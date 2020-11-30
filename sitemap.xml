@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://example.com/post/wso2update/</loc>
+    <lastmod>2020-11-30T11:08:52+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://example.com/post/k8s/</loc>
     <lastmod>2020-02-29T11:04:52+01:00</lastmod>
   </url>
@@ -129,13 +134,13 @@
   
   <url>
     <loc>https://example.com/</loc>
-    <lastmod>2020-02-29T11:04:52+01:00</lastmod>
+    <lastmod>2020-11-30T11:08:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://example.com/post/</loc>
-    <lastmod>2020-02-29T11:04:52+01:00</lastmod>
+    <lastmod>2020-11-30T11:08:52+01:00</lastmod>
     <priority>0</priority>
   </url>
   
